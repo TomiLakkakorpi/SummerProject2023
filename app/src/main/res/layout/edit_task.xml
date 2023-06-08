@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTaskActivity"
     android:background="#bcbcbc">
 
     <GridLayout
-        android:id="@+id/addScreenGridLayout"
+        android:id="@+id/editScreenGridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20sp"
@@ -26,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvAddScreenHeader"
+            android:id="@+id/tvEditScreenHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -39,16 +38,14 @@
             tools:layout_editor_absoluteY="19dp" />
 
         <EditText
-            android:id="@+id/etAddScreenHeader"
+            android:id="@+id/etEditScreenHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
-            android:backgroundTint="#000000"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/tvAddScreenTime"
+            android:id="@+id/tvEditScreenTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -61,16 +58,14 @@
             tools:layout_editor_absoluteY="19dp" />
 
         <EditText
-            android:id="@+id/etAddScreenTime"
+            android:id="@+id/etEditScreenTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
-            android:backgroundTint="#000000"
             android:ems="10"
             android:inputType="time" />
 
         <TextView
-            android:id="@+id/tvAddScreenDate"
+            android:id="@+id/tvEditScreenDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -83,16 +78,14 @@
             tools:layout_editor_absoluteY="19dp" />
 
         <EditText
-            android:id="@+id/etAddScreenDate"
+            android:id="@+id/etEditScreenDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
-            android:backgroundTint="#000000"
             android:ems="10"
             android:inputType="date" />
 
         <TextView
-            android:id="@+id/tvAddScreenDetails"
+            android:id="@+id/tvEditScreenDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -105,16 +98,14 @@
             tools:layout_editor_absoluteY="19dp" />
 
         <EditText
-            android:id="@+id/etAddScreenDetails"
+            android:id="@+id/etEditScreenDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
-            android:backgroundTint="#000000"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/tvAddScreenCategory"
+            android:id="@+id/tvEditScreenCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
@@ -132,16 +123,16 @@
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
-                android:id="@+id/addScreenDropDownMenu"
+                android:id="@+id/editScreenDropDownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5sp"
-                android:text="@string/valitse_kategoriaString" />
+                android:text="Valitse Kategoria" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/buAddScreenCancel"
+            android:id="@+id/buEditScreenCancel"
             android:layout_width="120sp"
             android:layout_height="50sp"
             android:layout_marginTop="5sp"
@@ -153,20 +144,21 @@
             android:backgroundTint="#FF200B"/>
 
         <Button
-            android:id="@+id/buAddScreenAdd"
+            android:id="@+id/buEditScreenSave"
             android:layout_width="150sp"
             android:layout_height="50sp"
             android:layout_marginTop="5sp"
             android:layout_marginBottom="5sp"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="10sp"
-            android:backgroundTint="#49AB81"
-            android:text="@string/lisaaString" />
+            android:gravity="center"
+            android:backgroundTint="#13e7ff"
+            android:text="@string/paivitaString" />
 
     </GridLayout>
 
     <TextView
-        android:id="@+id/tvAddScreenHeader2"
+        android:id="@+id/tvEditScreenHeader2"
         android:layout_width="150sp"
         android:layout_height="30sp"
         android:layout_marginTop="150sp"
@@ -176,7 +168,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/addScreenGridLayout"
+        app:layout_constraintBottom_toTopOf="@+id/editScreenGridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

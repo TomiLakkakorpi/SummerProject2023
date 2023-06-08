@@ -4,23 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/buttonAddTask"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:text="Lisää"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonDeleteCompletedTasks"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+    tools:context=".MainActivity"
+    android:background="#5b5b5b">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="412dp"
-        android:layout_height="674dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,23 +18,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonDeleteCompletedTasks"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:text="Button"
+        android:id="@+id/buHomeScreenDelete"
+        android:layout_width="120sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FF200B"
+        android:gravity="center"
+        android:text="@string/poistaString"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAddTask"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        tools:text="Poista" />
+        android:layout_marginStart="20sp"
+        android:layout_marginBottom="10sp" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/multiAutoCompleteTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MultiAutoCompleteTextView"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="318dp" />
+    <Button
+        android:id="@+id/buHomeScreenAdd"
+        android:layout_width="150sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#49AB81"
+        android:gravity="center"
+        android:text="@string/lisaaString"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        android:layout_marginEnd="20sp"
+        android:layout_marginBottom="10sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
