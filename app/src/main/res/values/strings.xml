@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">To Do App</string>
+    <string name="kategoriaString">Kategoria:</string>
+    <string name="lisatiedotString">Lisätiedot:</string>
+    <string name="paivamaaraString">Päivämäärä:</string>
+    <string name="kellonaikaString">Kellonaika:</string>
+    <string name="otsikkoString">Otsikko:</string>
+    <string name="lisaatehtavaString">Lisää Tehtävä</string>
+    <string name="peruutaString">Peruuta</string>
+    <string name="lisaaString">Lisää</string>
 </resources>

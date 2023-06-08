@@ -12,7 +12,7 @@ Summer project 2023 - Tomi Lakkakorpi
     • OneDrive - Project files storage
     • Github - Storing source code, version control & kanban board
     • LucidChart - Designing the app
-    •
+    • Figma - Designing app UI
 
     Techniques used in the project:
     • 
