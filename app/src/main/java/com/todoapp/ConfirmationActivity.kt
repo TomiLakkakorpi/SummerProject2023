@@ -10,20 +10,20 @@ class ConfirmationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.confirmation)
 
-        // Palataan takaisin päänäkymään
-        val returnToMainActivityCancel = findViewById<Button>(R.id.buConfirmationScreenCancel)
-        returnToMainActivityCancel.setOnClickListener {
-            val Intent = Intent(this,MainActivity::class.java)
-            startActivity(Intent)
-        }
+        //Palataan takaisin päänäkymään
+        //val returnToMainActivityCancel = findViewById<Button>(R.id.buConfirmationScreenCancel)
+        //returnToMainActivityCancel.setOnClickListener {
+        //    val Intent = Intent(this,MainActivity::class.java)
+        //    startActivity(Intent)
+        //}
 
         //Palataan takaisin päänäkymään
-        val returnToMainActivityDelete = findViewById<Button>(R.id.buConfirmationScreenDelete)
-        returnToMainActivityDelete.setOnClickListener {
-            val Intent = Intent(this,MainActivity::class.java)
-            startActivity(Intent)
+        //val returnToMainActivityDelete = findViewById<Button>(R.id.buConfirmationScreenDelete)
+        //returnToMainActivityDelete.setOnClickListener {
+        //    val Intent = Intent(this,MainActivity::class.java)
+        //    startActivity(Intent)
 
             //Tähän myöhemmin valmiiden tehtävien poisto
-        }
+        //}
     }
 }
