@@ -45,13 +45,4 @@
         android:layout_marginEnd="20sp"
         android:layout_marginBottom="10sp"/>
 
-    <Button
-        android:id="@+id/buTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buHomeScreenAdd"
-        app:layout_constraintStart_toEndOf="@+id/buHomeScreenDelete" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
