@@ -9,6 +9,8 @@ data class Task(
     val time: String,
     val date: String,
     val details: String,
+    val isTaskCompleted: Boolean,
+    val category: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )

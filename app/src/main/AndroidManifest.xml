@@ -16,10 +16,15 @@
 
         <activity
             android:name=".AddTaskActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_add_task"
-            android:theme="@style/Theme.ToDoApp.NoActionBar" />
+            android:theme="@style/Theme.ToDoApp.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".ConfirmationActivity"
             android:exported="false"
@@ -32,13 +37,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true"/>
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
 
     </application>
 

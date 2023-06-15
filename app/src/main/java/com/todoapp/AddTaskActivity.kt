@@ -3,9 +3,7 @@ package com.todoapp
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import org.w3c.dom.Text
 import java.io.File
@@ -25,6 +23,17 @@ class AddTaskActivity : AppCompatActivity() {
             startActivity(Intent)
         }
 
+        val categories = listOf("")
+        val autoComplete : AutoCompleteTextView = findViewById(R.id.addScreenDropDownMenu)
+
+        val adapter = ArrayAdapter(this, R.layout.list_category, categories)
+        autoComplete.setAdapter(adapter)
+        autoComplete.onItemClickListener = AdapterView.OnItemClickListener {
+            adapterView, view, i, l ->
+
+            val itemSelected = adapterView.getItemAtPosition(i)
+            Toast.makeText(this, "Item: $itemSelected", Toast.LENGTH_SHORT)
+        }
 
     }
 }

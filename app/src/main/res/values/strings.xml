@@ -23,4 +23,13 @@
     <string name="confirmationString">Haluatko varmasti poistaa tehdyiksi merkityt tehtävät?</string>
     <string name="piilotaLisatiedotString">Piilota Lisätiedot</string>
     <string name="laajennaLisatiedotString">Laajenna Lisätiedot</string>
+
+    <string-array name="categories">
+        <item>Työ</item>
+        <item>Koulu</item>
+        <item>Liikunta</item>
+        <item>Terveys</item>
+        <item>Hyvinvointi</item>
+        <item>Muu</item>
+    </string-array>
 </resources>

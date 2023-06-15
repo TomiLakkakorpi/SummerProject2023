@@ -16,8 +16,7 @@ class TaskViewModel(
         .flatMapLatest { sortType ->
             when(sortType) {
                 SortType.HEADER -> dao.getTasksOrderedByHeader()
-                SortType.TIME -> dao.getTasksOrderedByTime()
-                SortType.DATE -> dao.getTasksOrderedByDate()
+                SortType.TIMEANDDATE -> dao.getTasksOrderedByTimeAndDate()
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
@@ -49,8 +48,10 @@ class TaskViewModel(
                 val time = state.value.time
                 val date = state.value.date
                 val details = state.value.details
+                val category = state.value.category
+                val isCompleted = state.value.isCompleted
 
-                if(header.isBlank() || time.isBlank() || date.isBlank() || details.isBlank()) {
+                if(header.isBlank() || time.isBlank() || date.isBlank() || details.isBlank() || category.isBlank()) {
                     return
                 }
 
@@ -58,7 +59,9 @@ class TaskViewModel(
                     header = header,
                     time = time,
                     date = date,
-                    details = details
+                    details = details,
+                    category = category,
+                    isTaskCompleted = isCompleted
                 )
                 viewModelScope.launch {
                     dao.upsertTask(task)
@@ -94,6 +97,18 @@ class TaskViewModel(
                 _state.update { it.copy(
                     time = event.time
                 ) }
+            }
+
+            is TaskEvent.SetCategory -> {
+                _state.update { it.copy(
+                    category = event.category
+                )}
+            }
+
+            is TaskEvent.SetIsCompleted -> {
+                _state.update { it.copy(
+                    isCompleted = event.isCompleted
+                )}
             }
 
             TaskEvent.ShowDialog -> {

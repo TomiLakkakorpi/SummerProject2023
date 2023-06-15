@@ -7,6 +7,22 @@
     tools:context=".AddTaskActivity"
     android:background="#bcbcbc">
 
+    <TextView
+        android:id="@+id/tvAddScreenHeader2"
+        android:layout_width="150sp"
+        android:layout_height="30sp"
+        android:layout_marginTop="150sp"
+
+        android:background="#5b5b5b"
+        android:text="@string/lisaatehtavaString"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/addScreenGridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <GridLayout
         android:id="@+id/addScreenGridLayout"
         android:layout_width="wrap_content"
@@ -128,15 +144,17 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
                 android:id="@+id/addScreenDropDownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_margin="5sp"
-                android:text="@string/valitse_kategoriaString" />
+                android:text="@string/valitse_kategoriaString"
+                android:inputType="none"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,21 +182,5 @@
             android:text="@string/lisaaString" />
 
     </GridLayout>
-
-    <TextView
-        android:id="@+id/tvAddScreenHeader2"
-        android:layout_width="150sp"
-        android:layout_height="30sp"
-        android:layout_marginTop="150sp"
-
-        android:background="#5b5b5b"
-        android:text="@string/lisaatehtavaString"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/addScreenGridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
