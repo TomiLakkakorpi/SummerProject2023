@@ -4,45 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#5b5b5b">
+    tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
+    <fragment
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buHomeScreenDelete"
-        android:layout_width="120sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#FF200B"
-        android:gravity="center"
-        android:text="@string/poistaString"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        android:layout_marginStart="20sp"
-        android:layout_marginBottom="10sp" />
-
-    <Button
-        android:id="@+id/buHomeScreenAdd"
-        android:layout_width="150sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#49AB81"
-        android:gravity="center"
-        android:text="@string/lisaaString"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        android:layout_marginEnd="20sp"
-        android:layout_marginBottom="10sp"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/my_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

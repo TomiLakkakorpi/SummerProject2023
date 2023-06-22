@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">To Do App</string>
+    <string name="app_name">DatabaseTest</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="kategoriaString">Kategoria:</string>
     <string name="lisatiedotString">Lisätiedot:</string>
     <string name="paivamaaraString">Päivämäärä:</string>
@@ -17,19 +20,5 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="confirmationString">Haluatko varmasti poistaa tehdyiksi merkityt tehtävät?</string>
-    <string name="piilotaLisatiedotString">Piilota Lisätiedot</string>
-    <string name="laajennaLisatiedotString">Laajenna Lisätiedot</string>
-
-    <string-array name="categories">
-        <item>Työ</item>
-        <item>Koulu</item>
-        <item>Liikunta</item>
-        <item>Terveys</item>
-        <item>Hyvinvointi</item>
-        <item>Muu</item>
-    </string-array>
+    <string name="poista_valmiit_tehtavatString">Poista Valmiit Tehtävät</string>
 </resources>
