@@ -12,6 +12,7 @@
         android:layout_marginTop="200sp"
         android:layout_marginRight="20sp"
         android:layout_marginBottom="200sp"
+        android:padding="10dp"
         android:background="#5b5b5b"
         android:columnCount="2"
         android:rowCount="6"

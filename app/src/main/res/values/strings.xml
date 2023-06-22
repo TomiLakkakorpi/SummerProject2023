@@ -26,5 +26,7 @@
     <string-array name="categories">
         <item>Kuntoilu</item>
         <item>Terveys</item>
+        <item>Koulu</item>
+        <item>Työ</item>
     </string-array>
 </resources>

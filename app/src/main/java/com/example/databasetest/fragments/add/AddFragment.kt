@@ -18,12 +18,9 @@ import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 
-
 class AddFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var mTaskViewModel: TaskViewModel
 
     override fun onCreateView(

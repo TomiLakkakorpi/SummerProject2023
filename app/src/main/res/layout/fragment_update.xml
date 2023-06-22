@@ -122,11 +122,12 @@
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
-                android:id="@+id/editScreenDropDownMenu"
+                android:id="@+id/autoCompleteTextView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_margin="5sp"
-                android:text="Valitse Kategoria" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -155,21 +156,5 @@
             android:text="@string/paivitaString" />
 
     </GridLayout>
-
-    <TextView
-        android:id="@+id/tvEditScreenHeader2"
-        android:layout_width="150sp"
-        android:layout_height="30sp"
-        android:layout_marginTop="150sp"
-
-        android:background="#5b5b5b"
-        android:text="@string/lisaatehtavaString"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/editScreenGridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
