@@ -129,14 +129,13 @@
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
-                android:id="@+id/addScreenDropDownMenu"
+                android:id="@+id/autoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="5sp"
                 android:text="@string/valitse_kategoriaString"
                 android:inputType="none"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

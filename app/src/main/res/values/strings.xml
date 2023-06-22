@@ -21,4 +21,10 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="poista_valmiit_tehtavatString">Poista Valmiit Tehtävät</string>
+
+    <!-- Lisää kategorioita -->
+    <string-array name="categories">
+        <item>Kuntoilu</item>
+        <item>Terveys</item>
+    </string-array>
 </resources>

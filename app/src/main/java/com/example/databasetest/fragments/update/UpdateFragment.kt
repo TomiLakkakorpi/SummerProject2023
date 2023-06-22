@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.databasetest.R
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
+import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 
@@ -53,9 +54,10 @@ class UpdateFragment : Fragment() {
         val time = etEditScreenTime.text.toString()
         val date = etEditScreenDate.text.toString()
         val details = etEditScreenDetails.text.toString()
+        val category = autoCompleteTextView.text.toString()
 
         if (inputCheck(header, time, date, details)){
-            val updatedTask = Task(args.currentTask.id, header, time, date, details)
+            val updatedTask = Task(args.currentTask.id, header, time, date, details, category)
 
             mTaskViewModel.updateTask(updatedTask)
 
