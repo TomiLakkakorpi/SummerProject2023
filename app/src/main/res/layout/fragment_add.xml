@@ -43,6 +43,7 @@
             android:layout_marginEnd="5sp"
             android:backgroundTint="#000000"
             android:ems="10"
+            android:text=""
             android:inputType="textPersonName" />
 
         <TextView
@@ -65,6 +66,7 @@
             android:layout_marginEnd="5sp"
             android:backgroundTint="#000000"
             android:ems="10"
+            android:text=""
             android:inputType="time" />
 
         <TextView
@@ -87,6 +89,7 @@
             android:layout_marginEnd="5sp"
             android:backgroundTint="#000000"
             android:ems="10"
+            android:text=""
             android:inputType="date" />
 
         <TextView
@@ -109,6 +112,7 @@
             android:layout_marginEnd="5sp"
             android:backgroundTint="#000000"
             android:ems="10"
+            android:text=""
             android:inputType="textPersonName" />
 
         <TextView
@@ -135,7 +139,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="5sp"
-                android:text="@string/valitse_kategoriaString"
+                android:text=""
                 android:inputType="none"/>
         </com.google.android.material.textfield.TextInputLayout>
 

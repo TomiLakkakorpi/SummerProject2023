@@ -44,6 +44,7 @@ class UpdateFragment : Fragment() {
 
         view.buEditScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_LONG).show()
         }
 
         setHasOptionsMenu(true)
@@ -68,7 +69,7 @@ class UpdateFragment : Fragment() {
 
             mTaskViewModel.updateTask(updatedTask)
 
-            Toast.makeText(requireContext(), "Pävitetty onnistuneesti", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Tehtävä pävitettiin onnistuneesti", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }else{
             Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_LONG).show()
@@ -79,9 +80,9 @@ class UpdateFragment : Fragment() {
         return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(details) && TextUtils.isEmpty((category)))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
-    }
+    //override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    //    inflater.inflate(R.menu.delete_menu, menu)
+    //}
 
     // Turha? poistetaan ehkä
     //fun onOptionsItemsSelected(item: MenuItem): Boolean {
