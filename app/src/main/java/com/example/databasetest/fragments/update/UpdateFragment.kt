@@ -1,5 +1,6 @@
 package com.example.databasetest.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -14,9 +15,9 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
-import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
+import android.view.Menu
 
 class UpdateFragment : Fragment() {
 
@@ -80,31 +81,29 @@ class UpdateFragment : Fragment() {
         return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(details) && TextUtils.isEmpty((category)))
     }
 
-    //override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    //    inflater.inflate(R.menu.delete_menu, menu)
-    //}
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
 
-    // Turha? poistetaan ehkä
-    //fun onOptionsItemsSelected(item: MenuItem): Boolean {
-    //    if(item.itemId == R.id.delete_menu) {
-    //        deleteTask()
-    //    }
-    //    return onOptionsItemSelected(item)
-    //}
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.delete_menu) {
+            deleteTask()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
-    // Turha? Poistetaan ehkä
-    //private fun deleteTask(){
-    //    val builder = AlertDialog.Builder(requireContext())
-    //    builder.setPositiveButton("Kyllä") {_, _ ->
-    //        mTaskViewModel.deleteTask(args.currentTask)
-    //        Toast.makeText(requireContext(), "Tehtävät poistettiin onnistuneesti: ${args.currentTask.header}", Toast.LENGTH_LONG).show()
-    //            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-    //    }
-    //    builder.setNegativeButton("Ei") {_, _ -> }
-    //    builder.setTitle("Poista ${args.currentTask.header}?")
-    //   builder.setMessage("Haluatko varmasti poistaa ${args.currentTask.header}?")
-    //    builder.create().show()
-    //}
+    private fun deleteTask(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Kyllä") {_, _ ->
+            mTaskViewModel.deleteTask(args.currentTask)
+            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} poistettiin onnistuneesti", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
+        builder.setNegativeButton("Ei") {_, _ -> }
+        builder.setTitle("Poista ${args.currentTask.header}?")
+       builder.setMessage("Haluatko varmasti poistaa tehtävän ${args.currentTask.header}?")
+        builder.create().show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
