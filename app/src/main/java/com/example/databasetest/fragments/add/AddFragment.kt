@@ -27,9 +27,7 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
-
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
         view.buAddScreenAdd.setOnClickListener {
@@ -57,14 +55,12 @@ class AddFragment : Fragment() {
         val category = autoCompleteTextView.text.trim().toString()
 
         if (inputCheck(header,time, date, details, category)) {
-
             val task = Task(0, header, time, date, details, category)
 
             mTaskViewModel.addTask(task)
             Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_LONG).show()
-
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
-        }else{
+        } else {
             Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_LONG).show()
         }
     }

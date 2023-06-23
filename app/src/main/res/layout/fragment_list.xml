@@ -8,19 +8,24 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonAdd"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:clickable="true"
         android:src="@drawable/ic_add"
         android:focusable="true"
         app:backgroundTint="@color/green_add"
+
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,11 +33,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonDelete"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:clickable="true"
         android:src="@drawable/ic_delete"
         app:backgroundTint="@color/red_delete"
+
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

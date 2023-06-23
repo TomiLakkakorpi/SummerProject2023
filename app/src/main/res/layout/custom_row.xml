@@ -4,87 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/taskMainConstraint"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:background="@color/purple_500">
 
     <CheckBox
         android:id="@+id/taskCheckbox"
+
         android:layout_width="43dp"
         android:layout_height="43dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTaskHeader"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
         app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTaskTime"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
+
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
         app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
     <TextView
         android:id="@+id/tvTaskDate"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
         app:layout_constraintStart_toEndOf="@id/tvTaskTime"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
     <TextView
         android:id="@+id/tvTaskDetails"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:paddingRight="90dp"
+
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskTime" />
 
     <TextView
         android:id="@+id/tvCategory"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
+
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
         app:layout_constraintEnd_toStartOf="@+id/taskCategoryBar"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvTaskID"
-        android:layout_width="43dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskCheckbox" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/taskCategoryBar"
+
         android:layout_width="10dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="10dp"
+
         android:background="@color/purple_700"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

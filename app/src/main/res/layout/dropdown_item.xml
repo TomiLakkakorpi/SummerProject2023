@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
     android:id="@+id/tvDropDownMenuItem"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:text="Test"
     android:textColor="@color/black"
     android:textSize="16sp"
-    android:textStyle="bold"
+    android:textStyle="italic"
+
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="5dp"
+
     xmlns:android="http://schemas.android.com/apk/res/android" />
