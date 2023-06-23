@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.databasetest.fragments.update.UpdateFragment"
-        android:label="Päivitä Tai Poista Tehtävä" >
+        android:label="Päivitä Tai Poista Tehtävä">
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment" />
