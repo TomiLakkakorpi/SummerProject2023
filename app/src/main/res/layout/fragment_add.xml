@@ -42,9 +42,7 @@
             android:text="@string/otsikkoString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
+            android:textStyle="italic"/>
 
         <EditText
             android:id="@+id/etAddScreenHeader"
@@ -87,6 +85,7 @@
             android:backgroundTint="#000000"
             android:ems="10"
 
+
             android:inputType="time"
             android:text="" />
 
@@ -104,9 +103,7 @@
             android:text="@string/paivamaaraString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
+            android:textStyle="italic"/>
 
         <EditText
             android:id="@+id/etAddScreenDate"
@@ -134,9 +131,7 @@
             android:text="@string/lisatiedotString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
+            android:textStyle="italic"/>
 
         <EditText
             android:id="@+id/etAddScreenDetails"
@@ -164,9 +159,7 @@
             android:text="@string/kategoriaString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
+            android:textStyle="italic"/>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
