@@ -48,9 +48,17 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
+
+        val dateValues = etAddScreenDate.text.trim().toString()
+        val valuesArrayList = dateValues.split("/")
+
+        val day = valuesArrayList[0]
+        val month = valuesArrayList[1]
+        val year = valuesArrayList[2]
+
         val header = etAddScreenHeader.text.trim().toString()
         val time = etAddScreenTime.text.trim().toString()
-        val date = etAddScreenDate.text.trim().toString()
+        val date = year + "/" + month + "/" + day
         val details = etAddScreenDetails.text.trim().toString()
         val category = autoCompleteTextView.text.trim().toString()
 

@@ -19,6 +19,6 @@ interface TaskDao {
     @Query("DELETE FROM task_table WHERE status=1")
     fun deleteAllTasks(): Void
 
-    @Query("SELECT * FROM task_table ORDER BY date, time DESC")
+    @Query("SELECT * FROM task_table ORDER BY date, time ASC")
     fun readAllData(): LiveData<List<Task>>
 }

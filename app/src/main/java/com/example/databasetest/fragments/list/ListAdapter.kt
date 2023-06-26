@@ -30,9 +30,19 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         val currentItem = taskList[position]
         holder.itemView.tvTaskHeader.text = currentItem.header
         holder.itemView.tvTaskTime.text = currentItem.time
-        holder.itemView.tvTaskDate.text = currentItem.date
         holder.itemView.tvTaskDetails.text = currentItem.details
         holder.itemView.tvCategory.text = currentItem.category
+
+
+        val dateValues = currentItem.date
+        val valuesArrayList = dateValues.split("/")
+
+        val year = valuesArrayList[0]
+        val month = valuesArrayList[1]
+        val day = valuesArrayList[2]
+
+        val dateValue = day + "/" + month + "/" + year
+        holder.itemView.tvTaskDate.text = dateValue
 
         holder.itemView.taskMainConstraint.setOnClickListener{
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)

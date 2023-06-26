@@ -115,8 +115,7 @@
             android:backgroundTint="#000000"
             android:ems="10"
 
-            android:inputType="date"
-            android:text="" />
+            android:inputType="date" />
 
         <TextView
             android:id="@+id/tvAddScreenDetails"

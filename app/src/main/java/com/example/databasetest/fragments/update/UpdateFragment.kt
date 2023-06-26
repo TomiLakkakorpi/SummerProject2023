@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 import android.view.Menu
 import kotlinx.android.synthetic.main.custom_row.view.*
+import kotlinx.android.synthetic.main.fragment_add.*
 
 class UpdateFragment : Fragment() {
 
@@ -36,9 +37,18 @@ class UpdateFragment : Fragment() {
 
         view.etEditScreenHeader.setText(args.currentTask.header)
         view.etEditScreenTime.setText(args.currentTask.time)
-        view.etEditScreenDate.setText(args.currentTask.date)
         view.etEditScreenDetails.setText(args.currentTask.details)
         view.autoCompleteTextView2.setText(args.currentTask.category)
+
+        val dateValues = args.currentTask.date
+        val valuesArrayList = dateValues.split("/")
+
+        val year = valuesArrayList[0]
+        val month = valuesArrayList[1]
+        val day = valuesArrayList[2]
+        val dateValue = (day + "/" + month + "/" + year)
+
+        view.etEditScreenDate.setText(dateValue)
 
         if (args.currentTask.status == true) {
             view.checkBox.setChecked(true)
@@ -68,9 +78,17 @@ class UpdateFragment : Fragment() {
     private fun updateItem(){
         val header = etEditScreenHeader.text.toString()
         val time = etEditScreenTime.text.toString()
-        val date = etEditScreenDate.text.toString()
         val details = etEditScreenDetails.text.toString()
         val category = autoCompleteTextView2.text.toString()
+
+        val dateValues = etEditScreenDate.text.toString()
+        val valuesArrayList = dateValues.split("/")
+
+        val day = valuesArrayList[0]
+        val month = valuesArrayList[1]
+        val year = valuesArrayList[2]
+
+        val date = year + "/" + month + "/" + day
 
         if (inputCheck(header, time, date, details, category)){
             if (checkBox.isChecked) {
