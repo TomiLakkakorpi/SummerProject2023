@@ -28,7 +28,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = taskList[position]
-        //holder.itemView.tvTaskID.text = currentItem.id.toString()
         holder.itemView.tvTaskHeader.text = currentItem.header
         holder.itemView.tvTaskTime.text = currentItem.time
         holder.itemView.tvTaskDate.text = currentItem.date
@@ -38,6 +37,12 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         holder.itemView.taskMainConstraint.setOnClickListener{
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
+        }
+
+        if (currentItem.status) {
+            holder.itemView.taskCheckbox.setChecked(true)
+        } else {
+            holder.itemView.taskCheckbox.setChecked(false)
         }
     }
 

@@ -55,8 +55,7 @@ class AddFragment : Fragment() {
         val category = autoCompleteTextView.text.trim().toString()
 
         if (inputCheck(header,time, date, details, category)) {
-            val task = Task(0, header, time, date, details, category)
-
+            val task = Task(0, header, time, date, details, category, status = false)
             mTaskViewModel.addTask(task)
             Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)

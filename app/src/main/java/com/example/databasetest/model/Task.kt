@@ -14,5 +14,6 @@ data class Task(
     val time: String,
     val date: String,
     val details: String,
-    val category: String
+    val category: String,
+    val status: Boolean
 ): Parcelable

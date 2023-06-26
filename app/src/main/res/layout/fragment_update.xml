@@ -26,6 +26,28 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tvEditScreenStatus"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10sp"
+
+            android:text="Merkitse Tehdyksi"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
+
+            tools:layout_editor_absoluteY="19dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/tvEditScreenHeader"
 
             android:layout_width="wrap_content"
@@ -165,12 +187,12 @@
         android:gravity="center"
 
         android:text="@string/peruutaString"
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
 
+        app:layout_constraintEnd_toStartOf="@+id/buEditScreenSave"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout"
-        app:layout_constraintEnd_toStartOf="@id/buEditScreenSave"/>
+        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
     <Button
         android:id="@+id/buEditScreenSave"
@@ -182,8 +204,8 @@
         android:gravity="center"
 
         android:text="@string/paivitaString"
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buEditScreenCancel"

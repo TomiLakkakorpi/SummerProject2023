@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databasetest.R
 import com.example.databasetest.viewmodel.TaskViewModel
+import kotlinx.android.synthetic.main.custom_row.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
@@ -47,10 +48,9 @@ class ListFragment : Fragment() {
         return view
     }
 
-    // Turha? Poistetaan ehkä
-    //override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    //    inflater.inflate(R.menu.delete_menu, menu)
-    //}
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
 
     private fun deleteAllTasks() {
         val builder = AlertDialog.Builder(requireContext())
@@ -60,7 +60,7 @@ class ListFragment : Fragment() {
         }
         builder.setNegativeButton("Ei") {_, _ -> }
         builder.setTitle("Poista kaikki tehtävät?")
-        builder.setMessage("Haluatko varmasti poistaa kaikki tehtävät?")
+        builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät?")
         builder.create().show()
     }
 }

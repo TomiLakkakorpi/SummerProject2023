@@ -18,6 +18,7 @@ import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 import android.view.Menu
+import kotlinx.android.synthetic.main.custom_row.view.*
 
 class UpdateFragment : Fragment() {
 
@@ -38,6 +39,12 @@ class UpdateFragment : Fragment() {
         view.etEditScreenDate.setText(args.currentTask.date)
         view.etEditScreenDetails.setText(args.currentTask.details)
         view.autoCompleteTextView2.setText(args.currentTask.category)
+
+        if (args.currentTask.status == true) {
+            view.checkBox.setChecked(true)
+        } else {
+            view.checkBox.setChecked(false)
+        }
 
         view.buEditScreenSave.setOnClickListener {
             updateItem()
@@ -66,11 +73,14 @@ class UpdateFragment : Fragment() {
         val category = autoCompleteTextView2.text.toString()
 
         if (inputCheck(header, time, date, details, category)){
-            val updatedTask = Task(args.currentTask.id, header, time, date, details, category)
-
-            mTaskViewModel.updateTask(updatedTask)
-
-            Toast.makeText(requireContext(), "Tehtävä pävitettiin onnistuneesti", Toast.LENGTH_LONG).show()
+            if (checkBox.isChecked) {
+                val updatedTask = Task(args.currentTask.id, header, time, date, details, category, status = true)
+                mTaskViewModel.updateTask(updatedTask)
+            } else {
+                val updatedTask = Task(args.currentTask.id, header, time, date, details, category, status = false)
+                mTaskViewModel.updateTask(updatedTask)
+            }
+            Toast.makeText(requireContext(), "Tehtävä päivitettiin onnistuneesti", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }else{
             Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_LONG).show()

@@ -24,9 +24,12 @@
 
     <!-- Lisää kategorioita -->
     <string-array name="categories">
-        <item>Kuntoilu / Liikunta</item>
-        <item>Hyvinvointi / Terveys</item>
-        <item>Koulu / Työ</item>
+        <item>Kuntoilu</item>
+        <item>Liikunta</item>
+        <item>Hyvinvointi</item>
+        <item>Terveys</item>
+        <item>Koulu</item>
+        <item>Työ</item>
         <item>Harrastus</item>
         <item>Askare</item>
         <item>Tapaaminen</item>
