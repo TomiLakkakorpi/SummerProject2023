@@ -1,23 +1,13 @@
 package com.example.databasetest.fragments.list
 
-import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorRes
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasetest.R
 import com.example.databasetest.model.Task
 import kotlinx.android.synthetic.main.custom_row.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.Collections.emptyList
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){

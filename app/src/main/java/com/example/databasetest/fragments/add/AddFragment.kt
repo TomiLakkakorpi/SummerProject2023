@@ -30,11 +30,11 @@ class AddFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
-        view.buAddScreenAdd.setOnClickListener {
+        view.addScreenAdd.setOnClickListener {
             insertDataToDatabase()
         }
 
-        view.buAddScreenCancel.setOnClickListener {
+        view.addScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
             Toast.makeText(requireContext(), "Tehtävää ei tallennettu", Toast.LENGTH_SHORT).show()
         }

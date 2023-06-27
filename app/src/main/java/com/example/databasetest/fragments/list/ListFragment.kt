@@ -41,12 +41,7 @@ class ListFragment : Fragment() {
             deleteAllTasks()
         }
 
-        setHasOptionsMenu(true)
         return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
     }
 
     private fun deleteAllTasks() {

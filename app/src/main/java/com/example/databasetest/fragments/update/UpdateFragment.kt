@@ -54,7 +54,7 @@ class UpdateFragment : Fragment() {
             view.checkBox.setChecked(false)
         }
 
-        view.buEditScreenSave.setOnClickListener {
+        view.updateScreenUpdate.setOnClickListener {
             updateItem()
         }
 
@@ -62,7 +62,7 @@ class UpdateFragment : Fragment() {
             deleteTask()
         }
 
-        view.buEditScreenCancel.setOnClickListener {
+        view.updateScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
         }
@@ -72,7 +72,6 @@ class UpdateFragment : Fragment() {
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView2).setAdapter(arrayAdapter)
 
-        setHasOptionsMenu(true)
         return view
     }
 
@@ -108,10 +107,6 @@ class UpdateFragment : Fragment() {
 
     private fun inputCheck(header: String, time: String, date: String, dayName: String, category: String): Boolean{
         return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(dayName) && TextUtils.isEmpty((category)))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
     }
 
     private fun deleteTask(){

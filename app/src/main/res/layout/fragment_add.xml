@@ -15,11 +15,11 @@
         android:layout_marginTop="200sp"
         android:layout_marginRight="20sp"
         android:layout_marginBottom="200sp"
-        android:padding="10dp"
-
         android:background="@color/purple_500"
 
         android:columnCount="2"
+
+        android:padding="10dp"
         android:rowCount="6"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +42,7 @@
             android:text="@string/otsikkoString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/etAddScreenHeader"
@@ -55,7 +55,7 @@
             android:ems="10"
 
             android:inputType="text"
-            android:text=""/>
+            android:text="" />
 
         <TextView
             android:id="@+id/tvAddScreenTime"
@@ -103,7 +103,7 @@
             android:text="@string/paivamaaraString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/etAddScreenDate"
@@ -132,7 +132,7 @@
             android:text="@string/paivaString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/etAddScreenDay"
@@ -145,7 +145,7 @@
             android:ems="10"
 
             android:inputType="text"
-            android:text=""/>
+            android:text="" />
 
         <TextView
             android:id="@+id/tvAddScreenDetails"
@@ -160,7 +160,7 @@
             android:text="@string/lisatiedotString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/etAddScreenDetails"
@@ -188,7 +188,7 @@
             android:text="@string/kategoriaString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
@@ -212,37 +212,36 @@
 
     </GridLayout>
 
-    <Button
-        android:id="@+id/buAddScreenCancel"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addScreenCancel"
 
-        android:layout_width="125sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
 
-        android:backgroundTint="@color/red_delete"
-        android:text="@string/peruutaString"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_cancel"
+        app:backgroundTint="@color/red_delete"
 
+        app:layout_constraintEnd_toStartOf="@+id/addScreenAdd"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout"
-        app:layout_constraintEnd_toStartOf="@id/buAddScreenAdd"/>
+        app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
 
-    <Button
-        android:id="@+id/buAddScreenAdd"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addScreenAdd"
 
-        android:layout_width="125sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
 
-        android:backgroundTint="@color/green_add"
-        android:text="@string/lisaaString"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/green_add"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buAddScreenCancel"
-        app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout"
+        app:layout_constraintStart_toEndOf="@id/addScreenCancel"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

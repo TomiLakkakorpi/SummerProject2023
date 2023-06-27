@@ -134,7 +134,7 @@
             android:text="@string/paivaString"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/etEditScreenDay"
@@ -147,7 +147,7 @@
             android:ems="10"
 
             android:inputType="text"
-            android:text=""/>
+            android:text="" />
 
         <TextView
             android:id="@+id/tvEditScreenDetails"
@@ -207,38 +207,19 @@
 
     </GridLayout>
 
-    <Button
-        android:id="@+id/buEditScreenCancel"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/updateScreenCancel"
 
-        android:layout_width="125sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/green_add"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        android:text="@string/peruutaString"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-
+        android:layout_marginTop="30dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_cancel"
+        app:backgroundTint="@color/green_add"
         app:layout_constraintEnd_toStartOf="@+id/updateScreenDelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
-
-    <Button
-        android:id="@+id/buEditScreenSave"
-
-        android:layout_width="125sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/blue_update"
-        android:gravity="center"
-
-        android:text="@string/paivitaString"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
         app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -246,15 +227,29 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
 
+        android:layout_marginTop="30dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_delete"
         app:backgroundTint="@color/red_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
-        app:layout_constraintEnd_toStartOf="@+id/buEditScreenSave"
-        app:layout_constraintStart_toEndOf="@+id/buEditScreenCancel"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/updateScreenUpdate"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="30dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_update"
+        app:backgroundTint="@color/blue_update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
         app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
