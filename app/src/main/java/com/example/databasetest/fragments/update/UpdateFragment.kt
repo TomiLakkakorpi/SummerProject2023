@@ -64,7 +64,7 @@ class UpdateFragment : Fragment() {
 
         view.updateScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-            Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Tehtävää ${args.currentTask.header} ei päivitetty", Toast.LENGTH_SHORT).show()
         }
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
@@ -98,7 +98,7 @@ class UpdateFragment : Fragment() {
                 val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
                 mTaskViewModel.updateTask(updatedTask)
             }
-            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} päivitettiin onnistuneesti", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} päivitettiin", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }else{
             Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_SHORT).show()
@@ -114,7 +114,7 @@ class UpdateFragment : Fragment() {
         builder.setPositiveButton("Kyllä")
         {_, _ ->
             mTaskViewModel.deleteTask(args.currentTask)
-            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} poistettiin onnistuneesti", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} poistettiin", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
         builder.setNegativeButton("Ei")

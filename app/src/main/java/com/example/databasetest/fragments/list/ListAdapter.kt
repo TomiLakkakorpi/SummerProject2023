@@ -82,25 +82,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         }
     }
 
-    /*
-    @SuppressLint("ResourceType")
-    fun changeBarColor(holder: MyViewHolder, @ColorRes color: Int) {
-        val id = ContextCompat.getDrawable(
-            context, R.id.addFragment
-        ) as LayerDrawable
-
-        val gradientDrawable = id.findDrawableByLayerId(R.id.taskCategoryBar) as GradientDrawable
-
-        gradientDrawable.setColor(
-            ContextCompat.getColor(
-                context,
-                color
-            )
-        )
-
-        holder.itemView.background = id
-    } */
-
     fun setData(task: List<Task>){
         this.taskList = task
         notifyDataSetChanged()

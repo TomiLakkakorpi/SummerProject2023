@@ -11,15 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="200sp"
-        android:layout_marginRight="20sp"
-        android:layout_marginBottom="200sp"
-        android:background="@color/purple_500"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="200dp"
+        android:background="@color/gray"
 
         android:columnCount="2"
-
-        android:padding="10dp"
         android:rowCount="6"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,14 +28,14 @@
         <TextView
             android:id="@+id/tvAddScreenHeader"
 
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
 
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
 
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
 
             android:text="@string/otsikkoString"
             android:textColor="@color/black"
@@ -47,9 +45,8 @@
         <EditText
             android:id="@+id/etAddScreenHeader"
 
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
 
             android:backgroundTint="#000000"
             android:ems="10"
@@ -60,13 +57,13 @@
         <TextView
             android:id="@+id/tvAddScreenTime"
 
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
 
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
 
             android:text="@string/kellonaikaString"
             android:textColor="@color/black"
@@ -78,9 +75,9 @@
         <EditText
             android:id="@+id/etAddScreenTime"
 
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
+            android:layout_marginEnd="5dp"
 
             android:backgroundTint="#000000"
             android:ems="10"
@@ -92,13 +89,13 @@
         <TextView
             android:id="@+id/tvAddScreenDate"
 
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
 
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
 
             android:text="@string/paivamaaraString"
             android:textColor="@color/black"
@@ -108,9 +105,9 @@
         <EditText
             android:id="@+id/etAddScreenDate"
 
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
+            android:layout_marginEnd="5dp"
 
             android:backgroundTint="#000000"
             android:ems="10"
@@ -120,14 +117,14 @@
         <TextView
             android:id="@+id/tvAddScreenDay"
 
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
 
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
 
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
 
             android:text="@string/paivaString"
             android:textColor="@color/black"
@@ -137,9 +134,9 @@
         <EditText
             android:id="@+id/etAddScreenDay"
 
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
+            android:layout_marginEnd="5dp"
 
             android:backgroundTint="#000000"
             android:ems="10"
@@ -149,13 +146,13 @@
 
         <TextView
             android:id="@+id/tvAddScreenDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
 
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
 
             android:text="@string/lisatiedotString"
             android:textColor="@color/black"
@@ -165,9 +162,9 @@
         <EditText
             android:id="@+id/etAddScreenDetails"
 
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
+            android:layout_marginEnd="5dp"
 
             android:backgroundTint="#000000"
             android:ems="10"
@@ -178,12 +175,12 @@
         <TextView
             android:id="@+id/tvAddScreenCategory"
 
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
 
             android:text="@string/kategoriaString"
             android:textColor="@color/black"
@@ -201,7 +198,7 @@
 
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5sp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
 
                 android:inputType="none"

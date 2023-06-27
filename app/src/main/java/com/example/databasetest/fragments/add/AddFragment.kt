@@ -65,7 +65,7 @@ class AddFragment : Fragment() {
         if (inputCheck(header,time, date, dayName, category)) {
             val task = Task(0, header, time, date, dayName, details, category, status = false)
             mTaskViewModel.addTask(task)
-            Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         } else {
             Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_SHORT).show()
