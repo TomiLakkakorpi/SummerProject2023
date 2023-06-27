@@ -36,7 +36,7 @@ class AddFragment : Fragment() {
 
         view.buAddScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
-            Toast.makeText(requireContext(), "Tehtävää ei tallennettu", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Tehtävää ei tallennettu", Toast.LENGTH_SHORT).show()
         }
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
@@ -48,7 +48,6 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-
         val dateValues = etAddScreenDate.text.trim().toString()
         val valuesArrayList = dateValues.split("/")
 
@@ -58,22 +57,23 @@ class AddFragment : Fragment() {
 
         val header = etAddScreenHeader.text.trim().toString()
         val time = etAddScreenTime.text.trim().toString()
-        val date = year + "/" + month + "/" + day
+        val date = "$year/$month/$day"
+        val dayName = etAddScreenDay.text.trim().toString()
         val details = etAddScreenDetails.text.trim().toString()
         val category = autoCompleteTextView.text.trim().toString()
 
-        if (inputCheck(header,time, date, details, category)) {
-            val task = Task(0, header, time, date, details, category, status = false)
+        if (inputCheck(header,time, date, dayName, category)) {
+            val task = Task(0, header, time, date, dayName, details, category, status = false)
             mTaskViewModel.addTask(task)
-            Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         } else {
-            Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun inputCheck(header: String, time: String, date: String, details: String, category: String): Boolean{
-        return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(details) && TextUtils.isEmpty(category))
+    private fun inputCheck(header: String, time: String, date: String, dayName: String, category: String): Boolean{
+        return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(dayName) && TextUtils.isEmpty(category))
     }
 
     override fun onDestroyView() {

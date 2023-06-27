@@ -32,25 +32,23 @@ class UpdateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_update, container, false)
-
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-
-        view.etEditScreenHeader.setText(args.currentTask.header)
-        view.etEditScreenTime.setText(args.currentTask.time)
-        view.etEditScreenDetails.setText(args.currentTask.details)
-        view.autoCompleteTextView2.setText(args.currentTask.category)
 
         val dateValues = args.currentTask.date
         val valuesArrayList = dateValues.split("/")
-
         val year = valuesArrayList[0]
         val month = valuesArrayList[1]
         val day = valuesArrayList[2]
-        val dateValue = (day + "/" + month + "/" + year)
+        val dateValue = ("$day/$month/$year")
 
         view.etEditScreenDate.setText(dateValue)
+        view.etEditScreenHeader.setText(args.currentTask.header)
+        view.etEditScreenTime.setText(args.currentTask.time)
+        view.etEditScreenDay.setText(args.currentTask.dayName)
+        view.etEditScreenDetails.setText(args.currentTask.details)
+        view.autoCompleteTextView2.setText(args.currentTask.category)
 
-        if (args.currentTask.status == true) {
+        if (args.currentTask.status) {
             view.checkBox.setChecked(true)
         } else {
             view.checkBox.setChecked(false)
@@ -60,27 +58,25 @@ class UpdateFragment : Fragment() {
             updateItem()
         }
 
-        view.buEditScreenCancel.setOnClickListener {
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-            Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_LONG).show()
+        view.updateScreenDelete.setOnClickListener {
+            deleteTask()
         }
 
-        setHasOptionsMenu(true)
+        view.buEditScreenCancel.setOnClickListener {
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
+        }
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView2).setAdapter(arrayAdapter)
 
+        setHasOptionsMenu(true)
         return view
     }
 
     private fun updateItem(){
-        val header = etEditScreenHeader.text.toString()
-        val time = etEditScreenTime.text.toString()
-        val details = etEditScreenDetails.text.toString()
-        val category = autoCompleteTextView2.text.toString()
-
         val dateValues = etEditScreenDate.text.toString()
         val valuesArrayList = dateValues.split("/")
 
@@ -88,46 +84,46 @@ class UpdateFragment : Fragment() {
         val month = valuesArrayList[1]
         val year = valuesArrayList[2]
 
+        val header = etEditScreenHeader.text.trim().toString()
+        val time = etEditScreenTime.text.trim().toString()
         val date = year + "/" + month + "/" + day
+        val dayName = etEditScreenDay.text.trim().toString()
+        val details = etEditScreenDetails.text.trim().toString()
+        val category = autoCompleteTextView2.text.trim().toString()
 
-        if (inputCheck(header, time, date, details, category)){
+        if (inputCheck(header, time, date, dayName, category)){
             if (checkBox.isChecked) {
-                val updatedTask = Task(args.currentTask.id, header, time, date, details, category, status = true)
+                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
                 mTaskViewModel.updateTask(updatedTask)
             } else {
-                val updatedTask = Task(args.currentTask.id, header, time, date, details, category, status = false)
+                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
                 mTaskViewModel.updateTask(updatedTask)
             }
-            Toast.makeText(requireContext(), "Tehtävä päivitettiin onnistuneesti", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} päivitettiin onnistuneesti", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }else{
-            Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun inputCheck(header: String, time: String, date: String, details: String, category: String): Boolean{
-        return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(details) && TextUtils.isEmpty((category)))
+    private fun inputCheck(header: String, time: String, date: String, dayName: String, category: String): Boolean{
+        return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(dayName) && TextUtils.isEmpty((category)))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.delete_menu) {
-            deleteTask()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun deleteTask(){
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Kyllä") {_, _ ->
+        builder.setPositiveButton("Kyllä")
+        {_, _ ->
             mTaskViewModel.deleteTask(args.currentTask)
-            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} poistettiin onnistuneesti", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} poistettiin onnistuneesti", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
-        builder.setNegativeButton("Ei") {_, _ -> }
+        builder.setNegativeButton("Ei")
+        {_, _ -> }
         builder.setTitle("Poista ${args.currentTask.header}?")
        builder.setMessage("Haluatko varmasti poistaa tehtävän ${args.currentTask.header}?")
         builder.create().show()

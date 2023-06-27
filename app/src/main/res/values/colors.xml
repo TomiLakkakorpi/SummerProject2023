@@ -13,4 +13,14 @@
     <color name="blue_update">#FF03DAC5</color>
     <color name="backgroundMain">#6712EF</color>
     <color name="backgroundSecondary">#D17936</color>
+
+    <color name="liikunta">#37e1e1</color>
+    <color name="hyvinvointi">#8a2be2</color>
+    <color name="terveys">#f54fa6</color>
+    <color name="koulu">#20D1AC</color>
+    <color name="tyo">#0B5E55</color>
+    <color name="harrastus">#82d782</color>
+    <color name="askare">#dd9933</color>
+    <color name="tapaaminen">#dadd1e</color>
+    <color name="muu">#20d1ac</color>
 </resources>

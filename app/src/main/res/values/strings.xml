@@ -13,6 +13,7 @@
     <string name="lisaaString">Lisää</string>
     <string name="poistaString">Poista</string>
     <string name="paivitaString">Päivitä</string>
+    <string name="paivaString">Päivä:</string>
     <string name="valitse_kategoriaString">Valitse Kategoria</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -24,7 +25,7 @@
 
     <!-- Lisää kategorioita -->
     <string-array name="categories">
-        <item>Kuntoilu</item>
+         <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
         <item>Liikunta</item>
         <item>Hyvinvointi</item>
         <item>Terveys</item>

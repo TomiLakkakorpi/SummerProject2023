@@ -13,6 +13,7 @@ data class Task(
     val header: String,
     val time: String,
     val date: String,
+    val dayName: String,
     val details: String,
     val category: String,
     val status: Boolean

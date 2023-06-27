@@ -22,9 +22,7 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
-
         val adapter = ListAdapter()
         val recyclerView = view.recyclerView
         recyclerView.adapter = adapter
@@ -44,7 +42,6 @@ class ListFragment : Fragment() {
         }
 
         setHasOptionsMenu(true)
-
         return view
     }
 
@@ -54,11 +51,15 @@ class ListFragment : Fragment() {
 
     private fun deleteAllTasks() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Kyllä") {_, _ ->
+        builder.setPositiveButton("Kyllä")
+        {_, _ ->
             mTaskViewModel.deleteAllTasks()
-            Toast.makeText(requireContext(), "Kaikki tehtävät poistettiin onnistuneesti", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Kaikki tehdyiksi merkityt tehtävät poistettiin onnistuneesti", Toast.LENGTH_SHORT).show()
         }
-        builder.setNegativeButton("Ei") {_, _ -> }
+        builder.setNegativeButton("Ei")
+        {_, _ ->
+            Toast.makeText(requireContext(),"Tehtäviä ei poistettu", Toast.LENGTH_SHORT).show()
+        }
         builder.setTitle("Poista kaikki tehtävät?")
         builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät?")
         builder.create().show()
