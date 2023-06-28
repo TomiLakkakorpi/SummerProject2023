@@ -29,15 +29,48 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         val currentItem = taskList[position]
         val dateValues = currentItem.date
         val valuesArrayList = dateValues.split("/")
+        val timeValues = currentItem.time
+        val valuesArrayList2 = timeValues.split(":")
 
         val year = valuesArrayList[0]
         val month = valuesArrayList[1]
         val day = valuesArrayList[2]
-        val dateValue = "$day/$month/$year"
+
+        val hour = valuesArrayList2[0]
+        val minute = valuesArrayList2[1]
+
+        if (day.startsWith("0")) {
+            val newDay = day.drop(1)
+            val dateValue = "$newDay/$month/$year"
+            holder.itemView.tvTaskDate.text = dateValue
+        }
+
+        if (month.startsWith("0")) {
+            val newMonth = month.drop(1)
+            val dateValue = "$day/$newMonth/$year"
+            holder.itemView.tvTaskDate.text = dateValue
+        }
+
+        if (month.startsWith("0") && day.startsWith("0")) {
+            val newMonth = month.drop(1)
+            val newDay = day.drop(1)
+            val dateValue = "$newDay/$newMonth/$year"
+            holder.itemView.tvTaskDate.text = dateValue
+        } else {
+            val dateValue = "$day/$month/$year"
+            holder.itemView.tvTaskDate.text = dateValue
+        }
+
+        if(hour.startsWith("0")) {
+            val newHour = hour.drop(1)
+            val timeValue = "$newHour:$minute"
+            holder.itemView.tvTaskTime.text = timeValue
+        } else {
+            val timeValue = "$hour:$minute"
+            holder.itemView.tvTaskTime.text = timeValue
+        }
 
         holder.itemView.tvTaskHeader.text = currentItem.header
-        holder.itemView.tvTaskTime.text = currentItem.time
-        holder.itemView.tvTaskDate.text = dateValue
         holder.itemView.tvTaskDay.text = currentItem.dayName
         holder.itemView.tvTaskDetails.text = currentItem.details
         holder.itemView.tvCategory.text = currentItem.category

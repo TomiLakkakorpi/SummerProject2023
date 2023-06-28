@@ -51,8 +51,7 @@
             android:backgroundTint="#000000"
             android:ems="10"
 
-            android:inputType="text"
-            android:text="" />
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/tvAddScreenTime"
@@ -83,8 +82,7 @@
             android:ems="10"
 
 
-            android:inputType="time"
-            android:text="" />
+            android:inputType="time" />
 
         <TextView
             android:id="@+id/tvAddScreenDate"
@@ -141,8 +139,7 @@
             android:backgroundTint="#000000"
             android:ems="10"
 
-            android:inputType="text"
-            android:text="" />
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/tvAddScreenDetails"
@@ -169,8 +166,7 @@
             android:backgroundTint="#000000"
             android:ems="10"
 
-            android:inputType="textMultiLine"
-            android:text="" />
+            android:inputType="textMultiLine" />
 
         <TextView
             android:id="@+id/tvAddScreenCategory"

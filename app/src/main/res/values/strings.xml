@@ -3,17 +3,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="kategoriaString">Kategoria:</string>
+    <string name="kategoriaString">*Kategoria:</string>
     <string name="lisatiedotString">Lisätiedot:</string>
-    <string name="paivamaaraString">Päivämäärä:</string>
-    <string name="kellonaikaString">Kellonaika:</string>
-    <string name="otsikkoString">Otsikko:</string>
+    <string name="paivamaaraString">*Päivämäärä:</string>
+    <string name="kellonaikaString">*Kellonaika:</string>
+    <string name="otsikkoString">*Otsikko:</string>
+    <string name="paivaString">*Päivä:</string>
+
     <string name="lisaatehtavaString">Lisää Tehtävä</string>
     <string name="peruutaString">Peruuta</string>
     <string name="lisaaString">Lisää</string>
     <string name="poistaString">Poista</string>
     <string name="paivitaString">Päivitä</string>
-    <string name="paivaString">Päivä:</string>
     <string name="valitse_kategoriaString">Valitse Kategoria</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
     <!-- Strings used for fragments for navigation -->

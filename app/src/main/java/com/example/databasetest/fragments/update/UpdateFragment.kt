@@ -15,11 +15,9 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
+import kotlinx.android.synthetic.main.custom_row.view.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
-import android.view.Menu
-import kotlinx.android.synthetic.main.custom_row.view.*
-import kotlinx.android.synthetic.main.fragment_add.*
 
 class UpdateFragment : Fragment() {
 
@@ -39,11 +37,45 @@ class UpdateFragment : Fragment() {
         val year = valuesArrayList[0]
         val month = valuesArrayList[1]
         val day = valuesArrayList[2]
-        val dateValue = ("$day/$month/$year")
 
-        view.etEditScreenDate.setText(dateValue)
+        val timeValues = args.currentTask.time
+        val valuesArrayList2 = timeValues.split(":")
+        val hour = valuesArrayList2[0]
+        val minute = valuesArrayList2[1]
+
+        if (day.startsWith("0")) {
+            val newDay = day.drop(1)
+            val dateValue1 = "$newDay/$month/$year"
+            view.etEditScreenDate.setText(dateValue1)
+        }
+
+        if (month.startsWith("0")) {
+            val newMonth = month.drop(1)
+            val dateValue2 = "$day/$newMonth/$year"
+            view.etEditScreenDate.setText(dateValue2)
+        }
+
+        if (month.startsWith("0") && day.startsWith("0")) {
+            val newMonth = month.drop(1)
+            val newDay = day.drop(1)
+            val dateValue3 = "$newDay/$newMonth/$year"
+            view.etEditScreenDate.setText(dateValue3)
+
+        } else {
+            val dateValue4 = "$day/$month/$year"
+            view.etEditScreenDate.setText(dateValue4)
+        }
+
+        if(hour.startsWith("0")) {
+            val newHour = hour.drop(1)
+            val timeValue1 = "$newHour:$minute"
+            view.etEditScreenTime.setText(timeValue1)
+        } else {
+            val timeValue2 = "$hour:$minute"
+            view.etEditScreenTime.setText(timeValue2)
+        }
+
         view.etEditScreenHeader.setText(args.currentTask.header)
-        view.etEditScreenTime.setText(args.currentTask.time)
         view.etEditScreenDay.setText(args.currentTask.dayName)
         view.etEditScreenDetails.setText(args.currentTask.details)
         view.autoCompleteTextView2.setText(args.currentTask.category)
@@ -76,37 +108,55 @@ class UpdateFragment : Fragment() {
     }
 
     private fun updateItem(){
-        val dateValues = etEditScreenDate.text.toString()
-        val valuesArrayList = dateValues.split("/")
+        val header = etEditScreenHeader.text.toString()
+        val time = etEditScreenTime.text.toString()
+        val dateTest = etEditScreenDate.text.toString()
+        val dayName = etEditScreenDay.text.toString()
+        val details = etEditScreenDetails.text.toString()
+        val category = autoCompleteTextView2.text.toString()
 
-        val day = valuesArrayList[0]
-        val month = valuesArrayList[1]
-        val year = valuesArrayList[2]
+        if (checkHeader(header))
+        {
+            if (checkTime(time))
+            {
+                var timeString = etEditScreenTime.text.toString()
+                if (timeCheck1(timeString) || timeCheck2(timeString))
+                {
+                    if (checkDate(dateTest))
+                    {
+                        var dateString = etEditScreenDate.text.toString()
+                        if (dateCheck1(dateString) || dateCheck2(dateString) || dateCheck3(dateString) || dateCheck4(dateString) || dateCheck5(dateString) || dateCheck6(dateString) || dateCheck7(dateString) || dateCheck8(dateString))
+                        {
+                            if (checkDayName(dayName))
+                            {
+                                if (checkCategory(category))
+                                {
+                                    val dateValues = etEditScreenDate.text.toString()
+                                    val valuesArrayList = dateValues.split("/")
 
-        val header = etEditScreenHeader.text.trim().toString()
-        val time = etEditScreenTime.text.trim().toString()
-        val date = year + "/" + month + "/" + day
-        val dayName = etEditScreenDay.text.trim().toString()
-        val details = etEditScreenDetails.text.trim().toString()
-        val category = autoCompleteTextView2.text.trim().toString()
+                                    val day = valuesArrayList[0]
+                                    val month = valuesArrayList[1]
+                                    val year = valuesArrayList[2]
 
-        if (inputCheck(header, time, date, dayName, category)){
-            if (checkBox.isChecked) {
-                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
-                mTaskViewModel.updateTask(updatedTask)
-            } else {
-                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
-                mTaskViewModel.updateTask(updatedTask)
-            }
-            Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} päivitettiin", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-        }else{
-            Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_SHORT).show()
-        }
-    }
+                                    val date = year + "/" + month + "/" + day
 
-    private fun inputCheck(header: String, time: String, date: String, dayName: String, category: String): Boolean{
-        return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(dayName) && TextUtils.isEmpty((category)))
+                                    if (checkBox.isChecked) {
+                                        val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                        mTaskViewModel.updateTask(updatedTask)
+                                    } else {
+                                        val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                        mTaskViewModel.updateTask(updatedTask)
+                                    }
+                                    Toast.makeText(requireContext(), "Tehtävä ${args.currentTask.header} päivitettiin", Toast.LENGTH_SHORT).show()
+                                    findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+
+                                } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
+                            } else {Toast.makeText(requireContext(), "Syötä päivä esim. Maanantai", Toast.LENGTH_SHORT).show()}
+                        } else {Toast.makeText(requireContext(), "Söytä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
+                    } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
+                } else {Toast.makeText(requireContext(), "Syötä aika muodossa tunnit:minuutit", Toast.LENGTH_SHORT).show()}
+            } else {Toast.makeText(requireContext(), "Syötä Kellonaika", Toast.LENGTH_SHORT).show()}
+        } else {Toast.makeText(requireContext(), "Syötä otsikko", Toast.LENGTH_SHORT).show()}
     }
 
     private fun deleteTask(){
@@ -127,5 +177,90 @@ class UpdateFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    //Checking that header field isn't empty
+    fun checkHeader(header: String): Boolean {
+        return !(TextUtils.isEmpty(header))
+    }
+
+    //Checking that time field isn't empty
+    private fun checkTime(time: String): Boolean {
+        return !(TextUtils.isEmpty(time))
+    }
+
+    //Checking that date field isn't empty
+    private fun checkDate(date: String): Boolean {
+        return !(TextUtils.isEmpty(date))
+    }
+
+    //Checking that dayName field isn't empty
+    private fun checkDayName(dayName: String): Boolean {
+        return !(TextUtils.isEmpty(dayName))
+    }
+
+    //Checking that category field isn't empty
+    private fun checkCategory(category: String): Boolean {
+        return !(TextUtils.isEmpty(category))
+    }
+
+    //Checking input and matching for times like 11:11
+    private fun timeCheck1(str: String): Boolean {
+        val regex = Regex("\\d{2}:\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for times like 1:11
+    private fun timeCheck2(str: String): Boolean {
+        val regex = Regex("\\d{1}:\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/11/2023
+    private fun dateCheck1(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{2}/\\d{4}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/11/2023
+    private fun dateCheck2(str: String): Boolean {
+        val regex = Regex("\\d{1}/\\d{2}/\\d{4}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/1/2023
+    private fun dateCheck3(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{1}/\\d{4}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/1/2023
+    private fun dateCheck4(str: String): Boolean {
+        val regex = Regex("\\d{1}/\\d{1}/\\d{4}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/11/23
+    private fun dateCheck5(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/11/23
+    private fun dateCheck6(str: String): Boolean {
+        val regex = Regex("\\d{1}/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/1/23
+    private fun dateCheck7(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{1}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/1/23
+    private fun dateCheck8(str: String): Boolean {
+        val regex = Regex("\\d{1}/\\d{1}/\\d{2}")
+        return str.matches(regex)
     }
 }

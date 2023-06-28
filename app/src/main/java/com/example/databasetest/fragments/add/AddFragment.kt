@@ -48,36 +48,226 @@ class AddFragment : Fragment() {
     }
 
     private fun insertDataToDatabase() {
-        val dateValues = etAddScreenDate.text.trim().toString()
-        val valuesArrayList = dateValues.split("/")
+        val header = etAddScreenHeader.text.toString()
+        val time = etAddScreenTime.text.toString()
+        val dateTest = etAddScreenDate.text.toString()
+        val dayName = etAddScreenDay.text.toString()
+        val details = etAddScreenDetails.text.toString()
+        val category = autoCompleteTextView.text.toString()
 
-        val day = valuesArrayList[0]
-        val month = valuesArrayList[1]
-        val year = valuesArrayList[2]
+            if (checkHeader(header))
+            {
+                if (checkTime(time))
+                {
+                    var timeString = etAddScreenTime.text.toString()
+                    if (timeCheck1(timeString) || timeCheck2(timeString))
+                    {
+                        if (checkDate(dateTest))
+                        {
+                            var dateString = etAddScreenDate.text.toString()
+                            if (dateCheck1(dateString) || dateCheck2(dateString) || dateCheck3(dateString) || dateCheck4(dateString))
+                            {
+                                if (checkDayName(dayName))
+                                {
+                                    if (checkCategory(category))
+                                    {
+                                        val dateValues = etAddScreenDate.text.toString()
+                                        val valuesArrayList = dateValues.split("/")
 
-        val header = etAddScreenHeader.text.trim().toString()
-        val time = etAddScreenTime.text.trim().toString()
-        val date = "$year/$month/$day"
-        val dayName = etAddScreenDay.text.trim().toString()
-        val details = etAddScreenDetails.text.trim().toString()
-        val category = autoCompleteTextView.text.trim().toString()
+                                        val timeValues = etAddScreenTime.text.toString()
+                                        val valuesArrayList2 = timeValues.split(":")
 
-        if (inputCheck(header,time, date, dayName, category)) {
-            val task = Task(0, header, time, date, dayName, details, category, status = false)
-            mTaskViewModel.addTask(task)
-            Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_addFragment_to_listFragment)
-        } else {
-            Toast.makeText(requireContext(), "Täytä kaikki kentät", Toast.LENGTH_SHORT).show()
-        }
-    }
+                                        //Normal date 11/11/23
+                                        if (dateCheck1(dateString)) {
+                                            val day = valuesArrayList[0]
+                                            val month = valuesArrayList[1]
+                                            val year = valuesArrayList[2]
+                                            val date = "$year/$month/$day"
 
-    private fun inputCheck(header: String, time: String, date: String, dayName: String, category: String): Boolean{
-        return !(TextUtils.isEmpty(header) && TextUtils.isEmpty(time) && TextUtils.isEmpty(date) && TextUtils.isEmpty(dayName) && TextUtils.isEmpty(category))
+                                            //Normal time 10:00
+                                            if (timeCheck1(timeString)) {
+                                                val hour = valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time1 = "$hour:$minute"
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+
+                                            //Time with only 1 digit in hour field (1:00)
+                                            if (timeCheck2(timeString)) {
+                                                val newHour = "0" + valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time2 = "$newHour:$minute"
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+                                        }
+
+                                        //Date like 1/11/23
+                                        if (dateCheck2(dateString)) {
+                                            val day = "0" + valuesArrayList[0]
+                                            val month = valuesArrayList[1]
+                                            val year = valuesArrayList[2]
+                                            val date = "$year/$month/$day"
+
+                                            //Normal time 10:00
+                                            if (timeCheck1(timeString)) {
+                                                val hour = valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time1 = "$hour:$minute"
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+
+                                            //Time with only 1 digit in hour field (1:00)
+                                            if (timeCheck2(timeString)) {
+                                                val newHour = "0" + valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time2 = "$newHour:$minute"
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+                                        }
+
+                                        //Date like 11/1/23
+                                        if (dateCheck3(dateString)) {
+                                            val day = valuesArrayList[0]
+                                            val month = "0" + valuesArrayList[1]
+                                            val year = valuesArrayList[2]
+                                            val date = "$year/$month/$day"
+
+                                            //Normal time 10:00
+                                            if (timeCheck1(timeString)) {
+                                                val hour = valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time1 = "$hour:$minute"
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+
+                                            //Time with only 1 digit in hour field (1:00)
+                                            if (timeCheck2(timeString)) {
+                                                val newHour = "0" + valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time2 = "$newHour:$minute"
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+                                        }
+
+                                        //Date like 1/1/23
+                                        if (dateCheck4(dateString)) {
+                                            val day = "0" + valuesArrayList[0]
+                                            val month = "0" + valuesArrayList[1]
+                                            val year = valuesArrayList[2]
+                                            val date = "$year/$month/$day"
+
+                                            //Normal time 10:00
+                                            if (timeCheck1(timeString)) {
+                                                val hour = valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time1 = "$hour:$minute"
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+
+                                            //Time with only 1 digit in hour field (1:00)
+                                            if (timeCheck2(timeString)) {
+                                                val newHour = "0" + valuesArrayList2[0]
+                                                val minute = valuesArrayList2[1]
+                                                val time2 = "$newHour:$minute"
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                mTaskViewModel.addTask(task)
+                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                                            }
+                                        }
+                                    } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
+                                } else {Toast.makeText(requireContext(), "Syötä päivä esim. Maanantai", Toast.LENGTH_SHORT).show()}
+                            } else {Toast.makeText(requireContext(), "Syötä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
+                        } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
+                    } else {Toast.makeText(requireContext(), "Syötä aika muodossa tunnit:minuutit", Toast.LENGTH_SHORT).show()}
+                } else {Toast.makeText(requireContext(), "Syötä kellonaika", Toast.LENGTH_SHORT).show()}
+            } else {Toast.makeText(requireContext(), "Syötä Otsikko", Toast.LENGTH_SHORT).show()}
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    //Checking that header field isn't empty
+    fun checkHeader(header: String): Boolean {
+        return !(TextUtils.isEmpty(header))
+    }
+
+    //Checking that time field isn't empty
+    private fun checkTime(time: String): Boolean {
+        return !(TextUtils.isEmpty(time))
+    }
+
+    //Checking that date field isn't empty
+    private fun checkDate(date: String): Boolean {
+        return !(TextUtils.isEmpty(date))
+    }
+
+    //Checking that dayName field isn't empty
+    private fun checkDayName(dayName: String): Boolean {
+        return !(TextUtils.isEmpty(dayName))
+    }
+
+    //Checking that category field isn't empty
+    private fun checkCategory(category: String): Boolean {
+        return !(TextUtils.isEmpty(category))
+    }
+
+    //Checking input and matching for times like 11:11
+    private fun timeCheck1(str: String): Boolean {
+        val regex = Regex("\\d{2}:\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for times like 1:11
+    private fun timeCheck2(str: String): Boolean {
+        val regex = Regex("\\d{1}:\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/11/23
+    private fun dateCheck1(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/11/23
+    private fun dateCheck2(str: String): Boolean {
+        val regex = Regex("\\d{1}/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/1/23
+    private fun dateCheck3(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{1}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/1/23
+    private fun dateCheck4(str: String): Boolean {
+        val regex = Regex("\\d{1}/\\d{1}/\\d{2}")
+        return str.matches(regex)
     }
 }
