@@ -49,33 +49,28 @@ class AddFragment : Fragment() {
 
     private fun insertDataToDatabase() {
         val header = etAddScreenHeader.text.toString()
-        val time = etAddScreenTime.text.toString()
-        val dateTest = etAddScreenDate.text.toString()
+        val timeString = etAddScreenTime.text.toString()
+        val dateString = etAddScreenDate.text.toString()
         val dayName = etAddScreenDay.text.toString()
         val details = etAddScreenDetails.text.toString()
         val category = autoCompleteTextView.text.toString()
 
             if (checkHeader(header))
             {
-                if (checkTime(time))
+                if (checkTime(timeString))
                 {
-                    var timeString = etAddScreenTime.text.toString()
                     if (timeCheck1(timeString) || timeCheck2(timeString))
                     {
-                        if (checkDate(dateTest))
+                        if (checkDate(dateString))
                         {
-                            var dateString = etAddScreenDate.text.toString()
                             if (dateCheck1(dateString) || dateCheck2(dateString) || dateCheck3(dateString) || dateCheck4(dateString))
                             {
                                 if (checkDayName(dayName))
                                 {
                                     if (checkCategory(category))
                                     {
-                                        val dateValues = etAddScreenDate.text.toString()
-                                        val valuesArrayList = dateValues.split("/")
-
-                                        val timeValues = etAddScreenTime.text.toString()
-                                        val valuesArrayList2 = timeValues.split(":")
+                                        val valuesArrayList = dateString.split("/")
+                                        val valuesArrayList2 = timeString.split(":")
 
                                         //Normal date 11/11/23
                                         if (dateCheck1(dateString)) {

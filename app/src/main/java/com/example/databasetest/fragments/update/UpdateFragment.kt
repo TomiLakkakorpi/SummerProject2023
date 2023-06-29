@@ -130,11 +130,8 @@ class UpdateFragment : Fragment() {
                             {
                                 if (checkCategory(category))
                                 {
-                                    val dateValues = dateTest
-                                    val valuesArrayList = dateValues.split("/")
-
-                                    val timeValues = timeTest
-                                    val valuesArrayList2 = timeValues.split(":")
+                                    val valuesArrayList = dateTest.split("/")
+                                    val valuesArrayList2 = timeTest.split(":")
 
                                     //Normal date 11/11/23
                                     if (dateCheck1(dateTest)) {
