@@ -3,6 +3,8 @@ package com.example.databasetest.fragments.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasetest.R
@@ -32,6 +34,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         val timeValues = currentItem.time
         val valuesArrayList2 = timeValues.split(":")
 
+        //Getting values from date arraylist and time arraylist
         val year = valuesArrayList[0]
         val month = valuesArrayList[1]
         val day = valuesArrayList[2]
@@ -39,29 +42,36 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         val hour = valuesArrayList2[0]
         val minute = valuesArrayList2[1]
 
-        if (day.startsWith("0")) {
-            val newDay = day.drop(1)
-            val dateValue = "$newDay/$month/$year"
-            holder.itemView.tvTaskDate.text = dateValue
-        }
-
-        if (month.startsWith("0")) {
-            val newMonth = month.drop(1)
-            val dateValue = "$day/$newMonth/$year"
-            holder.itemView.tvTaskDate.text = dateValue
-        }
-
+        //If date is for example 01/01/23 drop first 0 from both day and month and then show the date in the list
         if (month.startsWith("0") && day.startsWith("0")) {
             val newMonth = month.drop(1)
             val newDay = day.drop(1)
             val dateValue = "$newDay/$newMonth/$year"
             holder.itemView.tvTaskDate.text = dateValue
-        } else {
+        }
+
+        //If date is for example 11/11/23 show the date as it is and then show the date in the list
+        if (!month.startsWith("0") && !day.startsWith("0")) {
             val dateValue = "$day/$month/$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
-        if(hour.startsWith("0")) {
+        //If date is for example 01/11/23 drop the fist 0 from day and then show the date in the list
+        if (day.startsWith("0") && !month.startsWith("0")) {
+            val newDay = day.drop(1)
+            val dateValue = "$newDay/$month/$year"
+            holder.itemView.tvTaskDate.text = dateValue
+        }
+
+        //If date is for example 11/01/23 drop the first 0 from month and then show the date in the list
+        if (month.startsWith("0") && !day.startsWith("0")) {
+            val newMonth = month.drop(1)
+            val dateValue = "$day/$newMonth/$year"
+            holder.itemView.tvTaskDate.text = dateValue
+        }
+
+        //If time is for example 09:00 drop the first 0 from hour and then show the date in the list
+        if(hour.startsWith("0") && !minute.startsWith("0")) {
             val newHour = hour.drop(1)
             val timeValue = "$newHour:$minute"
             holder.itemView.tvTaskTime.text = timeValue
@@ -70,22 +80,26 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
             holder.itemView.tvTaskTime.text = timeValue
         }
 
+        //Setting header, dayName, details and category from db to the list
         holder.itemView.tvTaskHeader.text = currentItem.header
         holder.itemView.tvTaskDay.text = currentItem.dayName
         holder.itemView.tvTaskDetails.text = currentItem.details
         holder.itemView.tvCategory.text = currentItem.category
 
+        //If user clicks on the task, open update fragment for that task.
         holder.itemView.taskMainConstraint.setOnClickListener{
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
             holder.itemView.findNavController().navigate(action)
         }
 
+        //Setting the task´s checkbox based on its status in the database (status true = checkbox checked)
         if (currentItem.status) {
             holder.itemView.taskCheckbox.setChecked(true)
         } else {
             holder.itemView.taskCheckbox.setChecked(false)
         }
 
+        //Setting the tasks background color based on category
         if (currentItem.category == "Liikunta") {
             holder.itemView.taskMainConstraint.setBackgroundResource(R.color.liikunta)
         }
