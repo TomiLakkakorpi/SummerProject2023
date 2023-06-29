@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
     tools:context=".fragments.list.ListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:background="@color/white"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         android:focusable="true"
         app:backgroundTint="@color/green_add"
 
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -43,10 +43,34 @@
         android:src="@drawable/ic_delete"
         app:backgroundTint="@color/red_delete"
 
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="15dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButtonAdd"
+        app:layout_constraintStart_toEndOf="@+id/floatingActionButtonDelete">
+
+        <AutoCompleteTextView
+            android:id="@+id/CategoryFilter"
+
+            android:layout_width="195dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+
+            android:inputType="none"
+            android:text="Näytä kaikki"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

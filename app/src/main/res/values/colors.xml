@@ -19,8 +19,10 @@
     <color name="terveys">#f54fa6</color>
     <color name="koulu">#20D1AC</color>
     <color name="tyo">#0B5E55</color>
+    <color name="tärkeä">#3A4C97</color>
     <color name="harrastus">#82d782</color>
     <color name="askare">#dd9933</color>
     <color name="tapaaminen">#dadd1e</color>
-    <color name="muu">#20d1ac</color>
+    <color name="pelit">#197823</color>
+    <color name="muu">#DB5729</color>
 </resources>

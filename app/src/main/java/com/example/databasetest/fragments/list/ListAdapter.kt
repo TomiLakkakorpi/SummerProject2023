@@ -101,6 +101,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         if (currentItem.category == "Työ") {
             holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tyo)
         }
+        if (currentItem.category == "Tärkeä") {
+            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tärkeä)
+        }
         if (currentItem.category == "Harrastus") {
             holder.itemView.taskMainConstraint.setBackgroundResource(R.color.harrastus)
         }
@@ -109,6 +112,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         }
         if (currentItem.category == "Tapaaminen") {
             holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tapaaminen)
+        }
+        if (currentItem.category == "Pelit") {
+            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.pelit)
         }
         if (currentItem.category == "Muu") {
             holder.itemView.taskMainConstraint.setBackgroundResource(R.color.muu)

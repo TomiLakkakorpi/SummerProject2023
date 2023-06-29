@@ -8,8 +8,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:background="@color/purple_500">
+    android:layout_marginEnd="10dp">
 
     <CheckBox
         android:id="@+id/taskCheckbox"
@@ -32,6 +31,7 @@
         android:layout_marginTop="5dp"
 
         android:textStyle="bold"
+        android:textSize="16sp"
         android:textColor="@color/black"
 
         app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
@@ -45,8 +45,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
 
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
 
         app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
@@ -59,8 +59,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
 
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
 
         app:layout_constraintStart_toEndOf="@id/tvTaskTime"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
@@ -73,8 +73,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
 
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
 
         app:layout_constraintStart_toEndOf="@id/tvTaskDay"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
@@ -89,8 +89,8 @@
         android:layout_marginBottom="5dp"
         android:paddingRight="90dp"
 
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textStyle="bold"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
@@ -105,6 +105,7 @@
         android:layout_marginEnd="10dp"
 
         android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"

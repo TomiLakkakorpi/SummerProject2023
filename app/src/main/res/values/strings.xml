@@ -16,17 +16,45 @@
     <string name="poistaString">Poista</string>
     <string name="paivitaString">Päivitä</string>
     <string name="valitse_kategoriaString">Valitse Kategoria</string>
+
     <string name="title_activity_add_task">AddTaskActivity</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="poista_valmiit_tehtavatString">Poista Valmiit Tehtävät</string>
 
-    <!-- Lisää kategorioita -->
+    <!-- Jos vaihdat kategorioiden nimiä, vaihda myös tähän -->
+    <string name="category1">1</string>
+    <string name="category2">2</string>
+    <string name="category3">3</string>
+    <string name="category4">4</string>
+    <string name="category5">5</string>
+    <string name="category6">6</string>
+    <string name="category7">7</string>
+    <string name="category8">8</string>
+    <string name="category9">9</string>
+    <string name="category10">10</string>
+    <string name="allCategories">Show All Categories</string>
+
     <string-array name="categories">
-         <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
+        <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
+        <item>Liikunta</item>
+        <item>Hyvinvointi</item>
+        <item>Terveys</item>
+        <item>Koulu</item>
+        <item>Työ</item>
+        <item>Tärkeä</item>
+        <item>Harrastus</item>
+        <item>Askare</item>
+        <item>Tapaaminen</item>
+        <item>Pelit</item>
+        <item>Muu</item>
+    </string-array>
+
+    <string-array name="categories2">
+        <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
+        <item>Näytä kaikki</item>
         <item>Liikunta</item>
         <item>Hyvinvointi</item>
         <item>Terveys</item>

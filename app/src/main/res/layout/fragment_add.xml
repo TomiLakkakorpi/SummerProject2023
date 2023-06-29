@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -5,236 +6,261 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <GridLayout
-        android:id="@+id/addScreenGridLayout"
-
+    <androidx.cardview.widget.CardView
+        android:id="@+id/addScreenCardview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="200dp"
-        android:background="@color/gray"
-
-        android:columnCount="2"
-        android:rowCount="6"
-
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cardBackgroundColor="@color/gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvAddScreenHeader"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-
-            android:layout_margin="10dp"
-
-            android:text="@string/otsikkoString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-        <EditText
-            android:id="@+id/etAddScreenHeader"
-
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-
-            android:backgroundTint="#000000"
-            android:ems="10"
-
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/tvAddScreenTime"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10dp"
-
-            android:text="@string/kellonaikaString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
-
-        <EditText
-            android:id="@+id/etAddScreenTime"
-
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-
-            android:backgroundTint="#000000"
-            android:ems="10"
-
-
-            android:inputType="time" />
-
-        <TextView
-            android:id="@+id/tvAddScreenDate"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10dp"
-
-            android:text="@string/paivamaaraString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-        <EditText
-            android:id="@+id/etAddScreenDate"
-
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-
-            android:backgroundTint="#000000"
-            android:ems="10"
-
-            android:inputType="date" />
-
-        <TextView
-            android:id="@+id/tvAddScreenDay"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-
-            android:layout_margin="10dp"
-
-            android:text="@string/paivaString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-        <EditText
-            android:id="@+id/etAddScreenDay"
-
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-
-            android:backgroundTint="#000000"
-            android:ems="10"
-
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/tvAddScreenDetails"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10dp"
-
-            android:text="@string/lisatiedotString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-        <EditText
-            android:id="@+id/etAddScreenDetails"
-
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-
-            android:backgroundTint="#000000"
-            android:ems="10"
-
-            android:inputType="textMultiLine" />
-
-        <TextView
-            android:id="@+id/tvAddScreenCategory"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10dp"
-
-            android:text="@string/kategoriaString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addSCreenConstraint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:minHeight="230dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
+            <GridLayout
+                android:id="@+id/addScreenGridLayout"
 
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                android:inputType="none"
-                android:text=""
-                android:textStyle="bold" />
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/gray"
+                android:columnCount="2"
 
-        </com.google.android.material.textfield.TextInputLayout>
+                android:rowCount="6"
+                app:cardCornerRadius="20dp"
 
-    </GridLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addScreenCancel"
+                <TextView
+                    android:id="@+id/tvAddScreenHeader"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
 
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_cancel"
-        app:backgroundTint="@color/red_delete"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
 
-        app:layout_constraintEnd_toStartOf="@+id/addScreenAdd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+                    android:layout_margin="10dp"
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addScreenAdd"
+                    android:text="@string/otsikkoString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+                <EditText
+                    android:id="@+id/etAddScreenHeader"
 
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/green_add"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout"
-        app:layout_constraintStart_toEndOf="@id/addScreenCancel"/>
+                    android:backgroundTint="#000000"
+                    android:ems="10"
 
+                    android:inputType="text" />
+
+                <TextView
+                    android:id="@+id/tvAddScreenTime"
+
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/kellonaikaString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+
+                    tools:layout_editor_absoluteY="19dp" />
+
+                <EditText
+                    android:id="@+id/etAddScreenTime"
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+
+                    android:backgroundTint="#000000"
+                    android:ems="10"
+
+
+                    android:inputType="time" />
+
+                <TextView
+                    android:id="@+id/tvAddScreenDate"
+
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/paivamaaraString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/etAddScreenDate"
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+
+                    android:backgroundTint="#000000"
+                    android:ems="10"
+
+                    android:inputType="date" />
+
+                <TextView
+                    android:id="@+id/tvAddScreenDay"
+
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+
+                    android:layout_margin="10dp"
+
+                    android:text="@string/paivaString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/etAddScreenDay"
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+
+                    android:backgroundTint="#000000"
+                    android:ems="10"
+
+                    android:inputType="text" />
+
+                <TextView
+                    android:id="@+id/tvAddScreenDetails"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/lisatiedotString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/etAddScreenDetails"
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+
+                    android:backgroundTint="#000000"
+                    android:ems="10"
+
+                    android:inputType="textMultiLine" />
+
+                <TextView
+                    android:id="@+id/tvAddScreenCategory"
+
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/kategoriaString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+
+                        android:layout_width="190dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+
+                        android:inputType="none"
+                        android:text=""
+                        android:textStyle="bold" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </GridLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addScreenCancel"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_cancel"
+                app:backgroundTint="@color/red_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addScreenAdd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addScreenAdd"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_add"
+                app:backgroundTint="@color/green_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/addScreenCancel"
+                app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

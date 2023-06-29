@@ -91,7 +91,7 @@ class AddFragment : Fragment() {
                                                 val time1 = "$hour:$minute"
                                                 val task = Task(0, header, time1, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
 
@@ -102,7 +102,7 @@ class AddFragment : Fragment() {
                                                 val time2 = "$newHour:$minute"
                                                 val task = Task(0, header, time2, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
                                         }
@@ -121,7 +121,7 @@ class AddFragment : Fragment() {
                                                 val time1 = "$hour:$minute"
                                                 val task = Task(0, header, time1, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
 
@@ -132,7 +132,7 @@ class AddFragment : Fragment() {
                                                 val time2 = "$newHour:$minute"
                                                 val task = Task(0, header, time2, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
                                         }
@@ -151,7 +151,7 @@ class AddFragment : Fragment() {
                                                 val time1 = "$hour:$minute"
                                                 val task = Task(0, header, time1, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
 
@@ -162,7 +162,7 @@ class AddFragment : Fragment() {
                                                 val time2 = "$newHour:$minute"
                                                 val task = Task(0, header, time2, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
                                         }
@@ -181,7 +181,7 @@ class AddFragment : Fragment() {
                                                 val time1 = "$hour:$minute"
                                                 val task = Task(0, header, time1, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
 
@@ -192,7 +192,7 @@ class AddFragment : Fragment() {
                                                 val time2 = "$newHour:$minute"
                                                 val task = Task(0, header, time2, date, dayName, details, category, status = false)
                                                 mTaskViewModel.addTask(task)
-                                                Toast.makeText(requireContext(), "Tehtävä $header tallennettu", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
                                         }
@@ -211,7 +211,7 @@ class AddFragment : Fragment() {
     }
 
     //Checking that header field isn't empty
-    fun checkHeader(header: String): Boolean {
+    private fun checkHeader(header: String): Boolean {
         return !(TextUtils.isEmpty(header))
     }
 

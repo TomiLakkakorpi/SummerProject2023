@@ -3,6 +3,8 @@ package com.example.databasetest.fragments.list
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -10,12 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databasetest.R
+import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.custom_row.*
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
+    private var _binding: FragmentListBinding? = null
     private lateinit var mTaskViewModel: TaskViewModel
 
     override fun onCreateView(
@@ -30,7 +35,7 @@ class ListFragment : Fragment() {
 
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
-            adapter.setData(task)
+           adapter.setData(task)
         })
 
         view.floatingActionButtonAdd.setOnClickListener{
@@ -40,6 +45,15 @@ class ListFragment : Fragment() {
         view.floatingActionButtonDelete.setOnClickListener {
             deleteAllTasks()
         }
+
+        //view.floatingActionButtonCategoryList.setOnClickListener {
+        //    findNavController().navigate(R.id.action_listFragment_to_filterFragment)
+        //}
+
+        _binding = FragmentListBinding.inflate(inflater, container, false)
+        val categories = resources.getStringArray(R.array.categories2)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
+        view.findViewById<AutoCompleteTextView>(R.id.CategoryFilter).setAdapter(arrayAdapter)
 
         return view
     }
@@ -59,4 +73,6 @@ class ListFragment : Fragment() {
         builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät?")
         builder.create().show()
     }
+
+
 }

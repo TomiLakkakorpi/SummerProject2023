@@ -6,21 +6,39 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/editScreenCardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cardBackgroundColor="@color/gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/editScreenConstraint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:minHeight="230dp">
+
     <GridLayout
         android:id="@+id/editScreenGridLayout"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="200sp"
-        android:layout_marginRight="20sp"
-        android:layout_marginBottom="200sp"
 
         android:background="@color/gray"
         android:columnCount="2"
         android:rowCount="6"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,7 +63,8 @@
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/tvEditScreenHeader"
@@ -171,7 +190,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textMultiLine"/>
 
         <TextView
             android:id="@+id/tvEditScreenCategory"
@@ -197,7 +216,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView2"
-                android:layout_width="200dp"
+                android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5sp"
                 android:layout_weight="1"
@@ -207,49 +226,57 @@
 
     </GridLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/updateScreenCancel"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/updateScreenCancel"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        android:layout_marginTop="30dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_cancel"
-        app:backgroundTint="@color/green_add"
-        app:layout_constraintEnd_toStartOf="@+id/updateScreenDelete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_cancel"
+                app:backgroundTint="@color/green_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/updateScreenDelete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/updateScreenDelete"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/updateScreenDelete"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        android:layout_marginTop="30dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_delete"
-        app:backgroundTint="@color/red_delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_delete"
+                app:backgroundTint="@color/red_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/updateScreenUpdate"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/updateScreenUpdate"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        android:layout_marginTop="30dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_update"
-        app:backgroundTint="@color/blue_update"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
-        app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_update"
+                app:backgroundTint="@color/blue_update"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
+                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
