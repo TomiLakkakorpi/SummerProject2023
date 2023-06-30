@@ -14,6 +14,9 @@
     <color name="backgroundMain">#6712EF</color>
     <color name="backgroundSecondary">#D17936</color>
 
+    <color name="purpleBackground2">#9900FF</color>
+    <color name="purpleBackground1">#674EA7</color>
+
     <color name="liikunta">#37e1e1</color>
     <color name="hyvinvointi">#8a2be2</color>
     <color name="terveys">#f54fa6</color>

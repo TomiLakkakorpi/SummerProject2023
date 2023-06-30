@@ -32,10 +32,10 @@ class ListFragment : Fragment() {
         val recyclerView = view.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-        mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
-           adapter.setData(task)
+        
+            mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+            mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
+                adapter.setData(task)
         })
 
         view.floatingActionButtonAdd.setOnClickListener{
@@ -45,10 +45,6 @@ class ListFragment : Fragment() {
         view.floatingActionButtonDelete.setOnClickListener {
             deleteAllTasks()
         }
-
-        //view.floatingActionButtonCategoryList.setOnClickListener {
-        //    findNavController().navigate(R.id.action_listFragment_to_filterFragment)
-        //}
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories2)
