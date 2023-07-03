@@ -44,36 +44,37 @@ class UpdateFragment : Fragment() {
         val hour = valuesArrayList2[0]
         val minute = valuesArrayList2[1]
 
-        if (day.startsWith("0")) {
+        if (day.startsWith("0") && (month.startsWith("0"))) {
+            val newDay = day.drop(1)
+            val newMonth = month.drop(1)
+            val dateValue1 = "$newDay/$newMonth/$year"
+            view.etEditScreenDate.setText(dateValue1)
+        }
+
+        if (!day.startsWith("0") && (!month.startsWith("0"))) {
+            val dateValue1 = "$day/$month/$year"
+            view.etEditScreenDate.setText(dateValue1)
+        }
+
+        if (day.startsWith("0") && (!month.startsWith("0"))) {
             val newDay = day.drop(1)
             val dateValue1 = "$newDay/$month/$year"
             view.etEditScreenDate.setText(dateValue1)
         }
 
-        if (month.startsWith("0")) {
+        if (!day.startsWith("0") && (month.startsWith("0"))) {
             val newMonth = month.drop(1)
-            val dateValue2 = "$day/$newMonth/$year"
-            view.etEditScreenDate.setText(dateValue2)
+            val dateValue1 = "$day/$newMonth/$year"
+            view.etEditScreenDate.setText(dateValue1)
         }
 
-        if (month.startsWith("0") && day.startsWith("0")) {
-            val newMonth = month.drop(1)
-            val newDay = day.drop(1)
-            val dateValue3 = "$newDay/$newMonth/$year"
-            view.etEditScreenDate.setText(dateValue3)
-
-        } else {
-            val dateValue4 = "$day/$month/$year"
-            view.etEditScreenDate.setText(dateValue4)
-        }
-
-        if(hour.startsWith("0")) {
+        if (hour.startsWith("0") && !minute.startsWith("0")) {
             val newHour = hour.drop(1)
-            val timeValue1 = "$newHour:$minute"
-            view.etEditScreenTime.setText(timeValue1)
+            val timeValue = "$newHour:$minute"
+            view.etEditScreenTime.setText(timeValue)
         } else {
-            val timeValue2 = "$hour:$minute"
-            view.etEditScreenTime.setText(timeValue2)
+            val timeValue = "$hour:$minute"
+            view.etEditScreenTime.setText(timeValue)
         }
 
         view.etEditScreenHeader.setText(args.currentTask.header)
