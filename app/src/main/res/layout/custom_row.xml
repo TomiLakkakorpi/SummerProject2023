@@ -8,7 +8,7 @@
     android:layout_margin="5dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/diet_window_view_with_border"
+        android:id="@+id/customRowCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

@@ -78,16 +78,22 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         if(hour.startsWith("0") && !minute.startsWith("0")) {
             val newHour = hour.drop(1)
             val timeValue = "$newHour:$minute"
-            holder.itemView.tvTaskTime.text = timeValue
+            holder.itemView.tvTaskTime.text = "\u2022 " + timeValue
         } else {
             val timeValue = "$hour:$minute"
-            holder.itemView.tvTaskTime.text = timeValue
+            holder.itemView.tvTaskTime.text = "\u2022 " + timeValue
         }
 
         //Setting header, dayName, details and category from db to the list
         holder.itemView.tvTaskHeader.text = currentItem.header
         holder.itemView.tvTaskDay.text = currentItem.dayName
-        holder.itemView.tvTaskDetails.text = currentItem.details
+
+        if (!currentItem.details.isBlank()) {
+            holder.itemView.tvTaskDetails.text = "\u2022 " + currentItem.details
+        } else {
+            holder.itemView.tvTaskDetails.text = currentItem.details
+        }
+
         holder.itemView.tvCategory.text = currentItem.category
 
         //If user clicks on the task, open update fragment for that task.

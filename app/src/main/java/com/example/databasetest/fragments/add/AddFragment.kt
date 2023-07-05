@@ -15,8 +15,10 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
+import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import java.text.SimpleDateFormat
 
 class AddFragment : Fragment() {
 
@@ -72,8 +74,11 @@ class AddFragment : Fragment() {
                                         val valuesArrayList = dateString.split("/")
                                         val valuesArrayList2 = timeString.split(":")
 
+                                        val notifyDay: Boolean = checkboxDayBefore.isChecked
+                                        val notifyHour: Boolean = checkBoxHourBefore.isChecked
+
                                         //Normal date 11/11/23
-                                        if (dateCheck1(dateString)) {
+                                        if (dateCheck1(dateString) && isValidDate(dateString)) {
                                             val day = valuesArrayList[0]
                                             val month = valuesArrayList[1]
                                             val year = valuesArrayList[2]
@@ -84,7 +89,7 @@ class AddFragment : Fragment() {
                                                 val hour = valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time1 = "$hour:$minute"
-                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -95,7 +100,7 @@ class AddFragment : Fragment() {
                                                 val newHour = "0" + valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time2 = "$newHour:$minute"
-                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -103,7 +108,7 @@ class AddFragment : Fragment() {
                                         }
 
                                         //Date like 1/11/23
-                                        if (dateCheck2(dateString)) {
+                                        if (dateCheck2(dateString) && isValidDate(dateString)) {
                                             val day = "0" + valuesArrayList[0]
                                             val month = valuesArrayList[1]
                                             val year = valuesArrayList[2]
@@ -114,7 +119,7 @@ class AddFragment : Fragment() {
                                                 val hour = valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time1 = "$hour:$minute"
-                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -125,7 +130,7 @@ class AddFragment : Fragment() {
                                                 val newHour = "0" + valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time2 = "$newHour:$minute"
-                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -133,7 +138,7 @@ class AddFragment : Fragment() {
                                         }
 
                                         //Date like 11/1/23
-                                        if (dateCheck3(dateString)) {
+                                        if (dateCheck3(dateString) && isValidDate(dateString)) {
                                             val day = valuesArrayList[0]
                                             val month = "0" + valuesArrayList[1]
                                             val year = valuesArrayList[2]
@@ -144,7 +149,7 @@ class AddFragment : Fragment() {
                                                 val hour = valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time1 = "$hour:$minute"
-                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -155,7 +160,7 @@ class AddFragment : Fragment() {
                                                 val newHour = "0" + valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time2 = "$newHour:$minute"
-                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -163,7 +168,7 @@ class AddFragment : Fragment() {
                                         }
 
                                         //Date like 1/1/23
-                                        if (dateCheck4(dateString)) {
+                                        if (dateCheck4(dateString) && isValidDate(dateString)) {
                                             val day = "0" + valuesArrayList[0]
                                             val month = "0" + valuesArrayList[1]
                                             val year = valuesArrayList[2]
@@ -174,7 +179,7 @@ class AddFragment : Fragment() {
                                                 val hour = valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time1 = "$hour:$minute"
-                                                val task = Task(0, header, time1, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time1, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -185,12 +190,21 @@ class AddFragment : Fragment() {
                                                 val newHour = "0" + valuesArrayList2[0]
                                                 val minute = valuesArrayList2[1]
                                                 val time2 = "$newHour:$minute"
-                                                val task = Task(0, header, time2, date, dayName, details, category, status = false)
+                                                val task = Task(0, header, time2, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.addTask(task)
                                                 Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
                                             }
                                         }
+
+                                        if (!isValidDate(dateString)) {
+                                            Toast.makeText(requireContext(), "Syötä oikea päivämäärä", Toast.LENGTH_SHORT).show()
+                                        }
+
+                                        //if (!isValidTime(timeString)) {
+                                        //     Toast.makeText(requireContext(), "Syötä oikea kellonaika", Toast.LENGTH_SHORT).show()
+                                        //}
+
                                     } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
                                 } else {Toast.makeText(requireContext(), "Syötä päivä esim. Maanantai", Toast.LENGTH_SHORT).show()}
                             } else {Toast.makeText(requireContext(), "Syötä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
@@ -264,5 +278,17 @@ class AddFragment : Fragment() {
     private fun dateCheck4(str: String): Boolean {
         val regex = Regex("\\d{1}/\\d{1}/\\d{2}")
         return str.matches(regex)
+    }
+
+    fun isValidDate(date: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd/MM/yy")
+        dateFormat.isLenient = false
+
+        return try {
+            dateFormat.parse(date)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

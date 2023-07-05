@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.list.ListFragment">
-Filt
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:background="@color/white"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:layout_marginTop="5dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,6 +71,4 @@ Filt
             android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

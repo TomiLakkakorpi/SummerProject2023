@@ -232,7 +232,6 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
 
                 android:clickable="true"
@@ -242,14 +241,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/addScreenAdd"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxHourBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addScreenAdd"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
 
                 android:clickable="true"
@@ -259,8 +257,61 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/addScreenCancel"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxHourBefore" />
+
+            <TextView
+                android:id="@+id/tvAddScreenRemember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/muistutaString"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+
+            <CheckBox
+                android:id="@+id/checkboxDayBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
+                app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
+
+            <CheckBox
+                android:id="@+id/checkBoxHourBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
+                app:layout_constraintTop_toBottomOf="@+id/checkboxDayBefore" />
+
+            <TextView
+                android:id="@+id/tvAddScreenDayBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:text="@string/daybeforeString"
+                app:layout_constraintStart_toEndOf="@id/checkboxDayBefore"
+                app:layout_constraintTop_toBottomOf="@id/addScreenGridLayout"/>
+
+            <TextView
+                android:id="@+id/tvAddScreenHourBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:text="@string/hourbeforeString"
+                app:layout_constraintStart_toEndOf="@id/checkBoxHourBefore"
+                app:layout_constraintTop_toBottomOf="@id/tvAddScreenDayBefore"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

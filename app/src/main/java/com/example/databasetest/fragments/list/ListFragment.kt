@@ -15,8 +15,10 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.custom_row.*
+import kotlinx.android.synthetic.main.custom_row.view.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.time.LocalDate
 
 class ListFragment : Fragment() {
 
@@ -32,11 +34,12 @@ class ListFragment : Fragment() {
         val recyclerView = view.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        
-            mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-            mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
-                adapter.setData(task)
+
+        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
+            adapter.setData(task)
         })
+
 
         view.floatingActionButtonAdd.setOnClickListener{
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
@@ -69,6 +72,4 @@ class ListFragment : Fragment() {
         builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät?")
         builder.create().show()
     }
-
-
 }

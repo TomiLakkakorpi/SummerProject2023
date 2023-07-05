@@ -1,6 +1,9 @@
 package com.example.databasetest.fragments.update
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -8,15 +11,17 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.databasetest.NotificationService
 import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
-import kotlinx.android.synthetic.main.custom_row.view.*
 import kotlinx.android.synthetic.main.fragment_add.*
+import kotlinx.android.synthetic.main.fragment_add.view.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 
@@ -30,6 +35,8 @@ class UpdateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        createNofiticationChannel()
+
         val view = inflater.inflate(R.layout.fragment_update, container, false)
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
@@ -88,6 +95,18 @@ class UpdateFragment : Fragment() {
             view.checkBox.setChecked(false)
         }
 
+        if (args.currentTask.notifyDay) {
+            view.checkboxDayBefore.setChecked(true)
+        } else {
+            view.checkboxDayBefore.setChecked(false)
+        }
+
+        if (args.currentTask.notifyHour) {
+            view.checkBoxHourBefore.setChecked(true)
+        } else {
+            view.checkBoxHourBefore.setChecked(false)
+        }
+
         view.updateScreenUpdate.setOnClickListener {
             updateItem()
         }
@@ -108,6 +127,20 @@ class UpdateFragment : Fragment() {
 
         return view
     }
+    val channelID = "To-Do Reminders"
+
+    private fun createNofiticationChannel(name: String, Description: String) {
+        val channel = NotificationChannel(
+            NotificationService.CHANNEL_ID,
+            name,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        channel.description =  Description
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
 
     private fun updateItem(){
         val header = etEditScreenHeader.text.toString()
@@ -134,6 +167,9 @@ class UpdateFragment : Fragment() {
                                     val valuesArrayList = dateTest.split("/")
                                     val valuesArrayList2 = timeTest.split(":")
 
+                                    val notifyDay: Boolean = checkboxDayBefore.isChecked
+                                    val notifyHour: Boolean = checkBoxHourBefore.isChecked
+
                                     //Normal date 11/11/23
                                     if (dateCheck1(dateTest)) {
                                         val day = valuesArrayList[0]
@@ -147,10 +183,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time1 = "$hour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time1, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time1, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time1, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time1, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -163,10 +199,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time2 = "$newHour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time2, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time2, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time2, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time2, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -187,10 +223,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time = "$hour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -203,10 +239,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time = "$newHour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -227,10 +263,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time = "$hour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -243,10 +279,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time = "$newHour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -267,10 +303,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time = "$hour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -283,10 +319,10 @@ class UpdateFragment : Fragment() {
                                             val minute = valuesArrayList2[1]
                                             val time = "$newHour:$minute"
                                             if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false)
+                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
                                                 mTaskViewModel.updateTask(updatedTask)
                                             }
                                             Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
@@ -313,7 +349,11 @@ class UpdateFragment : Fragment() {
         builder.setNegativeButton("Ei")
         {_, _ -> }
         builder.setTitle("Poista ${args.currentTask.header}?")
-       builder.setMessage("Haluatko varmasti poistaa tehtävän ${args.currentTask.header}?")
+        if (args.currentTask.status) {
+            builder.setMessage("Haluatko varmasti poistaa tehtävän ${args.currentTask.header}?")
+        } else {
+            builder.setMessage("Haluatko varmasti poistaa tehtävän ${args.currentTask.header} vaikka sitä ei ole merkitty tehdyksi?")
+        }
         builder.create().show()
     }
 
