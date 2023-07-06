@@ -1,9 +1,6 @@
 package com.example.databasetest.fragments.update
 
 import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -11,22 +8,20 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.databasetest.NotificationService
 import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
-import kotlinx.android.synthetic.main.fragment_add.*
-import kotlinx.android.synthetic.main.fragment_add.view.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
+import java.time.LocalDate
 
 class UpdateFragment : Fragment() {
 
+    //Intializing some varaiables and values
     private val args by navArgs<UpdateFragmentArgs>()
     private lateinit var mTaskViewModel: TaskViewModel
     private var _binding: FragmentListBinding? = null
@@ -35,22 +30,25 @@ class UpdateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        createNofiticationChannel()
 
+        //Initializing viewmodel and view
         val view = inflater.inflate(R.layout.fragment_update, container, false)
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
+        //Getting date values from the database, splitting them by delimiter / and putting the values in an array
         val dateValues = args.currentTask.date
-        val valuesArrayList = dateValues.split("/")
-        val year = valuesArrayList[0]
-        val month = valuesArrayList[1]
-        val day = valuesArrayList[2]
+        val valuesArrayListDate = dateValues.split("/")
+        val year = valuesArrayListDate[0]
+        val month = valuesArrayListDate[1]
+        val day = valuesArrayListDate[2]
 
+        //Getting time values from the database, splitting them by delimiter : and putting the values in an array
         val timeValues = args.currentTask.time
-        val valuesArrayList2 = timeValues.split(":")
-        val hour = valuesArrayList2[0]
-        val minute = valuesArrayList2[1]
+        val valuesArrayListTime = timeValues.split(":")
+        val hour = valuesArrayListTime[0]
+        val minute = valuesArrayListTime[1]
 
+        //Checking if day and month both start with 0 and dropping first index from the value before setting the value in the edittext field
         if (day.startsWith("0") && (month.startsWith("0"))) {
             val newDay = day.drop(1)
             val newMonth = month.drop(1)
@@ -58,23 +56,27 @@ class UpdateFragment : Fragment() {
             view.etEditScreenDate.setText(dateValue1)
         }
 
+        //Checking if neither of day or month start with 0 before setting the value in the edittext field
         if (!day.startsWith("0") && (!month.startsWith("0"))) {
             val dateValue1 = "$day/$month/$year"
             view.etEditScreenDate.setText(dateValue1)
         }
 
+        //Checking if only day starts with 0 and dropping first index from the value before setting the value in the edittext field
         if (day.startsWith("0") && (!month.startsWith("0"))) {
             val newDay = day.drop(1)
             val dateValue1 = "$newDay/$month/$year"
             view.etEditScreenDate.setText(dateValue1)
         }
 
+        //Checking if only month starts with 0 and dropping first index from the value before setting the value in the edittext field
         if (!day.startsWith("0") && (month.startsWith("0"))) {
             val newMonth = month.drop(1)
             val dateValue1 = "$day/$newMonth/$year"
             view.etEditScreenDate.setText(dateValue1)
         }
 
+        //Checking if hour value starts with 0 and dropping the first index value if it does, else showing the time as it is in database
         if (hour.startsWith("0") && !minute.startsWith("0")) {
             val newHour = hour.drop(1)
             val timeValue = "$newHour:$minute"
@@ -84,42 +86,49 @@ class UpdateFragment : Fragment() {
             view.etEditScreenTime.setText(timeValue)
         }
 
+        //Setting the values from database to the edittext fields
         view.etEditScreenHeader.setText(args.currentTask.header)
-        view.etEditScreenDay.setText(args.currentTask.dayName)
         view.etEditScreenDetails.setText(args.currentTask.details)
         view.autoCompleteTextView2.setText(args.currentTask.category)
 
+        //Setting the task status checkbox based on its value in database
         if (args.currentTask.status) {
             view.checkBox.setChecked(true)
         } else {
             view.checkBox.setChecked(false)
         }
 
+        //Setting the day checkbox in edit screen based on its value in database
         if (args.currentTask.notifyDay) {
-            view.checkboxDayBefore.setChecked(true)
+            view.editCheckboxDayBefore.setChecked(true)
         } else {
-            view.checkboxDayBefore.setChecked(false)
+            view.editCheckboxDayBefore.setChecked(false)
         }
 
+        //Setting the hour checkbox in edit screen based on its value in database
         if (args.currentTask.notifyHour) {
-            view.checkBoxHourBefore.setChecked(true)
+            view.editCheckBoxHourBefore.setChecked(true)
         } else {
-            view.checkBoxHourBefore.setChecked(false)
+            view.editCheckBoxHourBefore.setChecked(false)
         }
 
+        //Calling update function when "update" button is pressed
         view.updateScreenUpdate.setOnClickListener {
             updateItem()
         }
 
+        //Calling deletion function when "delete" button is pressed
         view.updateScreenDelete.setOnClickListener {
             deleteTask()
         }
 
+        //Changing from updateFragment to listFragment when "cancel" button is pressed
         view.updateScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
         }
 
+        //Initializing categoryfilter dropdown menu
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
@@ -127,217 +136,117 @@ class UpdateFragment : Fragment() {
 
         return view
     }
-    val channelID = "To-Do Reminders"
 
-    private fun createNofiticationChannel(name: String, Description: String) {
-        val channel = NotificationChannel(
-            NotificationService.CHANNEL_ID,
-            name,
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-        channel.description =  Description
-
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
-
-
+    //Function for updating a task
     private fun updateItem(){
+
+        //Getting values from "edit screen" edittext fields
         val header = etEditScreenHeader.text.toString()
-        val timeTest = etEditScreenTime.text.toString()
-        val dateTest = etEditScreenDate.text.toString()
-        val dayName = etEditScreenDay.text.toString()
+        val timeString = etEditScreenTime.text.toString()
+        val dateString = etEditScreenDate.text.toString()
         val details = etEditScreenDetails.text.toString()
         val category = autoCompleteTextView2.text.toString()
 
+        //Getting values for notifyDay and notifyHour from the checkboxes
+        val notifyDay: Boolean = editCheckboxDayBefore.isChecked
+        val notifyHour: Boolean = editCheckBoxHourBefore.isChecked
+
+        //Splitting date and time values into an array
+        val valuesArrayListDate2 = dateString.split("/")
+        val valuesArrayListTime2 = timeString.split(":")
+
+        //Getting values for day, month and year from the date values array
+        val day2 = valuesArrayListDate2[0]
+        val month2 = valuesArrayListDate2[1]
+        val year2 = valuesArrayListDate2[2]
+
+        //Getting values for hour and minute from the time values array
+        val hour = valuesArrayListTime2[0]
+        val minute = valuesArrayListTime2[1]
+
+        //Setting date values for the 4 scenarios
+        val regularDate = "$year2/$month2/$day2"                    //normal date (example 10/10/23)
+        val dayMissingZeroDate = "$year2/$month2/0$day2"            //day has only one digit (example 1/10/23) so we add 0 in front of it
+        val monthMissingZeroDate = "$year2/0$month2/$day2"          //month has only one digit (example 10/1/23) so we add 0 in front of it
+        val dayAndMonthMissingZeroDate = "$year2/0$month2/0$day2"   //both day and month have only one digit (example 1/1/23) so we add 0 in front of both of them
+
+        //Setting time values for the 2 possible scenarios
+        val regularTime = "$hour:$minute"           //Normal time (example 10:00)
+        val hourMissingZeroTime = "0$hour:$minute"  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
+
+        //Initializing variables
+        var dayName = ""
+        var date = ""
+        var time = ""
+        val status: Boolean
+
+        //Getting the day value based on the given due date
+        val getTaskDayName = LocalDate.of(year2.toInt(), month2.toInt(), day2.toInt()).dayOfWeek.toString()
+
+        //Changing the day name value from English to Finnish
+        if (getTaskDayName == "MONDAY")     { dayName = "Maanantai" }
+        if (getTaskDayName == "TUESDAY")    { dayName = "Tiistai" }
+        if (getTaskDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
+        if (getTaskDayName == "THURSDAY")   { dayName = "Torstai" }
+        if (getTaskDayName == "FRIDAY")     { dayName = "Perjantai" }
+        if (getTaskDayName == "SATURDAY")   { dayName = "Lauantai" }
+        if (getTaskDayName == "SUNDAY")     { dayName = "Sunnuntai" }
+
+        //Checking if header field is empty
         if (checkHeader(header))
         {
-            if (checkTime(timeTest))
+            //Checking if time field is empty
+            if (checkTime(timeString))
             {
-                if (timeCheck1(timeTest) || timeCheck2(timeTest))
+                //Calling functions to check that the given time matches either of the accepted formats
+                if (timeCheck1(timeString) || timeCheck2(timeString))
                 {
-                    if (checkDate(dateTest))
+                    //Checking if date field is empty
+                    if (checkDate(dateString))
                     {
-                        if (dateCheck1(dateTest) || dateCheck2(dateTest) || dateCheck3(dateTest) || dateCheck4(dateTest))
+                        //Calling functions to check that the given date matches any of the accepted formats
+                        if (dateCheck1(dateString) || dateCheck2(dateString) || dateCheck3(dateString) || dateCheck4(dateString))
                         {
-                            if (checkDayName(dayName))
+                            //Checking if category field is empty
+                            if (checkCategory(category))
                             {
-                                if (checkCategory(category))
-                                {
-                                    val valuesArrayList = dateTest.split("/")
-                                    val valuesArrayList2 = timeTest.split(":")
+                                //Normal date 11/11/23
+                                if (dateCheck1(dateString)) { date = regularDate }
 
-                                    val notifyDay: Boolean = checkboxDayBefore.isChecked
-                                    val notifyHour: Boolean = checkBoxHourBefore.isChecked
+                                //Date like 1/11/23
+                                if (dateCheck2(dateString)) { date = dayMissingZeroDate }
 
-                                    //Normal date 11/11/23
-                                    if (dateCheck1(dateTest)) {
-                                        val day = valuesArrayList[0]
-                                        val month = valuesArrayList[1]
-                                        val year = valuesArrayList[2]
-                                        val date = "$year/$month/$day"
+                                //Date like 11/1/23
+                                if (dateCheck3(dateString)) { date = monthMissingZeroDate }
 
-                                        //Normal time 10:00
-                                        if (timeCheck1(timeTest)) {
-                                            val hour = valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time1 = "$hour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time1, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time1, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
+                                //Date like 1/1/23
+                                if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
 
-                                        //Time with only 1 digit in hour field (1:00)
-                                        if (timeCheck2(timeTest)) {
-                                            val newHour = "0" + valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time2 = "$newHour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time2, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time2, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
-                                    }
+                                //Normal time 10:00
+                                if (timeCheck1(timeString)) { time = regularTime }
 
-                                    //Date like 1/11/23
-                                    if (dateCheck2(dateTest)) {
-                                        val day = "0" + valuesArrayList[0]
-                                        val month = valuesArrayList[1]
-                                        val year = valuesArrayList[2]
-                                        val date = "$year/$month/$day"
+                                //Time with only 1 digit in hour field (1:00)
+                                if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
-                                        //Normal time 10:00
-                                        if (timeCheck1(timeTest)) {
-                                            val hour = valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time = "$hour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
+                                //Setting the status variable based on the checkbox state
+                                status = checkBox.isChecked
 
-                                        //Time with only 1 digit in hour field (1:00)
-                                        if (timeCheck2(timeTest)) {
-                                            val newHour = "0" + valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time = "$newHour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
-                                    }
+                                //updating the task with the given values and changing back to listfragment
+                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyDay, notifyHour)
+                                mTaskViewModel.updateTask(updatedTask)
+                                Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
 
-                                    //Date like 11/1/23
-                                    if (dateCheck3(dateTest)) {
-                                        val day = valuesArrayList[0]
-                                        val month = "0" + valuesArrayList[1]
-                                        val year = valuesArrayList[2]
-                                        val date = "$year/$month/$day"
-
-                                        //Normal time 10:00
-                                        if (timeCheck1(timeTest)) {
-                                            val hour = valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time = "$hour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
-
-                                        //Time with only 1 digit in hour field (1:00)
-                                            if (timeCheck2(timeTest)) {
-                                            val newHour = "0" + valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time = "$newHour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
-                                    }
-
-                                    //Date like 1/1/23
-                                    if (dateCheck4(dateTest)) {
-                                        val day = "0" + valuesArrayList[0]
-                                        val month = "0" + valuesArrayList[1]
-                                        val year = valuesArrayList[2]
-                                        val date = "$year/$month/$day"
-
-                                        //Normal time 10:00
-                                        if (timeCheck1(timeTest)) {
-                                            val hour = valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time = "$hour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
-
-                                        //Time with only 1 digit in hour field (1:00)
-                                        if (timeCheck2(timeTest)) {
-                                            val newHour = "0" + valuesArrayList2[0]
-                                            val minute = valuesArrayList2[1]
-                                            val time = "$newHour:$minute"
-                                            if (checkBox.isChecked) {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = true, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            } else {
-                                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status = false, notifyDay, notifyHour)
-                                                mTaskViewModel.updateTask(updatedTask)
-                                            }
-                                            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-                                        }
-                                    }
-                                } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
-                            } else {Toast.makeText(requireContext(), "Syötä päivä esim. Maanantai", Toast.LENGTH_SHORT).show()}
-                        } else {Toast.makeText(requireContext(), "$dateTest Syötä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
+                                //Different toast messages for different errors
+                            } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
+                        } else {Toast.makeText(requireContext(), "Syötä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
                     } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
                 } else {Toast.makeText(requireContext(), "Syötä aika muodossa tunnit:minuutit", Toast.LENGTH_SHORT).show()}
             } else {Toast.makeText(requireContext(), "Syötä Kellonaika", Toast.LENGTH_SHORT).show()}
         } else {Toast.makeText(requireContext(), "Syötä otsikko", Toast.LENGTH_SHORT).show()}
     }
 
+    //Function for deleting a single task
     private fun deleteTask(){
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Kyllä")
@@ -375,11 +284,6 @@ class UpdateFragment : Fragment() {
     //Checking that date field isn't empty
     private fun checkDate(date: String): Boolean {
         return !(TextUtils.isEmpty(date))
-    }
-
-    //Checking that dayName field isn't empty
-    private fun checkDayName(dayName: String): Boolean {
-        return !(TextUtils.isEmpty(dayName))
     }
 
     //Checking that category field isn't empty

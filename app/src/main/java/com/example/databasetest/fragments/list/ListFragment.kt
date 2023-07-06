@@ -14,11 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.viewmodel.TaskViewModel
-import kotlinx.android.synthetic.main.custom_row.*
-import kotlinx.android.synthetic.main.custom_row.view.*
-import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
-import java.time.LocalDate
 
 class ListFragment : Fragment() {
 
@@ -29,6 +25,7 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         val adapter = ListAdapter()
         val recyclerView = view.recyclerView

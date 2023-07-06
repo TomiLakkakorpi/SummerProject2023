@@ -143,36 +143,6 @@
             android:inputType="date" />
 
         <TextView
-            android:id="@+id/tvEditScreenDay"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-
-            android:layout_margin="10sp"
-
-            android:text="@string/paivaString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-        <EditText
-            android:id="@+id/etEditScreenDay"
-
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5sp"
-
-            android:backgroundTint="#000000"
-            android:ems="10"
-
-            android:inputType="text"
-            android:text="" />
-
-        <TextView
             android:id="@+id/tvEditScreenDetails"
 
             android:layout_width="120dp"
@@ -230,6 +200,57 @@
 
     </GridLayout>
 
+            <TextView
+                android:id="@+id/tvAddScreenRemember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:text="@string/muistutaString"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+
+            <CheckBox
+                android:id="@+id/editCheckboxDayBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
+                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+
+            <CheckBox
+                android:id="@+id/editCheckBoxHourBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
+                app:layout_constraintTop_toBottomOf="@+id/editCheckboxDayBefore" />
+
+            <TextView
+                android:id="@+id/tvAddScreenDayBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:text="@string/daybeforeString"
+                app:layout_constraintStart_toEndOf="@id/editCheckboxDayBefore"
+                app:layout_constraintTop_toBottomOf="@id/editScreenGridLayout"/>
+
+            <TextView
+                android:id="@+id/tvAddScreenHourBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:text="@string/hourbeforeString"
+                app:layout_constraintStart_toEndOf="@id/editCheckBoxHourBefore"
+                app:layout_constraintTop_toBottomOf="@id/tvAddScreenDayBefore"/>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenCancel"
 
@@ -237,7 +258,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_cancel"
@@ -245,7 +265,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/updateScreenDelete"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/editCheckBoxHourBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenDelete"
@@ -254,7 +274,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_delete"
@@ -262,7 +281,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/editCheckBoxHourBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenUpdate"
@@ -271,7 +290,6 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_update"
@@ -279,7 +297,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
-                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/editCheckBoxHourBefore" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

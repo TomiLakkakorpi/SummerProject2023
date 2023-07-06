@@ -135,35 +135,6 @@
                     android:inputType="date" />
 
                 <TextView
-                    android:id="@+id/tvAddScreenDay"
-
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-
-                    android:layout_margin="10dp"
-
-                    android:text="@string/paivaString"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <EditText
-                    android:id="@+id/etAddScreenDay"
-
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-
-                    android:backgroundTint="#000000"
-                    android:ems="10"
-
-                    android:inputType="text" />
-
-                <TextView
                     android:id="@+id/tvAddScreenDetails"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -241,7 +212,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/addScreenAdd"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxHourBefore" />
+                app:layout_constraintTop_toBottomOf="@+id/addCheckBoxHourBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addScreenAdd"
@@ -257,7 +228,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/addScreenCancel"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxHourBefore" />
+                app:layout_constraintTop_toBottomOf="@+id/addCheckBoxHourBefore" />
 
             <TextView
                 android:id="@+id/tvAddScreenRemember"
@@ -273,18 +244,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
 
             <CheckBox
-                android:id="@+id/checkboxDayBefore"
+                android:id="@+id/addCheckboxDayBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
                 app:layout_constraintTop_toBottomOf="@+id/addScreenGridLayout" />
 
             <CheckBox
-                android:id="@+id/checkBoxHourBefore"
+                android:id="@+id/addCheckBoxHourBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
                 app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
-                app:layout_constraintTop_toBottomOf="@+id/checkboxDayBefore" />
+                app:layout_constraintTop_toBottomOf="@+id/addCheckboxDayBefore" />
 
             <TextView
                 android:id="@+id/tvAddScreenDayBefore"
@@ -295,7 +268,7 @@
                 android:textSize="20sp"
                 android:textStyle="italic"
                 android:text="@string/daybeforeString"
-                app:layout_constraintStart_toEndOf="@id/checkboxDayBefore"
+                app:layout_constraintStart_toEndOf="@id/addCheckboxDayBefore"
                 app:layout_constraintTop_toBottomOf="@id/addScreenGridLayout"/>
 
             <TextView
@@ -307,9 +280,8 @@
                 android:textSize="20sp"
                 android:textStyle="italic"
                 android:text="@string/hourbeforeString"
-                app:layout_constraintStart_toEndOf="@id/checkBoxHourBefore"
-                app:layout_constraintTop_toBottomOf="@id/tvAddScreenDayBefore"
-                />
+                app:layout_constraintStart_toEndOf="@id/addCheckBoxHourBefore"
+                app:layout_constraintTop_toBottomOf="@id/tvAddScreenDayBefore"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
