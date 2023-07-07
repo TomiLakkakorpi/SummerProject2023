@@ -109,7 +109,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
 
         //Setting the tasks background color based on category
         if (currentItem.category == "Liikunta") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.liikunta) }
-        if (currentItem.category == "Hyvinvointi") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.hyvinvointi) }
         if (currentItem.category == "Terveys") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.terveys) }
         if (currentItem.category == "Koulu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.koulu) }
         if (currentItem.category == "Työ") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tyo) }
@@ -118,6 +117,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         if (currentItem.category == "Askare") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.askare) }
         if (currentItem.category == "Tapaaminen") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tapaaminen) }
         if (currentItem.category == "Pelit") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.pelit) }
+        if (currentItem.category == "Jääkiekko") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.Jääkiekko) }
+        if (currentItem.category == "Formula 1") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.Formula_1) }
+        if (currentItem.category == "eSports") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.eSports) }
         if (currentItem.category == "Muu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.muu) }
 
         // Getting Task due date

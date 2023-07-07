@@ -18,7 +18,6 @@
     <color name="purpleBackground1">#674EA7</color>
 
     <color name="liikunta">#37e1e1</color>
-    <color name="hyvinvointi">#8a2be2</color>
     <color name="terveys">#f54fa6</color>
     <color name="koulu">#20D1AC</color>
     <color name="tyo">#0B5E55</color>
@@ -27,5 +26,8 @@
     <color name="askare">#dd9933</color>
     <color name="tapaaminen">#dadd1e</color>
     <color name="pelit">#197823</color>
+    <color name="Jääkiekko">#77BFEA</color>
+    <color name="Formula_1">#860713</color>
+    <color name="eSports">#871d7b</color>
     <color name="muu">#DB5729</color>
 </resources>

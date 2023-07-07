@@ -220,10 +220,10 @@ class AddFragment : Fragment() {
                                     if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
                                     //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
-                                    if (timeCheck3(timeString)) { time = bothHourAndMinuteMissingZeroTime }
+                                    if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
 
                                     //Time with 1 digit in both hour and minute field
-                                    if (timeCheck4(timeString)) { time = minuteMissingZeroTime}
+                                    if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime}
 
                                     //If the given date isn't a valid date, telling the user about it with a toast message
                                     if (!isValidDate(dateString)) {
