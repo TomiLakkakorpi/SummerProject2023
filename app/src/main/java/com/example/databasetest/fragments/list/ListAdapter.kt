@@ -3,6 +3,7 @@ package com.example.databasetest.fragments.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasetest.R
@@ -20,7 +21,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
         return MyViewHolder(LayoutInflater.from(parent.context).inflate((R.layout.custom_row), parent, false))
     }
 
@@ -108,39 +108,17 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         }
 
         //Setting the tasks background color based on category
-        if (currentItem.category == "Liikunta") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.liikunta)
-        }
-        if (currentItem.category == "Hyvinvointi") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.hyvinvointi)
-        }
-        if (currentItem.category == "Terveys") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.terveys)
-        }
-        if (currentItem.category == "Koulu") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.koulu)
-        }
-        if (currentItem.category == "Työ") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tyo)
-        }
-        if (currentItem.category == "Tärkeä") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tärkeä)
-        }
-        if (currentItem.category == "Harrastus") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.harrastus)
-        }
-        if (currentItem.category == "Askare") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.askare)
-        }
-        if (currentItem.category == "Tapaaminen") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tapaaminen)
-        }
-        if (currentItem.category == "Pelit") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.pelit)
-        }
-        if (currentItem.category == "Muu") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.muu)
-        }
+        if (currentItem.category == "Liikunta") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.liikunta) }
+        if (currentItem.category == "Hyvinvointi") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.hyvinvointi) }
+        if (currentItem.category == "Terveys") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.terveys) }
+        if (currentItem.category == "Koulu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.koulu) }
+        if (currentItem.category == "Työ") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tyo) }
+        if (currentItem.category == "Tärkeä") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tärkeä) }
+        if (currentItem.category == "Harrastus") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.harrastus) }
+        if (currentItem.category == "Askare") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.askare) }
+        if (currentItem.category == "Tapaaminen") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tapaaminen) }
+        if (currentItem.category == "Pelit") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.pelit) }
+        if (currentItem.category == "Muu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.muu) }
 
         // Getting Task due date
         val reminderYear = "20$year"
