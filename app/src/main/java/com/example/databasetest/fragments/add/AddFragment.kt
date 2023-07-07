@@ -70,9 +70,11 @@ class AddFragment : Fragment() {
         return view
     }
 
+    //Function for date picker
     private fun openDatePicker() {
-        val myCalendar = Calendar.getInstance()
 
+        //Initializing our calendar
+        val myCalendar = Calendar.getInstance()
         val datePicker = DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
            myCalendar.set(Calendar.YEAR, year)
            myCalendar.set(Calendar.MONTH, month)
@@ -90,13 +92,18 @@ class AddFragment : Fragment() {
         etAddScreenDate.setText(sdf.format(myCalendar.time))
     }
 
+    //Initializing some variables for time picker
     private var pickerHour = ""
     private var pickerMinute = ""
     var timeString = "00:00"
 
+    //Function for time picker
     private fun openTimePicker() {
+
+        //Setting the clock format
         val clockFormat = TimeFormat.CLOCK_24H
 
+        //Initializing the time picker
         val picker = MaterialTimePicker.Builder()
             .setTimeFormat(clockFormat)
             .setHour(12)
@@ -105,12 +112,13 @@ class AddFragment : Fragment() {
             .build()
         picker.show(childFragmentManager, "TAG")
 
+        //Getting time values from the picker when the user presses the "ok" buttton (positive button) and setting the values to timeString variable
         picker.addOnPositiveButtonClickListener {
             pickerHour = picker.hour.toString()
             pickerMinute = picker.minute.toString()
-
             timeString = "$pickerHour:$pickerMinute"
 
+            //Adding a "0" to minutes if minutes has only one digit, then setting the time value to the edittext for the user to see
             if (timeCheck3(timeString) || timeCheck4(timeString)) {
                 val showTime = "$pickerHour:0$pickerMinute"
                 etAddScreenTime.setText(showTime)
@@ -124,7 +132,6 @@ class AddFragment : Fragment() {
     private fun insertDataToDatabase() {
 
         //Getting values from "add screen" edittext fields
-
         val header = etAddScreenHeader.text.toString()
         val dateString = etAddScreenDate.text.toString()
         val details = etAddScreenDetails.text.toString()
@@ -182,7 +189,7 @@ class AddFragment : Fragment() {
                 //Checking if time field is empty
                 if (checkTime(timeString))
                 {
-                    //Checking if the given time input matches either of the accepted formats
+                    //Checking if the given time input matches any of the accepted formats
                     if (timeCheck1(timeString) || timeCheck2(timeString) || timeCheck3(timeString) || timeCheck4(timeString))
                     {
                         //Checking if date field is empty

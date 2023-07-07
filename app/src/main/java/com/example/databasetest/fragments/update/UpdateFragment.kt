@@ -129,10 +129,12 @@ class UpdateFragment : Fragment() {
             deleteTask()
         }
 
+        //Opening time picker menu when button is pressed
         view.updateScreenTimePicker.setOnClickListener {
             openTimePicker()
         }
 
+        //Opening date picker menu when button is pressed
         view.updateScreenDatePicker.setOnClickListener {
             openDatePicker()
         }
@@ -152,9 +154,11 @@ class UpdateFragment : Fragment() {
         return view
     }
 
+    //Function for date picker
     private fun openDatePicker() {
-        val myCalendar = Calendar.getInstance()
 
+        //Initializing our calendar
+        val myCalendar = Calendar.getInstance()
         val datePicker = DatePickerDialog.OnDateSetListener{ view, year, month, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, month)
@@ -173,17 +177,23 @@ class UpdateFragment : Fragment() {
         etEditScreenDate.setText(sdf.format(myCalendar.time))
     }
 
+    //Initializing some variables for time picker
     private var pickerHour = ""
     private var pickerMinute = ""
     var timeString = "00:00"
 
+    //Function for time picker
     private fun openTimePicker() {
+
+        //Setting the clock format
         val clockFormat = TimeFormat.CLOCK_24H
 
+        //Getting current task time values
         val taskTimeValue = args.currentTask.time.split(":")
         val setHour = taskTimeValue[0]
         val setMinute = taskTimeValue[1]
 
+        //Initializing the time picker
         val picker = MaterialTimePicker.Builder()
             .setTimeFormat(clockFormat)
             .setHour(setHour.toInt())
@@ -192,12 +202,13 @@ class UpdateFragment : Fragment() {
             .build()
         picker.show(childFragmentManager, "TAG")
 
+        //Getting time values from the picker when the user presses the "ok" buttton (positive button) and setting the values to timeString variable
         picker.addOnPositiveButtonClickListener {
             pickerHour = picker.hour.toString()
             pickerMinute = picker.minute.toString()
-
             timeString = "$pickerHour:$pickerMinute"
 
+            //Adding a "0" to minutes if minutes has only one digit, then setting the time value to the edittext for the user to see
             if (timeCheck3(timeString) || timeCheck4(timeString)) {
                 val showTime = "$pickerHour:0$pickerMinute"
                 etEditScreenTime.setText(showTime)
@@ -299,8 +310,10 @@ class UpdateFragment : Fragment() {
                                 //Time with only 1 digit in hour field (1:00)
                                 if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
+                                //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
                                 if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
 
+                                //Time with 1 digit in both hour and minute field
                                 if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime }
 
                                 //Setting the status variable based on the checkbox state
