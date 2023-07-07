@@ -180,11 +180,10 @@ class UpdateFragment : Fragment() {
     //Initializing some variables for time picker
     private var pickerHour = ""
     private var pickerMinute = ""
-    var timeString = "00:00"
+    var timeString2 = "00:00"
 
     //Function for time picker
     private fun openTimePicker() {
-
         //Setting the clock format
         val clockFormat = TimeFormat.CLOCK_24H
 
@@ -206,14 +205,27 @@ class UpdateFragment : Fragment() {
         picker.addOnPositiveButtonClickListener {
             pickerHour = picker.hour.toString()
             pickerMinute = picker.minute.toString()
-            timeString = "$pickerHour:$pickerMinute"
+            timeString2 = "$pickerHour:$pickerMinute"
 
             //Adding a "0" to minutes if minutes has only one digit, then setting the time value to the edittext for the user to see
-            if (timeCheck3(timeString) || timeCheck4(timeString)) {
-                val showTime = "$pickerHour:0$pickerMinute"
+            if (timeCheck1(timeString2)) {
+                val showTime = "$pickerHour:$pickerMinute"
                 etEditScreenTime.setText(showTime)
-            } else {
-                etEditScreenTime.setText(timeString)
+            }
+
+            if (timeCheck2(timeString2)) {
+                val showTime2 = "0$pickerHour:$pickerMinute"
+                etEditScreenTime.setText(showTime2)
+            }
+
+            if (timeCheck3(timeString2)) {
+                val showTime3 = "$pickerHour:0$pickerMinute"
+                etEditScreenTime.setText(showTime3)
+            }
+
+            if (timeCheck4(timeString2)) {
+                val showTime4 = "0$pickerHour:0$pickerMinute"
+                etEditScreenTime.setText(showTime4)
             }
         }
     }
@@ -224,6 +236,7 @@ class UpdateFragment : Fragment() {
         //Getting values from "edit screen" edittext fields
         val header = etEditScreenHeader.text.toString()
         val dateString = etEditScreenDate.text.toString()
+        val timeString = etEditScreenTime.text.toString()
         val details = etEditScreenDetails.text.toString()
         val category = autoCompleteTextView2.text.toString()
 
