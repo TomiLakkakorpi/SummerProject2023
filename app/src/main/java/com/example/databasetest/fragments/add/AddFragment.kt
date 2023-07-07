@@ -1,7 +1,9 @@
 package com.example.databasetest.fragments.add
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.format.DateFormat.is24HourFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +17,15 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.android.synthetic.main.fragment_update.*
+import kotlinx.android.synthetic.main.fragment_update.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 
 class AddFragment : Fragment() {
 
@@ -38,6 +45,16 @@ class AddFragment : Fragment() {
             insertDataToDatabase()
         }
 
+        //Opening time picker menu when button is pressed
+        view.addScreenTimePicker.setOnClickListener {
+            openTimePicker()
+        }
+
+        //Opening date picker menu when button is pressed
+        view.addScreenDatePicker.setOnClickListener {
+            openDatePicker()
+        }
+
         //Changing from addFragment to ListFragment when "cancel" button is pressed
         view.addScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -53,12 +70,62 @@ class AddFragment : Fragment() {
         return view
     }
 
+    private fun openDatePicker() {
+        val myCalendar = Calendar.getInstance()
+
+        val datePicker = DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
+           myCalendar.set(Calendar.YEAR, year)
+           myCalendar.set(Calendar.MONTH, month)
+           myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+           updateLabel(myCalendar)
+        }
+
+        DatePickerDialog(requireContext(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+        myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+    }
+
+    private fun updateLabel(myCalendar: Calendar) {
+        val myFormat = "dd/MM/yy"
+        val sdf = SimpleDateFormat(myFormat)
+        etAddScreenDate.setText(sdf.format(myCalendar.time))
+    }
+
+    private var pickerHour = ""
+    private var pickerMinute = ""
+    var timeString = "00:00"
+
+    private fun openTimePicker() {
+        val clockFormat = TimeFormat.CLOCK_24H
+
+        val picker = MaterialTimePicker.Builder()
+            .setTimeFormat(clockFormat)
+            .setHour(12)
+            .setMinute(0)
+            .setTitleText("Valitse Aika")
+            .build()
+        picker.show(childFragmentManager, "TAG")
+
+        picker.addOnPositiveButtonClickListener {
+            pickerHour = picker.hour.toString()
+            pickerMinute = picker.minute.toString()
+
+            timeString = "$pickerHour:$pickerMinute"
+
+            if (timeCheck3(timeString) || timeCheck4(timeString)) {
+                val showTime = "$pickerHour:0$pickerMinute"
+                etAddScreenTime.setText(showTime)
+            } else {
+                etAddScreenTime.setText(timeString)
+            }
+        }
+    }
+
     //Function for inserting data to database
     private fun insertDataToDatabase() {
 
         //Getting values from "add screen" edittext fields
+
         val header = etAddScreenHeader.text.toString()
-        val timeString = etAddScreenTime.text.toString()
         val dateString = etAddScreenDate.text.toString()
         val details = etAddScreenDetails.text.toString()
         val category = autoCompleteTextView.text.toString()
@@ -86,9 +153,11 @@ class AddFragment : Fragment() {
         val monthMissingZeroDate = "$year/0$month/$day"             //month has only one digit (example 10/1/23) so we add 0 in front of it
         val dayAndMonthMissingZeroDate = "$year/0$month/0$day"      //both day and month have only one digit (example 1/1/23) so we add 0 in front of both of them
 
-        //Setting time values for the 2 possible scenarios
-        val regularTime = "$hour:$minute"               //Normal time (example 10:00)
-        val hourMissingZeroTime = "0$hour:$minute"      //Hour value is only one digit (example 9:00) so we add a 0 in front of it
+        //Setting time values for the 4 possible scenarios
+        val regularTime = "$hour:$minute"                           //Normal time (example 10:00)
+        val hourMissingZeroTime = "0$hour:$minute"                  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
+        val minuteMissingZeroTime = "$hour:0$minute"
+        val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
 
         //Initializing variables
         var dayName = ""
@@ -114,7 +183,7 @@ class AddFragment : Fragment() {
                 if (checkTime(timeString))
                 {
                     //Checking if the given time input matches either of the accepted formats
-                    if (timeCheck1(timeString) || timeCheck2(timeString))
+                    if (timeCheck1(timeString) || timeCheck2(timeString) || timeCheck3(timeString) || timeCheck4(timeString))
                     {
                         //Checking if date field is empty
                         if (checkDate(dateString))
@@ -142,6 +211,12 @@ class AddFragment : Fragment() {
 
                                     //Time with only 1 digit in hour field (1:00)
                                     if (timeCheck2(timeString)) { time = hourMissingZeroTime }
+
+                                    //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
+                                    if (timeCheck3(timeString)) { time = bothHourAndMinuteMissingZeroTime }
+
+                                    //Time with 1 digit in both hour and minute field
+                                    if (timeCheck4(timeString)) { time = minuteMissingZeroTime}
 
                                     //If the given date isn't a valid date, telling the user about it with a toast message
                                     if (!isValidDate(dateString)) {
@@ -202,6 +277,16 @@ class AddFragment : Fragment() {
     //Checking input and matching for times like 1:11
     private fun timeCheck2(str: String): Boolean {
         val regex = Regex("\\d:\\d{2}")
+        return str.matches(regex)
+    }
+
+    private fun timeCheck3(str: String): Boolean {
+        val regex = Regex("\\d{2}:\\d")
+        return str.matches(regex)
+    }
+
+    private fun timeCheck4(str: String): Boolean {
+        val regex = Regex("\\d:\\d")
         return str.matches(regex)
     }
 
