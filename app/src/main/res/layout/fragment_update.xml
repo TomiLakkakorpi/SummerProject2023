@@ -315,10 +315,10 @@
                 android:focusable="true"
                 android:src="@drawable/ic_calendar"
                 app:backgroundTint="@color/blue_update"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="-290dp"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="82dp"
                 app:layout_constraintStart_toEndOf="@id/updateScreenUpdate"
-                app:layout_constraintTop_toBottomOf="@id/tvEditScreenHourBefore" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenTimePicker"
@@ -331,10 +331,10 @@
                 android:focusable="true"
                 android:src="@drawable/ic_time"
                 app:backgroundTint="@color/blue_update"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="-240dp"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="130dp"
                 app:layout_constraintStart_toEndOf="@id/updateScreenUpdate"
-                app:layout_constraintTop_toBottomOf="@id/tvEditScreenHourBefore" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

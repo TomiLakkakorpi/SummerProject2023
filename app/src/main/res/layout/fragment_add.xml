@@ -243,9 +243,9 @@
                 android:src="@drawable/ic_calendar"
                 app:backgroundTint="@color/blue_update"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="-290dp"
+                android:layout_marginTop="40dp"
                 app:layout_constraintStart_toEndOf="@id/addScreenAdd"
-                app:layout_constraintTop_toBottomOf="@id/tvAddScreenHourBefore" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addScreenTimePicker"
@@ -259,9 +259,9 @@
                 android:src="@drawable/ic_time"
                 app:backgroundTint="@color/blue_update"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="-240dp"
+                android:layout_marginTop="90dp"
                 app:layout_constraintStart_toEndOf="@id/addScreenAdd"
-                app:layout_constraintTop_toBottomOf="@id/tvAddScreenHourBefore" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvAddScreenRemember"

@@ -1,9 +1,11 @@
 package com.example.databasetest.fragments.add
 
-import android.app.DatePickerDialog
+import android.app.*
+import android.app.Notification
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.text.format.DateFormat.is24HourFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +13,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.databasetest.R
+import com.example.databasetest.*
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
@@ -21,10 +24,10 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
-import kotlinx.android.synthetic.main.fragment_update.*
-import kotlinx.android.synthetic.main.fragment_update.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class AddFragment : Fragment() {
@@ -48,6 +51,7 @@ class AddFragment : Fragment() {
         //Opening time picker menu when button is pressed
         view.addScreenTimePicker.setOnClickListener {
             openTimePicker()
+
         }
 
         //Opening date picker menu when button is pressed
@@ -70,6 +74,10 @@ class AddFragment : Fragment() {
         return view
     }
 
+    var notificationDay = ""
+    var notificationMonth = ""
+    var notificationYear = ""
+
     //Function for date picker
     private fun openDatePicker() {
 
@@ -81,6 +89,11 @@ class AddFragment : Fragment() {
            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
            updateLabel(myCalendar)
         }
+
+        //Getting date values for notification scheduler
+        notificationDay = Calendar.DAY_OF_MONTH.toString()
+        notificationMonth = Calendar.MONTH.toString()
+        notificationYear = Calendar.YEAR.toString()
 
         DatePickerDialog(requireContext(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
         myCalendar.get(Calendar.DAY_OF_MONTH)).show()
@@ -133,9 +146,9 @@ class AddFragment : Fragment() {
 
         //Getting values from "add screen" edittext fields
         val header = etAddScreenHeader.text.toString()
-        val dateString = etAddScreenDate.text.toString()
         val details = etAddScreenDetails.text.toString()
         val category = autoCompleteTextView.text.toString()
+        val dateString = etAddScreenDate.text.toString()
 
         //Getting values for notifyDay and notifyHour from the checkboxes
         val notifyDay: Boolean = addCheckboxDayBefore.isChecked
@@ -238,6 +251,10 @@ class AddFragment : Fragment() {
                                     //Adding a task with the given values and changing back to listfragment
                                     val task = Task(0, header, time, date, dayName, details, category, status, notifyDay, notifyHour)
                                     mTaskViewModel.addTask(task)
+
+                                    createNotificationChannel()
+                                    scheduleNotification()
+
                                     Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                     findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
@@ -248,6 +265,60 @@ class AddFragment : Fragment() {
                     } else {Toast.makeText(requireContext(), "Syötä aika muodossa tunnit:minuutit", Toast.LENGTH_SHORT).show()}
                 } else {Toast.makeText(requireContext(), "Syötä kellonaika", Toast.LENGTH_SHORT).show()}
             } else {Toast.makeText(requireContext(), "Syötä Otsikko", Toast.LENGTH_SHORT).show()}
+    }
+
+    private fun scheduleNotification() {
+        val intent = Intent(requireContext(), Notification::class.java)
+        val title = etAddScreenHeader.text.toString()
+        val message = "Muistutus tehtävän" + etAddScreenHeader.text.toString() + "takarajasta"
+        intent.putExtra(titleExtra, title)
+        intent.putExtra(messageExtra, message)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val time = getTime()
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+    }
+
+    private fun getTime(): Long {
+        timeString = etAddScreenTime.text.toString()
+        val dateString = etAddScreenDate.text.toString()
+
+        val valuesArrayListNotif = timeString.split(":")
+        val valuesArrayListNotif2 = dateString.split("/")
+
+        val hour = valuesArrayListNotif[0]
+        val minute = valuesArrayListNotif[1]
+        val day = valuesArrayListNotif2[0]
+        val month = valuesArrayListNotif2[1]
+        val year = "20" + valuesArrayListNotif2[2]
+
+        val dateAndTimeNow = LocalDateTime.now()
+        val dueDateAndTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+
+
+        return dateAndTimeNow.until(dueDateAndTime, ChronoUnit.MILLIS)
+    }
+
+    private fun createNotificationChannel() {
+        val name = "Notif Channel"
+        val desc = "A Description of the Channel"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelID, name, importance)
+        channel.description = desc
+        val notificationManager = requireActivity().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     override fun onDestroyView() {
