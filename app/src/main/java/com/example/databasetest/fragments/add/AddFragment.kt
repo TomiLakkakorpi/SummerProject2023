@@ -2,9 +2,7 @@ package com.example.databasetest.fragments.add
 
 import android.Manifest
 import android.app.*
-import android.app.Notification
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
@@ -16,10 +14,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.databasetest.*
@@ -28,13 +24,10 @@ import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 class AddFragment : Fragment() {
@@ -96,12 +89,6 @@ class AddFragment : Fragment() {
             openDatePicker()
         }
 
-        view.testButton1.setOnClickListener {
-            if (hasNotificationPermission) {
-                showNotification()
-            }
-        }
-
         //Changing from addFragment to ListFragment when "cancel" button is pressed
         view.addScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -117,11 +104,11 @@ class AddFragment : Fragment() {
         return view
     }
 
-    private fun showNotification() {
+    private fun showNotification(title: String, text: String) {
         val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification = NotificationCompat.Builder(requireContext(), "ToDoChannel")
-            .setContentText("Test Notification")
-            .setContentTitle("Title")
+            .setContentText(text)
+            .setContentTitle(title)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
         notificationManager.notify(1, notification)
@@ -293,6 +280,11 @@ class AddFragment : Fragment() {
 
                                     Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                     findNavController().navigate(R.id.action_addFragment_to_listFragment)
+
+                                    val notifText = "Muistutus tehtävän $header takarajasta"
+
+
+                                    showNotification(header, notifText)
 
                                     //Different toast messages for different errors
                                 } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
