@@ -219,7 +219,7 @@
                 android:id="@+id/editCheckboxDayBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="40dp"
                 app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
                 app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
@@ -227,7 +227,7 @@
                 android:id="@+id/editCheckBoxHourBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="40dp"
                 app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
                 app:layout_constraintTop_toBottomOf="@+id/editCheckboxDayBefore" />
 

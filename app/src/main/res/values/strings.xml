@@ -17,7 +17,7 @@
     <string name="paivitaString">Päivitä</string>
     <string name="valitse_kategoriaString">Valitse Kategoria</string>
     <string name="muistutaString">Muistuta</string>
-    <string name="daybeforeString">Päivää ennen</string>
+    <string name="daybeforeString">Tehtävän alkaessa</string>
     <string name="hourbeforeString">Tuntia ennen</string>
 
     <string name="title_activity_add_task">AddTaskActivity</string>

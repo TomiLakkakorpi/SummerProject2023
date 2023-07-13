@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.databasetest.*
 import com.example.databasetest.databinding.FragmentListBinding
@@ -26,8 +27,14 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class AddFragment : Fragment() {
@@ -40,7 +47,6 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val hasNotificationPermission: Boolean
 
         val requestPermissionLauncher =
             registerForActivityResult(
@@ -56,9 +62,7 @@ class AddFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED) {
-            hasNotificationPermission = true
         } else {
-            hasNotificationPermission = false
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
 
@@ -109,7 +113,7 @@ class AddFragment : Fragment() {
         val notification = NotificationCompat.Builder(requireContext(), "ToDoChannel")
             .setContentText(text)
             .setContentTitle(title)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.appicon)
             .build()
         notificationManager.notify(1, notification)
     }
@@ -173,6 +177,7 @@ class AddFragment : Fragment() {
     }
 
     //Function for inserting data to database
+    @OptIn(DelicateCoroutinesApi::class)
     private fun insertDataToDatabase() {
 
         //Getting values from "add screen" edittext fields
@@ -281,10 +286,36 @@ class AddFragment : Fragment() {
                                     Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                     findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
-                                    val notifText = "Muistutus tehtävän $header takarajasta"
+                                    val currentTime = LocalDateTime.now()
+                                    val correctYear = "20$year"
+                                    val dueTime = LocalDateTime.of(correctYear.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+                                    val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
 
+                                    if (notifyDay) {
+                                        //Notification at due time
+                                        var notify = lifecycleScope.launch {
+                                            delay(resultSeconds * 1000)
+                                            val notifText = "Muistutus tehtävästä $header"
+                                            showNotification(header, notifText)
+                                        }
+                                    }
 
-                                    showNotification(header, notifText)
+                                    if (notifyHour) {
+                                        //Notification 1 hour before
+                                        var notifyhourbefore = lifecycleScope.launch {
+                                            val thisResult = resultSeconds - 3600
+                                            if (thisResult > 0) {
+                                                delay(thisResult * 1000)
+                                                val notifText = "Tehtävä $header tunnin kuluttua"
+                                                showNotification(header, notifText)
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "$thisResult",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }
 
                                     //Different toast messages for different errors
                                 } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}

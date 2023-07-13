@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.databasetest.R
 import com.example.databasetest.model.Task
 import kotlinx.android.synthetic.main.custom_row.view.*
-import java.time.LocalDate
-import java.time.LocalTime
 import java.util.Collections.emptyList
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
@@ -28,7 +26,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         val currentItem = taskList[position]
         val dateValues = currentItem.date
         val valuesArrayList = dateValues.split("/")
@@ -120,49 +117,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
         if (currentItem.category == "Formula 1") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.Formula_1) }
         if (currentItem.category == "eSports") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.eSports) }
         if (currentItem.category == "Muu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.muu) }
-
-        // Getting Task due date
-        val reminderYear = "20$year"
-        val remindYear = reminderYear.toInt()
-        val remindMonth = month.toInt()
-        val remindDay = day.toInt()
-
-        //Getting task due time
-        val reminderHour = hour.toInt()
-        val reminderMinute = minute.toInt()
-
-        //Date 1 day before due date & Time 1 hour before due time
-        val remindDateDayBefore = LocalDate.of(remindYear, remindMonth, remindDay).minusDays(1).toString()
-        val remindTimeHourBefore = LocalTime.of(reminderHour, reminderMinute).minusHours(1).toString()
-
-        //Exact Due Date
-        val remindDate = LocalDate.of(remindYear, remindMonth, remindDay).toString()
-        val remindTime = LocalTime.of(reminderHour, reminderMinute).toString()
-
-        //Getting local dates
-        //These values need to be re-obtained every minute or so
-        val localDate = LocalDate.now().toString()
-        val localTimeNotSplit = LocalTime.now().toString()
-        val localTimeValues = localTimeNotSplit.split(":")
-        val localHour = localTimeValues[0]
-        val localMinute = localTimeValues[1]
-        val localTime = "$localHour:$localMinute"
-
-        //These need to be checked every minute or so
-        //Notification a day before
-        if (localDate == remindDateDayBefore && localTime == remindTime) {
-            //Call notification
-        }
-
-        //Notification an hour before
-        if (localDate == remindDate && localTime == remindTimeHourBefore) {
-            //Call notification
-        }
-
-        //Notify at due date and time
-        if (localDate == remindDateDayBefore && localTime == remindTime) {
-            //Call notification
-        }
     }
 
     fun setData(task: List<Task>){
