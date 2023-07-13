@@ -1,11 +1,10 @@
 package com.example.databasetest.fragments.add
 
+import android.Manifest
 import android.app.*
-import android.app.Notification
 import android.content.Context
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,8 +13,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.databasetest.*
 import com.example.databasetest.databinding.FragmentListBinding
@@ -25,6 +27,8 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -41,6 +45,33 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                } else {
+                }
+            }
+
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
+        //Creating notification channel
+        val channel = NotificationChannel(
+            "ToDoChannel",
+            "To Do Reminders",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+
+
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
@@ -243,17 +274,40 @@ class AddFragment : Fragment() {
                                         Toast.makeText(requireContext(), "Syötä oikea päivämäärä", Toast.LENGTH_SHORT).show()
                                     }
 
-                                    //If the given time isn't a valid time, telling the user about it with a toast message
-                                    //if (!isValidTime(timeString)) {
-                                    //     Toast.makeText(requireContext(), "Syötä oikea kellonaika", Toast.LENGTH_SHORT).show()
-                                    //}
-
                                     //Adding a task with the given values and changing back to listfragment
                                     val task = Task(0, header, time, date, dayName, details, category, status, notifyDay, notifyHour)
                                     mTaskViewModel.addTask(task)
 
-                                    createNotificationChannel()
-                                    scheduleNotification()
+                                    val currentTime = LocalDateTime.now()
+                                    val correctYear = "20$year"
+                                    val dueTime = LocalDateTime.of(correctYear.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+                                    val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
+
+                                    if (notifyDay) {
+                                        //Notification at due time
+                                        lifecycleScope.launch {
+                                            delay(resultSeconds * 1000)
+                                            val notifText = "Muistutus tehtävästä $header"
+                                            showNotification(header, notifText)
+                                        }
+                                    }
+
+                                    if (notifyHour) {
+                                        //Notification 1 hour before
+                                        lifecycleScope.launch {
+                                            val thisResult = resultSeconds - 3600
+                                            if (thisResult > 0) {
+                                                delay(thisResult * 1000)
+                                                val notifText = "Tehtävä $header tunnin kuluttua"
+                                                showNotification(header, notifText)
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "$thisResult",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }
 
                                     Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                     findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -267,65 +321,14 @@ class AddFragment : Fragment() {
             } else {Toast.makeText(requireContext(), "Syötä Otsikko", Toast.LENGTH_SHORT).show()}
     }
 
-    private fun scheduleNotification() {
-        val intent = Intent(context, Notification::class.java)
-        val title = etAddScreenHeader.text.toString()
-        val message = "Muistutus tehtävän" + etAddScreenHeader.text.toString() + "takarajasta"
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            notificationID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val time = getTime()
-
-        when {
-            alarmManager.canScheduleExactAlarms() -> {
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    time,
-                    pendingIntent
-                )
-                Toast.makeText(requireContext(), "Ajastus aloitettu, ilmoitus $time kuluttua", Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                Toast.makeText(requireContext(), "Tehtävän muistutusta ei ajastettu koska oikeutta ei ole annettu", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun getTime(): Long {
-        timeString = etAddScreenTime.text.toString()
-        val dateString = etAddScreenDate.text.toString()
-
-        val valuesArrayListNotif = timeString.split(":")
-        val valuesArrayListNotif2 = dateString.split("/")
-
-        val hour = valuesArrayListNotif[0]
-        val minute = valuesArrayListNotif[1]
-        val day = valuesArrayListNotif2[0]
-        val month = valuesArrayListNotif2[1]
-        val year = "20" + valuesArrayListNotif2[2]
-
-        val dateAndTimeNow = LocalDateTime.now()
-        val dueDateAndTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
-
-        return dateAndTimeNow.until(dueDateAndTime, ChronoUnit.MILLIS)
-    }
-
-    private fun createNotificationChannel() {
-        val name = "To Do Channel"
-        val desc = "A Description of the Channel"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelID, name, importance)
-        channel.description = desc
-        val notificationManager = requireActivity().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+    private fun showNotification(title: String, text: String) {
+        val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notification = NotificationCompat.Builder(requireContext(), "ToDoChannel")
+            .setContentText(text)
+            .setContentTitle(title)
+            .setSmallIcon(R.drawable.appicon)
+            .build()
+        notificationManager.notify(1, notification)
     }
 
     override fun onDestroyView() {
