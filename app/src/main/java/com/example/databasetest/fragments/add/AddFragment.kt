@@ -5,6 +5,7 @@ import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,7 +52,6 @@ class AddFragment : Fragment() {
         //Opening time picker menu when button is pressed
         view.addScreenTimePicker.setOnClickListener {
             openTimePicker()
-
         }
 
         //Opening date picker menu when button is pressed
@@ -268,14 +268,14 @@ class AddFragment : Fragment() {
     }
 
     private fun scheduleNotification() {
-        val intent = Intent(requireContext(), Notification::class.java)
+        val intent = Intent(context, Notification::class.java)
         val title = etAddScreenHeader.text.toString()
         val message = "Muistutus tehtävän" + etAddScreenHeader.text.toString() + "takarajasta"
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, message)
 
         val pendingIntent = PendingIntent.getBroadcast(
-            requireContext(),
+            context,
             notificationID,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
@@ -284,11 +284,19 @@ class AddFragment : Fragment() {
         val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val time = getTime()
 
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent
-        )
+        when {
+            alarmManager.canScheduleExactAlarms() -> {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    time,
+                    pendingIntent
+                )
+                Toast.makeText(requireContext(), "Ajastus aloitettu, ilmoitus $time kuluttua", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(requireContext(), "Tehtävän muistutusta ei ajastettu koska oikeutta ei ole annettu", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun getTime(): Long {
@@ -307,12 +315,11 @@ class AddFragment : Fragment() {
         val dateAndTimeNow = LocalDateTime.now()
         val dueDateAndTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
 
-
         return dateAndTimeNow.until(dueDateAndTime, ChronoUnit.MILLIS)
     }
 
     private fun createNotificationChannel() {
-        val name = "Notif Channel"
+        val name = "To Do Channel"
         val desc = "A Description of the Channel"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(channelID, name, importance)
