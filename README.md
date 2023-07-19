@@ -11,14 +11,14 @@ Summer project 2023 - Tomi Lakkakorpi
     • Excel - Working hours monitoring
     • OneDrive - Project files storage
     • Github - Storing source code, version control & kanban board
-    • LucidChart - Designing the app
     • Figma - Designing app UI
 
     Techniques used in the project:
-    • 
+    • SQLite ROOM Persistance Library for database functionality
+    • Alarm Manager for notification scheduling
 
     App architecture, UI/UX plans etc:
-    • 
+    • UI Plan V1 https://www.figma.com/file/5oU7sVzF0S8wphPnUa3cp6/Summer-Project-2023---UI-Designs?type=design&node-id=0-1&mode=design
 
     Guide on how to get the app working:
     • Clone/download the sourcecode
