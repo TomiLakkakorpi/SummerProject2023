@@ -1,25 +1,51 @@
 package com.example.databasetest.fragments.list
 
+import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.databasetest.MainActivity
 import com.example.databasetest.R
 import com.example.databasetest.model.Task
 import kotlinx.android.synthetic.main.custom_row.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
+class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var taskList = emptyList<Task>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+
+        //Creating notification channel
+        val channel = NotificationChannel(
+            "ToDoChannel",
+            "To Do Reminders",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val notificationManager = parent.context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+
         return MyViewHolder(LayoutInflater.from(parent.context).inflate((R.layout.custom_row), parent, false))
     }
 
@@ -28,8 +54,64 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
+        val context = holder.itemView.context
         val currentItem = taskList[position]
+
+        fun showNotification(title: String, text: String, id: Int) {
+            val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            val notification = NotificationCompat.Builder(context, "ToDoChannel")
+                .setContentText(text)
+                .setContentTitle(title)
+                .setSmallIcon(R.drawable.appicon)
+                .build()
+            notificationManager.notify(id, notification)
+        }
+
+        val dateValuesNotification = currentItem.date.split("/")
+        val timeValuesNotification = currentItem.time.split(":")
+
+        val notificationYear = dateValuesNotification[0]
+        val notificationMonth = dateValuesNotification[1]
+        val notificationDay = dateValuesNotification[2]
+
+        val notificationHour = dateValuesNotification[0]
+        val notificationMinute = timeValuesNotification[1]
+
+        val currentTime = LocalDateTime.now()
+        val correctYear = "20$notificationYear"
+        val dueTime = LocalDateTime.of(correctYear.toInt(), notificationMonth.toInt(), notificationDay.toInt(), notificationHour.toInt(), notificationMinute.toInt())
+        val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
+        val notifHeader = currentItem.header
+
+        var notification1Sent = false
+        var notification2Sent = false
+
+        /*
+        if (currentItem.notifyDay && !notification1Sent) {
+            //Notification at due time
+            GlobalScope.launch {
+                delay(resultSeconds * 1000)
+                val notifText = "Muistutus tehtävästä $notifHeader"
+                showNotification(currentItem.header, notifText, currentItem.id)
+                notification1Sent = true
+            }
+        }
+
+        if (currentItem.notifyHour && !notification2Sent) {
+            //Notification 1 hour before
+            GlobalScope.launch {
+                val thisResult = resultSeconds - 3600
+                if (thisResult > 0) {
+                    delay(thisResult * 1000)
+                    val notifText = "Tehtävä $notifHeader tunnin kuluttua"
+                    showNotification(currentItem.header, notifText, currentItem.id)
+                    Toast.makeText(context, "$thisResult", Toast.LENGTH_SHORT).show()
+                    notification2Sent = true
+                }
+            }
+        }
+         */
+
         val dateValues = currentItem.date
         val valuesArrayList = dateValues.split("/")
         val timeValues = currentItem.time

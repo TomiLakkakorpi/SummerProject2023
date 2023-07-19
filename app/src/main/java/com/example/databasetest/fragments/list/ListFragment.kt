@@ -1,6 +1,7 @@
 package com.example.databasetest.fragments.list
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
@@ -36,7 +37,6 @@ class ListFragment : Fragment() {
         mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
             adapter.setData(task)
         })
-
 
         view.floatingActionButtonAdd.setOnClickListener{
             findNavController().navigate(R.id.action_listFragment_to_addFragment)

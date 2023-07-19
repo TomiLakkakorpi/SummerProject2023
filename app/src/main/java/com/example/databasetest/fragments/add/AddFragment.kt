@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.databasetest.*
+import com.example.databasetest.alarm.AlarmItem
+import com.example.databasetest.alarm.AndroidAlarmScheduler
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
@@ -45,7 +47,6 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -70,7 +71,6 @@ class AddFragment : Fragment() {
         )
         val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-
 
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
@@ -108,6 +108,27 @@ class AddFragment : Fragment() {
     var notificationDay = ""
     var notificationMonth = ""
     var notificationYear = ""
+
+    var alarmItem: AlarmItem? = null
+    val scheduler by lazy {AndroidAlarmScheduler(requireContext().applicationContext)}
+
+    private fun scheduleAlarm(seconds: Long, message: String) {
+        alarmItem = AlarmItem(
+            time = LocalDateTime.now()
+                .plusSeconds(seconds),
+            message = message
+        )
+        alarmItem?.let(scheduler::schedule)
+
+        if(alarmItem == null) {
+            Toast.makeText(requireContext(), "Error in Alarm", Toast.LENGTH_SHORT).show()
+        } else {
+            //scheduler!!::schedule.let { alarmItem }
+        }
+        if (scheduler == null) {
+            Toast.makeText(requireContext(), "Error in Scheduler", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     //Function for date picker
     private fun openDatePicker() {
@@ -283,6 +304,7 @@ class AddFragment : Fragment() {
                                     val dueTime = LocalDateTime.of(correctYear.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
                                     val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
 
+                                    /*
                                     if (notifyDay) {
                                         //Notification at due time
                                         lifecycleScope.launch {
@@ -308,6 +330,10 @@ class AddFragment : Fragment() {
                                             }
                                         }
                                     }
+                                    */
+
+                                    scheduleAlarm(resultSeconds, header)
+                                    Toast.makeText(requireContext(), "Ajastin asetettu $resultSeconds päähän", Toast.LENGTH_SHORT).show()
 
                                     Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
                                     findNavController().navigate(R.id.action_addFragment_to_listFragment)
