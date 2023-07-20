@@ -12,12 +12,17 @@ class AndroidAlarmScheduler(
 
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
+    //Function to schedule alarm
     override fun schedule(item: AlarmItem) {
+
+        //Getting task ID from the message string and putting that as the alarm´s ID
         val message = item.message.split(":")
         val taskID = message[2]
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("EXTRA_MESSAGE", item.message)
         }
+
+        //Scheduling the alarm
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             item.time.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000,
@@ -30,9 +35,11 @@ class AndroidAlarmScheduler(
         )
     }
 
+    //Function to cancel alarm
     override fun cancel(item: AlarmItem) {
         val message = item.message
 
+        //Cancelling the alarm
         alarmManager.cancel(
             PendingIntent.getBroadcast(
                 context,

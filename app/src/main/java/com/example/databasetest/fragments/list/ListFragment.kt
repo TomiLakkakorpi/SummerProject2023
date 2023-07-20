@@ -1,7 +1,6 @@
 package com.example.databasetest.fragments.list
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
@@ -19,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
+    //Initializing variables
     private var _binding: FragmentListBinding? = null
     private lateinit var mTaskViewModel: TaskViewModel
 
@@ -38,10 +38,12 @@ class ListFragment : Fragment() {
             adapter.setData(task)
         })
 
+        //Navigating to add fragment when add button is pressed
         view.floatingActionButtonAdd.setOnClickListener{
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
+        //Calling delete all tasks function when delete all button is pressed
         view.floatingActionButtonDelete.setOnClickListener {
             deleteAllTasks()
         }
@@ -54,6 +56,7 @@ class ListFragment : Fragment() {
         return view
     }
 
+    //Function to delete all tasks that are marked as complete (SQL query has a check where it only deletes tasks that are marked as complete)
     private fun deleteAllTasks() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Kyllä")

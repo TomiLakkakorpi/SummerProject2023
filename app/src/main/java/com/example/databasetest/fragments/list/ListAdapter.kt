@@ -7,18 +7,12 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasetest.R
 import com.example.databasetest.alarm.AlarmItem
 import com.example.databasetest.alarm.AndroidAlarmScheduler
-import com.example.databasetest.fragments.update.UpdateFragment
 import com.example.databasetest.model.Task
-import com.example.databasetest.viewmodel.TaskViewModel
-import com.google.android.material.internal.ContextUtils.getActivity
 import kotlinx.android.synthetic.main.custom_row.view.*
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -50,20 +44,21 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+        //Getting current task from task list
         val currentItem = taskList[position]
 
-        val dateValues = currentItem.date
-        val valuesArrayList = dateValues.split("/")
-        val timeValues = currentItem.time
-        val valuesArrayList2 = timeValues.split(":")
+        //Getting current task´s date & time values
+        val dateValues = currentItem.date.split("/")
+        val timeValues = currentItem.time.split(":")
 
         //Getting values from date arraylist and time arraylist
-        val year = valuesArrayList[0]
-        val month = valuesArrayList[1]
-        val day = valuesArrayList[2]
+        val year = dateValues[0]
+        val month = dateValues[1]
+        val day = dateValues[2]
 
-        val hour = valuesArrayList2[0]
-        val minute = valuesArrayList2[1]
+        val hour = timeValues[0]
+        val minute = timeValues[1]
 
         //If date is for example 01/01/23 drop first 0 from both day and month and then show the date in the list
         if (month.startsWith("0") && day.startsWith("0")) {
@@ -140,24 +135,18 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val thisContext = holder.itemView.getContext()
 
         //Notification 15 minutes before due time
-        if (currentItem.notifyMinutes) {
-            if(resultSeconds > 900) {
-                scheduleAlarm(resultSeconds-900, "1:${currentItem.header}:${currentItem.id}", thisContext)
-            }
+        if (currentItem.notifyMinutes && resultSeconds > 900) {
+            scheduleAlarm(resultSeconds-900, "1:${currentItem.header}:${currentItem.id}", thisContext)
         }
 
         //Notification one hour before due time
-        if (currentItem.notifyHour) {
-            if (resultSeconds > 3600) {
-                scheduleAlarm(resultSeconds-3600, "2:${currentItem.header}:${currentItem.id}", thisContext)
-            }
+        if (currentItem.notifyHour && resultSeconds > 3600) {
+            scheduleAlarm(resultSeconds-3600, "2:${currentItem.header}:${currentItem.id}", thisContext)
         }
 
        //Notification one day before due time
-       if (currentItem.notifyDay) {
-           if (resultSeconds > 86400) {
-               scheduleAlarm(resultSeconds-86400, "3:${currentItem.header}:${currentItem.id}", thisContext)
-           }
+       if (currentItem.notifyDay && resultSeconds > 86400) {
+           scheduleAlarm(resultSeconds-86400, "3:${currentItem.header}:${currentItem.id}", thisContext)
        }
 
         //Setting the tasks background color based on category
@@ -176,6 +165,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         if (currentItem.category == "Muu")          { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.categoryRest) }
     }
 
+    //Function to schedule alarm
     private fun scheduleAlarm(seconds: Long, message: String, context: Context) {
         val alarmItem: AlarmItem?
         val scheduler by lazy { AndroidAlarmScheduler(context) }
@@ -188,6 +178,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         alarmItem.let(scheduler::schedule)
     }
 
+    //Function to set task´s data to the task list
     fun setData(task: List<Task>){
         this.taskList = task
         notifyDataSetChanged()

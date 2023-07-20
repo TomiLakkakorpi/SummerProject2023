@@ -14,34 +14,24 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.databasetest.*
-import com.example.databasetest.alarm.AlarmItem
-import com.example.databasetest.alarm.AndroidAlarmScheduler
 import com.example.databasetest.databinding.FragmentListBinding
-import com.example.databasetest.fragments.update.UpdateFragmentArgs
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 class AddFragment : Fragment() {
 
-    //Intializing some varaiables and values
+    //Intializing varaiables
     private var _binding: FragmentListBinding? = null
     private lateinit var mTaskViewModel: TaskViewModel
 
