@@ -47,7 +47,7 @@ class ListFragment : Fragment() {
         }
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        val categories = resources.getStringArray(R.array.categories2)
+        val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         view.findViewById<AutoCompleteTextView>(R.id.CategoryFilter).setAdapter(arrayAdapter)
 

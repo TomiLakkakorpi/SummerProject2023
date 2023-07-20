@@ -17,17 +17,18 @@
     <color name="purpleBackground2">#9900FF</color>
     <color name="purpleBackground1">#674EA7</color>
 
-    <color name="liikunta">#37e1e1</color>
-    <color name="terveys">#f54fa6</color>
-    <color name="koulu">#20D1AC</color>
-    <color name="tyo">#0B5E55</color>
-    <color name="tärkeä">#3A4C97</color>
-    <color name="harrastus">#82d782</color>
-    <color name="askare">#dd9933</color>
-    <color name="tapaaminen">#dadd1e</color>
-    <color name="pelit">#197823</color>
-    <color name="Jääkiekko">#77BFEA</color>
-    <color name="Formula_1">#860713</color>
-    <color name="eSports">#871d7b</color>
-    <color name="muu">#DB5729</color>
+    <color name="category1">#37e1e1</color>
+    <color name="category2">#f54fa6</color>
+    <color name="category3">#20D1AC</color>
+    <color name="category4">#0B5E55</color>
+    <color name="category5">#3A4C97</color>
+    <color name="category6">#82d782</color>
+    <color name="category7">#dd9933</color>
+    <color name="category8">#dadd1e</color>
+    <color name="category9">#197823</color>
+    <color name="category10">#77BFEA</color>
+    <color name="category11">#860713</color>
+    <color name="category12">#871d7b</color>
+
+    <color name="categoryRest">#DB5729</color>
 </resources>

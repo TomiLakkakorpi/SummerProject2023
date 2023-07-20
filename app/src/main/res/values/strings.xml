@@ -17,8 +17,9 @@
     <string name="paivitaString">Päivitä</string>
     <string name="valitse_kategoriaString">Valitse Kategoria</string>
     <string name="muistutaString">Muistuta</string>
-    <string name="daybeforeString">Tehtävän alkaessa</string>
+    <string name="minutesbeforeString">15min ennen</string>
     <string name="hourbeforeString">Tuntia ennen</string>
+    <string name="daybeforeString">Päivää ennen</string>
 
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="first_fragment_label">First Fragment</string>
@@ -47,23 +48,6 @@
         <item>Koulu</item>
         <item>Työ</item>
         <item>Tärkeä</item>
-        <item>Harrastus</item>
-        <item>Askare</item>
-        <item>Tapaaminen</item>
-        <item>Pelit</item>
-        <item>Jääkiekko</item>
-        <item>Formula 1</item>
-        <item>eSports</item>
-        <item>Muu</item>
-    </string-array>
-
-    <string-array name="categories2">
-        <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
-        <item>Näytä kaikki</item>
-        <item>Liikunta</item>
-        <item>Terveys</item>
-        <item>Koulu</item>
-        <item>Työ</item>
         <item>Harrastus</item>
         <item>Askare</item>
         <item>Tapaaminen</item>

@@ -19,10 +19,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.databasetest.*
 import com.example.databasetest.alarm.AlarmItem
 import com.example.databasetest.alarm.AndroidAlarmScheduler
 import com.example.databasetest.databinding.FragmentListBinding
+import com.example.databasetest.fragments.update.UpdateFragmentArgs
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -100,34 +102,9 @@ class AddFragment : Fragment() {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
-        view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView).setAdapter(arrayAdapter)
+        view.findViewById<AutoCompleteTextView>(R.id.addAutoCompleteTextView).setAdapter(arrayAdapter)
 
         return view
-    }
-
-    var notificationDay = ""
-    var notificationMonth = ""
-    var notificationYear = ""
-
-    var alarmItem: AlarmItem? = null
-    val scheduler by lazy {AndroidAlarmScheduler(requireContext().applicationContext)}
-
-    private fun scheduleAlarm(seconds: Long, message: String) {
-        alarmItem = AlarmItem(
-            time = LocalDateTime.now()
-                .plusSeconds(seconds),
-            message = message
-        )
-        alarmItem?.let(scheduler::schedule)
-
-        if(alarmItem == null) {
-            Toast.makeText(requireContext(), "Error in Alarm", Toast.LENGTH_SHORT).show()
-        } else {
-            //scheduler!!::schedule.let { alarmItem }
-        }
-        if (scheduler == null) {
-            Toast.makeText(requireContext(), "Error in Scheduler", Toast.LENGTH_SHORT).show()
-        }
     }
 
     //Function for date picker
@@ -141,11 +118,6 @@ class AddFragment : Fragment() {
            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
            updateLabel(myCalendar)
         }
-
-        //Getting date values for notification scheduler
-        notificationDay = Calendar.DAY_OF_MONTH.toString()
-        notificationMonth = Calendar.MONTH.toString()
-        notificationYear = Calendar.YEAR.toString()
 
         DatePickerDialog(requireContext(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
         myCalendar.get(Calendar.DAY_OF_MONTH)).show()
@@ -199,12 +171,13 @@ class AddFragment : Fragment() {
         //Getting values from "add screen" edittext fields
         val header = etAddScreenHeader.text.toString()
         val details = etAddScreenDetails.text.toString()
-        val category = autoCompleteTextView.text.toString()
+        val category = addAutoCompleteTextView.text.toString()
         val dateString = etAddScreenDate.text.toString()
 
         //Getting values for notifyDay and notifyHour from the checkboxes
-        val notifyDay: Boolean = addCheckboxDayBefore.isChecked
+        val notifyMinutes: Boolean = addCheckboxNow.isChecked
         val notifyHour: Boolean = addCheckBoxHourBefore.isChecked
+        val notifyDay: Boolean = addCheckBoxDayBefore.isChecked
 
         //Splitting date and time values into an array
         val valuesArrayList = dateString.split("/")
@@ -254,107 +227,53 @@ class AddFragment : Fragment() {
                 //Checking if time field is empty
                 if (checkTime(timeString))
                 {
-                    //Checking if the given time input matches any of the accepted formats
-                    if (timeCheck1(timeString) || timeCheck2(timeString) || timeCheck3(timeString) || timeCheck4(timeString))
+                    //Checking if date field is empty
+                    if (checkDate(dateString))
                     {
-                        //Checking if date field is empty
-                        if (checkDate(dateString))
+                        //Checking if category field is empty
+                        if (checkCategory(category))
                         {
-                            //Checking if the given date input matches any of the accepted formats
-                            if (dateCheck1(dateString) || dateCheck2(dateString) || dateCheck3(dateString) || dateCheck4(dateString))
-                            {
-                                //Checking if category field is empty
-                                if (checkCategory(category))
-                                {
-                                    //Normal date 11/11/23
-                                    if (dateCheck1(dateString)) { date = regularDate }
+                            //Normal date 11/11/23
+                            if (dateCheck1(dateString)) { date = regularDate }
 
-                                    //Date like 1/11/23
-                                    if (dateCheck2(dateString)) { date = dayMissingZeroDate }
+                            //Date like 1/11/23
+                            if (dateCheck2(dateString)) { date = dayMissingZeroDate }
 
-                                    //Date like 11/1/23
-                                    if (dateCheck3(dateString)) { date = monthMissingZeroDate }
+                            //Date like 11/1/23
+                            if (dateCheck3(dateString)) { date = monthMissingZeroDate }
 
-                                    //Date like 1/1/23
-                                    if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
+                            //Date like 1/1/23
+                            if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
 
-                                    //Normal time 10:00
-                                    if (timeCheck1(timeString)) { time = regularTime }
+                            //Normal time 10:00
+                            if (timeCheck1(timeString)) { time = regularTime }
 
-                                    //Time with only 1 digit in hour field (1:00)
-                                    if (timeCheck2(timeString)) { time = hourMissingZeroTime }
+                            //Time with only 1 digit in hour field (1:00)
+                            if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
-                                    //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
-                                    if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
+                            //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
+                            if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
 
-                                    //Time with 1 digit in both hour and minute field
-                                    if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime}
+                            //Time with 1 digit in both hour and minute field
+                            if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime}
 
-                                    //If the given date isn't a valid date, telling the user about it with a toast message
-                                    if (!isValidDate(dateString)) {
-                                        Toast.makeText(requireContext(), "Syötä oikea päivämäärä", Toast.LENGTH_SHORT).show()
-                                    }
+                            //If the given date isn't a valid date, telling the user about it with a toast message
+                            if (!isValidDate(dateString)) {
+                                Toast.makeText(requireContext(), "Syötä oikea päivämäärä", Toast.LENGTH_SHORT).show()
+                            }
 
-                                    //Adding a task with the given values and changing back to listfragment
-                                    val task = Task(0, header, time, date, dayName, details, category, status, notifyDay, notifyHour)
-                                    mTaskViewModel.addTask(task)
+                            //Adding a task with the given values and changing back to listfragment
+                            val task = Task(0, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay)
+                            mTaskViewModel.addTask(task)
 
-                                    val currentTime = LocalDateTime.now()
-                                    val correctYear = "20$year"
-                                    val dueTime = LocalDateTime.of(correctYear.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
-                                    val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
+                            //Navigating back to list fragment
+                            findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
-                                    /*
-                                    if (notifyDay) {
-                                        //Notification at due time
-                                        lifecycleScope.launch {
-                                            delay(resultSeconds * 1000)
-                                            val notifText = "Muistutus tehtävästä $header"
-                                            showNotification(header, notifText)
-                                        }
-                                    }
-
-                                    if (notifyHour) {
-                                        //Notification 1 hour before
-                                        lifecycleScope.launch {
-                                            val thisResult = resultSeconds - 3600
-                                            if (thisResult > 0) {
-                                                delay(thisResult * 1000)
-                                                val notifText = "Tehtävä $header tunnin kuluttua"
-                                                showNotification(header, notifText)
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    "$thisResult",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        }
-                                    }
-                                    */
-
-                                    scheduleAlarm(resultSeconds, header)
-                                    Toast.makeText(requireContext(), "Ajastin asetettu $resultSeconds päähän", Toast.LENGTH_SHORT).show()
-
-                                    Toast.makeText(requireContext(), "Tehtävä tallennettu", Toast.LENGTH_SHORT).show()
-                                    findNavController().navigate(R.id.action_addFragment_to_listFragment)
-
-                                    //Different toast messages for different errors
-                                } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
-                            } else {Toast.makeText(requireContext(), "Syötä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
-                        } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
-                    } else {Toast.makeText(requireContext(), "Syötä aika muodossa tunnit:minuutit", Toast.LENGTH_SHORT).show()}
+                        //Different toast messages for different errors
+                        } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
+                    } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
                 } else {Toast.makeText(requireContext(), "Syötä kellonaika", Toast.LENGTH_SHORT).show()}
             } else {Toast.makeText(requireContext(), "Syötä Otsikko", Toast.LENGTH_SHORT).show()}
-    }
-
-    private fun showNotification(title: String, text: String) {
-        val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notification = NotificationCompat.Builder(requireContext(), "ToDoChannel")
-            .setContentText(text)
-            .setContentTitle(title)
-            .setSmallIcon(R.drawable.appicon)
-            .build()
-        notificationManager.notify(1, notification)
     }
 
     override fun onDestroyView() {

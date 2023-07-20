@@ -17,6 +17,7 @@ data class Task(
     val details: String,
     val category: String,
     val status: Boolean,
-    val notifyDay: Boolean,
-    val notifyHour: Boolean
+    val notifyMinutes: Boolean,
+    val notifyHour: Boolean,
+    val notifyDay: Boolean
 ): Parcelable

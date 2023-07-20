@@ -9,13 +9,50 @@ import com.example.databasetest.R
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        val message = intent?.getStringExtra("EXTRA_MESSAGE") ?: return
+
+        //Initializing notification manager
         val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notification = NotificationCompat.Builder(context, "ToDoChannel")
-            .setContentText(message)
-            .setContentTitle("test title")
-            .setSmallIcon(R.drawable.appicon)
-            .build()
-        notificationManager.notify(2, notification)
+
+        //Getting the details for the notification from the intent
+        val message = intent?.getStringExtra("EXTRA_MESSAGE") ?: return
+
+        //Splitting the message string into 2 values (Notification type and the message itself)
+        val splitMessage = message.split(":")
+        val notificationType = splitMessage[0]
+        val notificationMessage = splitMessage[1]
+        val taskID = splitMessage[2]
+
+        //This notification will be shown at the due time
+        if (notificationType.toInt() == 1) {
+            val notification = NotificationCompat.Builder(context, "ToDoChannel")
+                .setContentTitle("Muistutus tehtävästä $notificationMessage")
+                .setContentText("Tehtävälle merkitty aika on 15 minuutin päästä")
+                .setSmallIcon(R.drawable.appicon)
+                .setAutoCancel(true)
+                .build()
+            notificationManager.notify(taskID.toInt(), notification)
+        }
+
+        //This notification will be shown one hour before the due time
+        if (notificationType.toInt() == 2) {
+            val notification = NotificationCompat.Builder(context, "ToDoChannel")
+                .setContentTitle("Muistutus tehtävästä $notificationMessage")
+                .setContentText("Tehtävälle merkitty aika on tunnin päästä!")
+                .setSmallIcon(R.drawable.appicon)
+                .setAutoCancel(true)
+                .build()
+            notificationManager.notify(taskID.toInt(), notification)
+        }
+
+        //This notification will be shown one day before the due time
+        if (notificationType.toInt() == 3) {
+            val notification = NotificationCompat.Builder(context, "ToDoChannel")
+                .setContentTitle("Muistutus tehtävästä $notificationMessage")
+                .setContentText("Tehtävälle merkitty aika on päivän päästä!")
+                .setSmallIcon(R.drawable.appicon)
+                .setAutoCancel(true)
+                .build()
+            notificationManager.notify(taskID.toInt(), notification)
+        }
     }
 }

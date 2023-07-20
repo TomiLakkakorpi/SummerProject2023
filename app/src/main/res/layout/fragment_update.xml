@@ -191,7 +191,7 @@
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView2"
+                android:id="@+id/updateAutoCompleteTextView"
                 android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5sp"
@@ -203,7 +203,7 @@
     </GridLayout>
 
             <TextView
-                android:id="@+id/tvAddScreenRemember"
+                android:id="@+id/tvUpdateScreenRemember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -216,35 +216,43 @@
                 app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
             <CheckBox
-                android:id="@+id/editCheckboxDayBefore"
+                android:id="@+id/updateCheckboxMinutesBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
+                app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
                 app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
 
             <CheckBox
-                android:id="@+id/editCheckBoxHourBefore"
+                android:id="@+id/updateCheckBoxHourBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                app:layout_constraintStart_toEndOf="@+id/tvAddScreenRemember"
-                app:layout_constraintTop_toBottomOf="@+id/editCheckboxDayBefore" />
+                app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
+                app:layout_constraintTop_toBottomOf="@+id/updateCheckboxMinutesBefore" />
+
+            <CheckBox
+                android:id="@+id/updateCheckBoxDayBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                app:layout_constraintTop_toBottomOf="@id/updateCheckBoxHourBefore"
+                app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember" />
 
             <TextView
-                android:id="@+id/tvEditScreenDayBefore"
+                android:id="@+id/tvUpdateScreenMinutesBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:text="@string/daybeforeString"
-                app:layout_constraintStart_toEndOf="@id/editCheckboxDayBefore"
+                android:text="@string/minutesbeforeString"
+                app:layout_constraintStart_toEndOf="@id/updateCheckboxMinutesBefore"
                 app:layout_constraintTop_toBottomOf="@id/editScreenGridLayout"/>
 
             <TextView
-                android:id="@+id/tvEditScreenHourBefore"
+                android:id="@+id/tvUpdateScreenHourBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -252,8 +260,20 @@
                 android:textSize="20sp"
                 android:textStyle="italic"
                 android:text="@string/hourbeforeString"
-                app:layout_constraintStart_toEndOf="@id/editCheckBoxHourBefore"
-                app:layout_constraintTop_toBottomOf="@id/tvEditScreenDayBefore"/>
+                app:layout_constraintStart_toEndOf="@id/updateCheckBoxHourBefore"
+                app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenMinutesBefore"/>
+
+            <TextView
+                android:id="@+id/tvUpdateScreenDayBefore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:text="@string/daybeforeString"
+                app:layout_constraintStart_toEndOf="@id/updateCheckBoxHourBefore"
+                app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenHourBefore"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenCancel"
@@ -269,7 +289,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/updateScreenDelete"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editCheckBoxHourBefore" />
+                app:layout_constraintTop_toBottomOf="@+id/updateCheckBoxDayBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenDelete"
@@ -285,7 +305,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editCheckBoxHourBefore" />
+                app:layout_constraintTop_toBottomOf="@+id/updateCheckBoxDayBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenUpdate"
@@ -302,7 +322,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
-                app:layout_constraintTop_toBottomOf="@+id/editCheckBoxHourBefore" />
+                app:layout_constraintTop_toBottomOf="@+id/updateCheckBoxDayBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenDatePicker"

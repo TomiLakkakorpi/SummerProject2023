@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
-import android.text.format.DateFormat
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -14,16 +13,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.databasetest.R
+import com.example.databasetest.alarm.AlarmItem
+import com.example.databasetest.alarm.AndroidAlarmScheduler
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 class UpdateFragment : Fragment() {
@@ -96,7 +97,7 @@ class UpdateFragment : Fragment() {
         //Setting the values from database to the edittext fields
         view.etEditScreenHeader.setText(args.currentTask.header)
         view.etEditScreenDetails.setText(args.currentTask.details)
-        view.autoCompleteTextView2.setText(args.currentTask.category)
+        view.updateAutoCompleteTextView.setText(args.currentTask.category)
 
         //Setting the task status checkbox based on its value in database
         if (args.currentTask.status) {
@@ -105,18 +106,25 @@ class UpdateFragment : Fragment() {
             view.checkBox.setChecked(false)
         }
 
-        //Setting the day checkbox in edit screen based on its value in database
-        if (args.currentTask.notifyDay) {
-            view.editCheckboxDayBefore.setChecked(true)
+        //Setting the minutes checkbox in update screen based on its value in database
+        if (args.currentTask.notifyMinutes) {
+            view.updateCheckboxMinutesBefore.setChecked(true)
         } else {
-            view.editCheckboxDayBefore.setChecked(false)
+            view.updateCheckboxMinutesBefore.setChecked(false)
         }
 
-        //Setting the hour checkbox in edit screen based on its value in database
+        //Setting the hour checkbox in update screen based on its value in database
         if (args.currentTask.notifyHour) {
-            view.editCheckBoxHourBefore.setChecked(true)
+            view.updateCheckBoxHourBefore.setChecked(true)
         } else {
-            view.editCheckBoxHourBefore.setChecked(false)
+            view.updateCheckBoxHourBefore.setChecked(false)
+        }
+
+        //Setting the day checkbox in update screen based on its value in database
+        if (args.currentTask.notifyDay) {
+            view.updateCheckBoxDayBefore.setChecked(true)
+        } else {
+            view.updateCheckBoxDayBefore.setChecked(false)
         }
 
         //Calling update function when "update" button is pressed
@@ -142,14 +150,14 @@ class UpdateFragment : Fragment() {
         //Changing from updateFragment to listFragment when "cancel" button is pressed
         view.updateScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-            Toast.makeText(requireContext(),"Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
         }
 
         //Initializing categoryfilter dropdown menu
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
-        view.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView2).setAdapter(arrayAdapter)
+        view.findViewById<AutoCompleteTextView>(R.id.updateAutoCompleteTextView).setAdapter(arrayAdapter)
 
         return view
     }
@@ -238,11 +246,12 @@ class UpdateFragment : Fragment() {
         val dateString = etEditScreenDate.text.toString()
         val timeString = etEditScreenTime.text.toString()
         val details = etEditScreenDetails.text.toString()
-        val category = autoCompleteTextView2.text.toString()
+        val category = updateAutoCompleteTextView.text.toString()
 
         //Getting values for notifyDay and notifyHour from the checkboxes
-        val notifyDay: Boolean = editCheckboxDayBefore.isChecked
-        val notifyHour: Boolean = editCheckBoxHourBefore.isChecked
+        val notifyMinutes: Boolean = updateCheckboxMinutesBefore.isChecked
+        val notifyHour: Boolean = updateCheckBoxHourBefore.isChecked
+        val notifyDay: Boolean = updateCheckBoxDayBefore.isChecked
 
         //Splitting date and time values into an array
         val valuesArrayListDate2 = dateString.split("/")
@@ -333,7 +342,7 @@ class UpdateFragment : Fragment() {
                                 status = checkBox.isChecked
 
                                 //updating the task with the given values and changing back to listfragment
-                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyDay, notifyHour)
+                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay)
                                 mTaskViewModel.updateTask(updatedTask)
                                 Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
                                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
@@ -353,8 +362,9 @@ class UpdateFragment : Fragment() {
         builder.setPositiveButton("Kyllä")
         {_, _ ->
             mTaskViewModel.deleteTask(args.currentTask)
+            cancelAlarm(args.currentTask.id)
             Toast.makeText(requireContext(), "Tehtävä poistettu", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
         builder.setNegativeButton("Ei")
         {_, _ -> }
@@ -365,6 +375,16 @@ class UpdateFragment : Fragment() {
             builder.setMessage("Haluatko varmasti poistaa tehtävän ${args.currentTask.header} vaikka sitä ei ole merkitty tehdyksi?")
         }
         builder.create().show()
+    }
+    var alarmItem: AlarmItem? = null
+    val scheduler by lazy { AndroidAlarmScheduler(requireContext()) }
+
+    private fun cancelAlarm(id: Int) {
+        alarmItem = AlarmItem(
+            message = id.toString(),
+            time = LocalDateTime.now()
+        )
+        alarmItem?.let(scheduler::cancel)
     }
 
     override fun onDestroyView() {

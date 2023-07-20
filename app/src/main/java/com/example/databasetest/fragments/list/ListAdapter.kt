@@ -1,6 +1,5 @@
 package com.example.databasetest.fragments.list
 
-import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -9,21 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.databasetest.MainActivity
 import com.example.databasetest.R
+import com.example.databasetest.alarm.AlarmItem
+import com.example.databasetest.alarm.AndroidAlarmScheduler
+import com.example.databasetest.fragments.update.UpdateFragment
 import com.example.databasetest.model.Task
+import com.example.databasetest.viewmodel.TaskViewModel
+import com.google.android.material.internal.ContextUtils.getActivity
 import kotlinx.android.synthetic.main.custom_row.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
@@ -32,7 +29,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var taskList = emptyList<Task>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -54,63 +50,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val context = holder.itemView.context
         val currentItem = taskList[position]
-
-        fun showNotification(title: String, text: String, id: Int) {
-            val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            val notification = NotificationCompat.Builder(context, "ToDoChannel")
-                .setContentText(text)
-                .setContentTitle(title)
-                .setSmallIcon(R.drawable.appicon)
-                .build()
-            notificationManager.notify(id, notification)
-        }
-
-        val dateValuesNotification = currentItem.date.split("/")
-        val timeValuesNotification = currentItem.time.split(":")
-
-        val notificationYear = dateValuesNotification[0]
-        val notificationMonth = dateValuesNotification[1]
-        val notificationDay = dateValuesNotification[2]
-
-        val notificationHour = dateValuesNotification[0]
-        val notificationMinute = timeValuesNotification[1]
-
-        val currentTime = LocalDateTime.now()
-        val correctYear = "20$notificationYear"
-        val dueTime = LocalDateTime.of(correctYear.toInt(), notificationMonth.toInt(), notificationDay.toInt(), notificationHour.toInt(), notificationMinute.toInt())
-        val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
-        val notifHeader = currentItem.header
-
-        var notification1Sent = false
-        var notification2Sent = false
-
-        /*
-        if (currentItem.notifyDay && !notification1Sent) {
-            //Notification at due time
-            GlobalScope.launch {
-                delay(resultSeconds * 1000)
-                val notifText = "Muistutus tehtävästä $notifHeader"
-                showNotification(currentItem.header, notifText, currentItem.id)
-                notification1Sent = true
-            }
-        }
-
-        if (currentItem.notifyHour && !notification2Sent) {
-            //Notification 1 hour before
-            GlobalScope.launch {
-                val thisResult = resultSeconds - 3600
-                if (thisResult > 0) {
-                    delay(thisResult * 1000)
-                    val notifText = "Tehtävä $notifHeader tunnin kuluttua"
-                    showNotification(currentItem.header, notifText, currentItem.id)
-                    Toast.makeText(context, "$thisResult", Toast.LENGTH_SHORT).show()
-                    notification2Sent = true
-                }
-            }
-        }
-         */
 
         val dateValues = currentItem.date
         val valuesArrayList = dateValues.split("/")
@@ -188,63 +128,64 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             holder.itemView.taskCheckbox.setChecked(false)
         }
 
+        //Getting local date & time for scheduling notifications
+        val currentTime = LocalDateTime.now()
+
+        //Getting due date & time from the user given date & time
+        val correctYear = "20$year"
+        val dueTime = LocalDateTime.of(correctYear.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+
+        //Getting the time difference between local time and due time
+        val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
+        val thisContext = holder.itemView.getContext()
+
+        //Notification 15 minutes before due time
+        if (currentItem.notifyMinutes) {
+            if(resultSeconds > 900) {
+                scheduleAlarm(resultSeconds-900, "1:${currentItem.header}:${currentItem.id}", thisContext)
+            }
+        }
+
+        //Notification one hour before due time
+        if (currentItem.notifyHour) {
+            if (resultSeconds > 3600) {
+                scheduleAlarm(resultSeconds-3600, "2:${currentItem.header}:${currentItem.id}", thisContext)
+            }
+        }
+
+       //Notification one day before due time
+       if (currentItem.notifyDay) {
+           if (resultSeconds > 86400) {
+               scheduleAlarm(resultSeconds-86400, "3:${currentItem.header}:${currentItem.id}", thisContext)
+           }
+       }
+
         //Setting the tasks background color based on category
-        if (currentItem.category == "Liikunta") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.liikunta) }
-        if (currentItem.category == "Terveys") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.terveys) }
-        if (currentItem.category == "Koulu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.koulu) }
-        if (currentItem.category == "Työ") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tyo) }
-        if (currentItem.category == "Tärkeä") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tärkeä) }
-        if (currentItem.category == "Harrastus") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.harrastus) }
-        if (currentItem.category == "Askare") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.askare) }
-        if (currentItem.category == "Tapaaminen") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.tapaaminen) }
-        if (currentItem.category == "Pelit") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.pelit) }
-        if (currentItem.category == "Jääkiekko") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.Jääkiekko) }
-        if (currentItem.category == "Formula 1") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.Formula_1) }
-        if (currentItem.category == "eSports") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.eSports) }
-        if (currentItem.category == "Muu") { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.muu) }
+        if (currentItem.category == "Liikunta")     { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category1) }
+        if (currentItem.category == "Terveys")      { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category2) }
+        if (currentItem.category == "Koulu")        { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category3) }
+        if (currentItem.category == "Työ")          { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category4) }
+        if (currentItem.category == "Tärkeä")       { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category5) }
+        if (currentItem.category == "Harrastus")    { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category6) }
+        if (currentItem.category == "Askare")       { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category7) }
+        if (currentItem.category == "Tapaaminen")   { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category8) }
+        if (currentItem.category == "Pelit")        { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category9) }
+        if (currentItem.category == "Jääkiekko")    { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category10) }
+        if (currentItem.category == "Formula 1")    { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category11) }
+        if (currentItem.category == "eSports")      { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category12) }
+        if (currentItem.category == "Muu")          { holder.itemView.taskMainConstraint.setBackgroundResource(R.color.categoryRest) }
+    }
 
-        // Getting Task due date
-        val reminderYear = "20$year"
-        val remindYear = reminderYear.toInt()
-        val remindMonth = month.toInt()
-        val remindDay = day.toInt()
+    private fun scheduleAlarm(seconds: Long, message: String, context: Context) {
+        val alarmItem: AlarmItem?
+        val scheduler by lazy { AndroidAlarmScheduler(context) }
 
-        //Getting task due time
-        val reminderHour = hour.toInt()
-        val reminderMinute = minute.toInt()
-
-        //Date 1 day before due date & Time 1 hour before due time
-        val remindDateDayBefore = LocalDate.of(remindYear, remindMonth, remindDay).minusDays(1).toString()
-        val remindTimeHourBefore = LocalTime.of(reminderHour, reminderMinute).minusHours(1).toString()
-
-        //Exact Due Date
-        val remindDate = LocalDate.of(remindYear, remindMonth, remindDay).toString()
-        val remindTime = LocalTime.of(reminderHour, reminderMinute).toString()
-
-        //Getting local dates
-        //These values need to be re-obtained every minute or so
-        val localDate = LocalDate.now().toString()
-        val localTimeNotSplit = LocalTime.now().toString()
-        val localTimeValues = localTimeNotSplit.split(":")
-        val localHour = localTimeValues[0]
-        val localMinute = localTimeValues[1]
-        val localTime = "$localHour:$localMinute"
-
-        //These need to be checked every minute or so
-        //Notification a day before
-        if (localDate == remindDateDayBefore && localTime == remindTime) {
-            //Call notification
-        }
-
-        //Notification an hour before
-        if (localDate == remindDate && localTime == remindTimeHourBefore) {
-            //Call notification
-        }
-
-        //Notify at due date and time
-        if (localDate == remindDateDayBefore && localTime == remindTime) {
-            //Call notification
-        }
+        alarmItem = AlarmItem(
+            time = LocalDateTime.now()
+                .plusSeconds(seconds),
+            message = message
+        )
+        alarmItem.let(scheduler::schedule)
     }
 
     fun setData(task: List<Task>){
