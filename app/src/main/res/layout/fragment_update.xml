@@ -8,8 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/editScreenCardview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:cardBackgroundColor="@color/teal_700"
@@ -17,7 +18,7 @@
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/addScreenCardviewBottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,7 +40,7 @@
                 android:layout_gravity="fill"
 
                 android:layout_marginTop="8dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:text="Merkitse Tehdyksi"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -92,7 +93,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textMultiLine" />
 
         <TextView
             android:id="@+id/tvEditScreenDate"
@@ -207,7 +208,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/tärkeysString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -222,7 +223,7 @@
                 android:layout_marginStart="20dp"
                 app:fabCustomSize="42dp"
                 android:clickable="true"
-                app:backgroundTint="@color/yellow_star"
+                app:backgroundTint="@color/red_delete"
                 app:srcCompat="@drawable/ic_remove"
                 tools:layout_editor_absoluteX="146dp"
                 tools:layout_editor_absoluteY="240dp"
@@ -233,9 +234,9 @@
                 android:id="@+id/updateScreenIncreaseImportance"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:clickable="true"
-                app:backgroundTint="@color/yellow_star"
+                app:backgroundTint="@color/green_add"
                 app:fabCustomSize="42dp"
                 app:layout_constraintEnd_toEndOf="parent"
 
@@ -258,7 +259,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/muistutaString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -270,7 +271,7 @@
                 android:id="@+id/updateCheckboxMinutesBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
                 app:layout_constraintTop_toBottomOf="@+id/updateScreenRatingBar" />
 
@@ -278,7 +279,7 @@
                 android:id="@+id/updateCheckBoxHourBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
                 app:layout_constraintTop_toBottomOf="@+id/updateCheckboxMinutesBefore" />
 
@@ -286,7 +287,7 @@
                 android:id="@+id/updateCheckBoxDayBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintTop_toBottomOf="@id/updateCheckBoxHourBefore"
                 app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember" />
 
@@ -327,60 +328,12 @@
                 app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenHourBefore"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/updateScreenCancel"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_cancel"
-                app:backgroundTint="@color/green_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/updateScreenDelete"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/updateCheckBoxDayBefore" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/updateScreenDelete"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_delete"
-                app:backgroundTint="@color/red_delete"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/updateCheckBoxDayBefore" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/updateScreenUpdate"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_update"
-                app:backgroundTint="@color/blue_update"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/updateScreenDelete"
-                app:layout_constraintTop_toBottomOf="@+id/updateCheckBoxDayBefore" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenDatePicker"
 
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 app:fabCustomSize="42dp"
+                android:layout_marginEnd="10dp"
 
                 android:clickable="true"
                 android:focusable="true"
@@ -388,7 +341,7 @@
                 app:backgroundTint="@color/blue_update"
                 android:layout_marginStart="-8dp"
                 android:layout_marginTop="82dp"
-                app:layout_constraintStart_toEndOf="@id/updateScreenUpdate"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -397,6 +350,7 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 app:fabCustomSize="42dp"
+                android:layout_marginEnd="10dp"
 
                 android:clickable="true"
                 android:focusable="true"
@@ -404,9 +358,71 @@
                 app:backgroundTint="@color/blue_update"
                 android:layout_marginStart="-8dp"
                 android:layout_marginTop="130dp"
-                app:layout_constraintStart_toEndOf="@id/updateScreenUpdate"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/updateScreenCancel"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_cancel"
+        app:backgroundTint="@color/green_add"
+        app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
+        app:layout_constraintStart_toStartOf="@id/addScreenCardviewBottom"
+        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/updateScreenDelete"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_delete"
+        app:backgroundTint="@color/red_delete"
+        app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
+        app:layout_constraintEnd_toEndOf="@id/addScreenCardviewBottom"
+        app:layout_constraintStart_toStartOf="@id/addScreenCardviewBottom"
+        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/updateScreenUpdate"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_update"
+        app:backgroundTint="@color/blue_update"
+        app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
+        app:layout_constraintEnd_toEndOf="@id/addScreenCardviewBottom"
+        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/addScreenCardviewBottom"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cardBackgroundColor="@color/teal_700"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
