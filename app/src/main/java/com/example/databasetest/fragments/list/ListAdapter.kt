@@ -14,6 +14,8 @@ import com.example.databasetest.alarm.AlarmItem
 import com.example.databasetest.alarm.AndroidAlarmScheduler
 import com.example.databasetest.model.Task
 import kotlinx.android.synthetic.main.custom_row.view.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList

@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/ListScreenCardviewTop"
         android:layout_width="match_parent"
-        android:layout_height="575dp"
+        android:layout_height="40dp"
         android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -20,6 +20,66 @@
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvTodaysDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:text=""
+        app:layout_constraintTop_toTopOf="@id/ListScreenCardviewTop"
+        app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewTop"
+        app:layout_constraintEnd_toEndOf="@id/ListScreenCardviewTop"
+        app:layout_constraintStart_toStartOf="@id/ListScreenCardviewTop"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ListIconLeft"
+
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        app:fabCustomSize="1dp"
+        app:backgroundTint="@color/gray"
+        android:src="@drawable/ic_calendar"
+        android:clickable="false"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="@id/ListScreenCardviewTop"
+        app:layout_constraintTop_toTopOf="@id/ListScreenCardviewTop"
+        app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewTop"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ListIconRight"
+
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp"
+        app:fabCustomSize="1dp"
+        app:backgroundTint="@color/gray"
+        android:src="@drawable/ic_calendar"
+        android:clickable="false"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="@id/ListScreenCardviewTop"
+        app:layout_constraintTop_toTopOf="@id/ListScreenCardviewTop"
+        app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewTop"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ListScreenCardviewMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="525dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cardBackgroundColor="@color/teal_700"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintTop_toBottomOf="@id/ListScreenCardviewTop"
+        app:layout_constraintBottom_toTopOf="@id/ListScreenCardviewBottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 

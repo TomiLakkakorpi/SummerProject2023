@@ -15,6 +15,7 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.time.LocalDate
 
 class ListFragment : Fragment() {
 
@@ -47,6 +48,38 @@ class ListFragment : Fragment() {
         view.floatingActionButtonDelete.setOnClickListener {
             deleteAllTasks()
         }
+
+        val today = LocalDate.now().toString().split("-")
+        val currentYear = today[0]
+        val currentMonth = today[1]
+        val currentDay = today[2]
+        val getDayName = LocalDate.of(currentYear.toInt(), currentMonth.toInt(), currentDay.toInt()).dayOfWeek.toString()
+        var dayName = ""
+        var monthName = ""
+
+        if (currentMonth == "01")     { monthName = "Tammikuuta" }
+        if (currentMonth == "02")     { monthName = "Helmikuuta" }
+        if (currentMonth == "03")     { monthName = "Maaliskuuta" }
+        if (currentMonth == "04")     { monthName = "Huhtikuuta" }
+        if (currentMonth == "05")     { monthName = "Toukokuuta" }
+        if (currentMonth == "06")     { monthName = "Kesäkuuta" }
+        if (currentMonth == "07")     { monthName = "Heinäkuuta" }
+        if (currentMonth == "08")     { monthName = "Elokuuta" }
+        if (currentMonth == "09")     { monthName = "Syyskuuta" }
+        if (currentMonth == "10")     { monthName = "Lokakuuta" }
+        if (currentMonth == "11")     { monthName = "Marraskuuta" }
+        if (currentMonth == "12")     { monthName = "Joulukuuta" }
+
+        if (getDayName == "MONDAY")     { dayName = "Maanantai" }
+        if (getDayName == "TUESDAY")    { dayName = "Tiistai" }
+        if (getDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
+        if (getDayName == "THURSDAY")   { dayName = "Torstai" }
+        if (getDayName == "FRIDAY")     { dayName = "Perjantai" }
+        if (getDayName == "SATURDAY")   { dayName = "Lauantai" }
+        if (getDayName == "SUNDAY")     { dayName = "Sunnuntai" }
+
+        val todaysDate = "$dayName $currentDay. $monthName"
+        view.tvTodaysDate.setText(todaysDate)
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
