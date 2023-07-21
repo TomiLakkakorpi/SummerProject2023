@@ -17,6 +17,7 @@
     <string name="paivitaString">Päivitä</string>
     <string name="valitse_kategoriaString">Valitse Kategoria</string>
     <string name="muistutaString">Muistuta</string>
+    <string name="tärkeysString">Tärkeys</string>
     <string name="minutesbeforeString">15min ennen</string>
     <string name="hourbeforeString">Tuntia ennen</string>
     <string name="daybeforeString">Päivää ennen</string>
@@ -48,7 +49,7 @@
         <item>Koulu</item>
         <item>Työ</item>
         <item>Tärkeä</item>
-        <item>Harrastus</item>
+        <item>Talous</item>
         <item>Askare</item>
         <item>Tapaaminen</item>
         <item>Pelit</item>

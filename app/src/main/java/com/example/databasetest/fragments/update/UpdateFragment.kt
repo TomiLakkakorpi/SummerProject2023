@@ -20,6 +20,8 @@ import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.android.synthetic.main.fragment_add.*
+import kotlinx.android.synthetic.main.fragment_add.view.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 import java.text.SimpleDateFormat
@@ -99,6 +101,9 @@ class UpdateFragment : Fragment() {
         view.etEditScreenDetails.setText(args.currentTask.details)
         view.updateAutoCompleteTextView.setText(args.currentTask.category)
 
+        //Setting rating to update screen´s rating bar with the value from database
+        view.updateScreenRatingBar.rating = args.currentTask.importance.toFloat()
+
         //Setting the task status checkbox based on its value in database
         if (args.currentTask.status) {
             view.checkBox.setChecked(true)
@@ -147,6 +152,29 @@ class UpdateFragment : Fragment() {
             openDatePicker()
         }
 
+        //Getting importance value from database with args
+        importance = args.currentTask.importance
+
+        //Increasing importance when "plus" button is clicked
+        view.updateScreenIncreaseImportance.setOnClickListener {
+            if (importance in 0..2) {
+                importance++
+                updateScreenRatingBar.rating = importance.toFloat()
+            } else {
+                Toast.makeText(requireContext(), "Korkein sallittu tärkeys on 3 tähteä!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //Decreasing importance when "minus" button is clicked
+        view.updateScreenDecreaseImportance.setOnClickListener {
+            if (importance in 1..3) {
+                importance--
+                updateScreenRatingBar.rating = importance.toFloat()
+            } else {
+                Toast.makeText(requireContext(), "Matalin sallittu tärkeys on 0 tähteä!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         //Changing from updateFragment to listFragment when "cancel" button is pressed
         view.updateScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
@@ -161,6 +189,9 @@ class UpdateFragment : Fragment() {
 
         return view
     }
+
+    //task importance value
+    private var importance = 0
 
     //Function for date picker
     private fun openDatePicker() {
@@ -297,63 +328,47 @@ class UpdateFragment : Fragment() {
         if (getTaskDayName == "SUNDAY")     { dayName = "Sunnuntai" }
 
         //Checking if header field is empty
-        if (checkHeader(header))
+        if (checkHeader(header) && checkTime(timeString) && checkDate(dateString) && checkCategory(category))
         {
-            //Checking if time field is empty
-            if (checkTime(timeString))
-            {
-                //Calling functions to check that the given time matches either of the accepted formats
-                if (timeCheck1(timeString) || timeCheck2(timeString) || timeCheck3(timeString) || timeCheck4(timeString))
-                {
-                    //Checking if date field is empty
-                    if (checkDate(dateString))
-                    {
-                        //Calling functions to check that the given date matches any of the accepted formats
-                        if (dateCheck1(dateString) || dateCheck2(dateString) || dateCheck3(dateString) || dateCheck4(dateString))
-                        {
-                            //Checking if category field is empty
-                            if (checkCategory(category))
-                            {
-                                //Normal date 11/11/23
-                                if (dateCheck1(dateString)) { date = regularDate }
+            //Normal date 11/11/23
+            if (dateCheck1(dateString)) { date = regularDate }
 
-                                //Date like 1/11/23
-                                if (dateCheck2(dateString)) { date = dayMissingZeroDate }
+            //Date like 1/11/23
+            if (dateCheck2(dateString)) { date = dayMissingZeroDate }
 
-                                //Date like 11/1/23
-                                if (dateCheck3(dateString)) { date = monthMissingZeroDate }
+            //Date like 11/1/23
+            if (dateCheck3(dateString)) { date = monthMissingZeroDate }
 
-                                //Date like 1/1/23
-                                if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
+            //Date like 1/1/23
+            if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
 
-                                //Normal time 10:00
-                                if (timeCheck1(timeString)) { time = regularTime }
+            //Normal time 10:00
+            if (timeCheck1(timeString)) { time = regularTime }
 
-                                //Time with only 1 digit in hour field (1:00)
-                                if (timeCheck2(timeString)) { time = hourMissingZeroTime }
+            //Time with only 1 digit in hour field (1:00)
+            if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
-                                //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
-                                if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
+            //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
+            if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
 
-                                //Time with 1 digit in both hour and minute field
-                                if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime }
+            //Time with 1 digit in both hour and minute field
+            if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime }
 
-                                //Setting the status variable based on the checkbox state
-                                status = checkBox.isChecked
+            //Setting the status variable based on the checkbox state
+            status = checkBox.isChecked
 
-                                //updating the task with the given values and changing back to listfragment
-                                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay)
-                                mTaskViewModel.updateTask(updatedTask)
-                                Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            //updating the task with the given values and changing back to listfragment
+            val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay, importance)
+            mTaskViewModel.updateTask(updatedTask)
+            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
 
-                                //Different toast messages for different errors
-                            } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
-                        } else {Toast.makeText(requireContext(), "Syötä päivämäärä muodossa päivä/kuukausi/vuosi", Toast.LENGTH_SHORT).show()}
-                    } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
-                } else {Toast.makeText(requireContext(), "Syötä aika muodossa tunnit:minuutit", Toast.LENGTH_SHORT).show()}
-            } else {Toast.makeText(requireContext(), "Syötä Kellonaika", Toast.LENGTH_SHORT).show()}
-        } else {Toast.makeText(requireContext(), "Syötä otsikko", Toast.LENGTH_SHORT).show()}
+            //Navigating back to list fragment
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+
+        } else {
+            //Displaying toast if any of the 4 required values are empty
+            Toast.makeText(requireContext(), "Syötä vähintään otsikko, kellonaika, päivämäärä ja kategoria", Toast.LENGTH_SHORT).show()
+        }
     }
 
     //Function for deleting a single task

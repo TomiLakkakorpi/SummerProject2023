@@ -11,8 +11,12 @@
     <color name="green_add">#5be71e</color>
     <color name="red_delete">#b6002a</color>
     <color name="blue_update">#FF03DAC5</color>
+    <color name="yellow_star">#dadd1e</color>
     <color name="backgroundMain">#6712EF</color>
     <color name="backgroundSecondary">#D17936</color>
+
+    <color name="lightGrey"></color>
+    <color name="yellow">#FFC300</color>
 
     <color name="purpleBackground2">#9900FF</color>
     <color name="purpleBackground1">#674EA7</color>

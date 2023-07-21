@@ -82,6 +82,26 @@ class AddFragment : Fragment() {
             openDatePicker()
         }
 
+        //Increasing importance when "plus" button is clicked
+        view.addScreenIncreaseImportance.setOnClickListener {
+            if (importance in 0..2) {
+                importance++
+                addScreenRatingBar.rating = importance.toFloat()
+            } else {
+                Toast.makeText(requireContext(), "Korkein sallittu tärkeys on 3 tähteä!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //Decreasing importance when "minus" button is clicked
+        view.addScreenDecreaseImportance.setOnClickListener {
+            if (importance in 1..3) {
+                importance--
+                addScreenRatingBar.rating = importance.toFloat()
+            } else {
+                Toast.makeText(requireContext(), "Matalin sallittu tärkeys on 0 tähteä!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         //Changing from addFragment to ListFragment when "cancel" button is pressed
         view.addScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
@@ -96,6 +116,9 @@ class AddFragment : Fragment() {
 
         return view
     }
+
+    //task importance value
+    private var importance = 0
 
     //Function for date picker
     private fun openDatePicker() {
@@ -169,18 +192,40 @@ class AddFragment : Fragment() {
         val notifyHour: Boolean = addCheckBoxHourBefore.isChecked
         val notifyDay: Boolean = addCheckBoxDayBefore.isChecked
 
-        //Splitting date and time values into an array
-        val valuesArrayList = dateString.split("/")
-        val valuesArrayList2 = timeString.split(":")
+        var day = "0"
+        var month = "0"
+        var year = "00"
+        var hour = "0"
+        var minute = "0"
+        var dayName = ""
 
-        //Getting values for day, month and year from the date values array
-        val day = valuesArrayList[0]
-        val month = valuesArrayList[1]
-        val year = valuesArrayList[2]
+        val getTaskDayName: String
 
-        //Getting values for hour and minute from the time values array
-        val hour = valuesArrayList2[0]
-        val minute = valuesArrayList2[1]
+        if (checkDate(dateString)) {
+            //Splitting date value into an array & getting values for day, month & year from the array
+            val valuesArrayList = dateString.split("/")
+            day = valuesArrayList[0]
+            month = valuesArrayList[1]
+            year = valuesArrayList[2]
+
+            //Getting the day value based on the given due date
+            getTaskDayName = LocalDate.of(year.toInt(), month.toInt(), day.toInt()).dayOfWeek.toString()
+
+            if (getTaskDayName == "MONDAY")     { dayName = "Maanantai" }
+            if (getTaskDayName == "TUESDAY")    { dayName = "Tiistai" }
+            if (getTaskDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
+            if (getTaskDayName == "THURSDAY")   { dayName = "Torstai" }
+            if (getTaskDayName == "FRIDAY")     { dayName = "Perjantai" }
+            if (getTaskDayName == "SATURDAY")   { dayName = "Lauantai" }
+            if (getTaskDayName == "SUNDAY")     { dayName = "Sunnuntai" }
+        }
+
+        if (checkTime(timeString)) {
+            //Splitting time value into an array & getting values for hour & minute from the array
+            val valuesArrayList2 = timeString.split(":")
+            hour = valuesArrayList2[0]
+            minute = valuesArrayList2[1]
+        }
 
         //Setting date values for the 4 scenarios
         val regularDate = "$year/$month/$day"                       //normal date (example 10/10/23)
@@ -195,75 +240,53 @@ class AddFragment : Fragment() {
         val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
 
         //Initializing variables
-        var dayName = ""
         var date = ""
         var time = ""
         val status = false
 
-        //Getting the day value based on the given due date
-        val getTaskDayName = LocalDate.of(year.toInt(), month.toInt(), day.toInt()).dayOfWeek.toString()
+        //Checking if header field is empty
+        if (checkHeader(header) && checkTime(timeString) &&  checkDate(dateString) && checkCategory(category))
+        {
+            //Normal date 11/11/23
+            if (dateCheck1(dateString)) { date = regularDate }
 
-        if (getTaskDayName == "MONDAY")     { dayName = "Maanantai" }
-        if (getTaskDayName == "TUESDAY")    { dayName = "Tiistai" }
-        if (getTaskDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
-        if (getTaskDayName == "THURSDAY")   { dayName = "Torstai" }
-        if (getTaskDayName == "FRIDAY")     { dayName = "Perjantai" }
-        if (getTaskDayName == "SATURDAY")   { dayName = "Lauantai" }
-        if (getTaskDayName == "SUNDAY")     { dayName = "Sunnuntai" }
+            //Date like 1/11/23
+            if (dateCheck2(dateString)) { date = dayMissingZeroDate }
 
-            //Checking if header field is empty
-            if (checkHeader(header))
-            {
-                //Checking if time field is empty
-                if (checkTime(timeString))
-                {
-                    //Checking if date field is empty
-                    if (checkDate(dateString))
-                    {
-                        //Checking if category field is empty
-                        if (checkCategory(category))
-                        {
-                            //Normal date 11/11/23
-                            if (dateCheck1(dateString)) { date = regularDate }
+            //Date like 11/1/23
+            if (dateCheck3(dateString)) { date = monthMissingZeroDate }
 
-                            //Date like 1/11/23
-                            if (dateCheck2(dateString)) { date = dayMissingZeroDate }
+            //Date like 1/1/23
+            if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
 
-                            //Date like 11/1/23
-                            if (dateCheck3(dateString)) { date = monthMissingZeroDate }
+            //Normal time 10:00
+            if (timeCheck1(timeString)) { time = regularTime }
 
-                            //Date like 1/1/23
-                            if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
+            //Time with only 1 digit in hour field (1:00)
+            if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
-                            //Normal time 10:00
-                            if (timeCheck1(timeString)) { time = regularTime }
+            //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
+            if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
 
-                            //Time with only 1 digit in hour field (1:00)
-                            if (timeCheck2(timeString)) { time = hourMissingZeroTime }
+            //Time with 1 digit in both hour and minute field
+            if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime}
 
-                            //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
-                            if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
+            //If the given date isn't a valid date, telling the user about it with a toast message
+            if (!isValidDate(dateString)) {
+                Toast.makeText(requireContext(), "Syötä oikea päivämäärä", Toast.LENGTH_SHORT).show()
+            }
 
-                            //Time with 1 digit in both hour and minute field
-                            if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime}
+            //Adding a task with the given values and changing back to listfragment
+            val task = Task(0, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay, importance)
+            mTaskViewModel.addTask(task)
 
-                            //If the given date isn't a valid date, telling the user about it with a toast message
-                            if (!isValidDate(dateString)) {
-                                Toast.makeText(requireContext(), "Syötä oikea päivämäärä", Toast.LENGTH_SHORT).show()
-                            }
+            //Navigating back to list fragment
+            findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
-                            //Adding a task with the given values and changing back to listfragment
-                            val task = Task(0, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay)
-                            mTaskViewModel.addTask(task)
-
-                            //Navigating back to list fragment
-                            findNavController().navigate(R.id.action_addFragment_to_listFragment)
-
-                        //Different toast messages for different errors
-                        } else {Toast.makeText(requireContext(), "Valitse kategoria", Toast.LENGTH_SHORT).show()}
-                    } else {Toast.makeText(requireContext(), "Syötä päivämäärä", Toast.LENGTH_SHORT).show()}
-                } else {Toast.makeText(requireContext(), "Syötä kellonaika", Toast.LENGTH_SHORT).show()}
-            } else {Toast.makeText(requireContext(), "Syötä Otsikko", Toast.LENGTH_SHORT).show()}
+            } else {
+                //Displaying toast if any of the 4 required values are empty
+                Toast.makeText(requireContext(), "Syötä vähintään otsikko, kellonaika, päivämäärä ja kategoria", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onDestroyView() {

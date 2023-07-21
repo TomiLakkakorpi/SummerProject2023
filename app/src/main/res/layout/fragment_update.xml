@@ -37,9 +37,9 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
-                android:layout_margin="10sp"
 
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
                 android:text="Merkitse Tehdyksi"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -57,7 +57,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <GridLayout
-                android:id="@+id/editScreenGridLayout"
+                android:id="@+id/updateScreenGridLayout"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -203,17 +203,68 @@
     </GridLayout>
 
             <TextView
+                android:id="@+id/tvUpdateScreenImportance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/tärkeysString"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/updateScreenDecreaseImportance"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="20dp"
+                app:fabCustomSize="42dp"
+                android:clickable="true"
+                app:backgroundTint="@color/yellow_star"
+                app:srcCompat="@drawable/ic_remove"
+                tools:layout_editor_absoluteX="146dp"
+                tools:layout_editor_absoluteY="240dp"
+                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
+                app:layout_constraintStart_toEndOf="@id/tvUpdateScreenImportance"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/updateScreenIncreaseImportance"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                app:backgroundTint="@color/yellow_star"
+                app:fabCustomSize="42dp"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
+                app:srcCompat="@drawable/ic_add" />
+
+            <RatingBar
+                android:id="@+id/updateScreenRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="3"
+                android:theme="@style/RatingBar"
+                style="?android:attr/ratingBarStyle"
+                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
+                app:layout_constraintStart_toEndOf="@id/updateScreenDecreaseImportance"
+                app:layout_constraintEnd_toStartOf="@id/updateScreenIncreaseImportance"/>
+
+            <TextView
                 android:id="@+id/tvUpdateScreenRemember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/muistutaString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/tvUpdateScreenImportance" />
 
             <CheckBox
                 android:id="@+id/updateCheckboxMinutesBefore"
@@ -221,7 +272,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
-                app:layout_constraintTop_toBottomOf="@+id/editScreenGridLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/updateScreenRatingBar" />
 
             <CheckBox
                 android:id="@+id/updateCheckBoxHourBefore"
@@ -249,7 +300,7 @@
                 android:textStyle="italic"
                 android:text="@string/minutesbeforeString"
                 app:layout_constraintStart_toEndOf="@id/updateCheckboxMinutesBefore"
-                app:layout_constraintTop_toBottomOf="@id/editScreenGridLayout"/>
+                app:layout_constraintTop_toBottomOf="@id/updateScreenRatingBar"/>
 
             <TextView
                 android:id="@+id/tvUpdateScreenHourBefore"
