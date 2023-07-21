@@ -14,8 +14,6 @@ import com.example.databasetest.alarm.AlarmItem
 import com.example.databasetest.alarm.AndroidAlarmScheduler
 import com.example.databasetest.model.Task
 import kotlinx.android.synthetic.main.custom_row.view.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
@@ -228,6 +226,12 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category12)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category12)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_pelit)
+        }
+
+        if (currentItem.category == "Matkailu")      {
+            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category13)
+            holder.itemView.categoryIcon.setBackgroundResource(R.color.category13)
+            holder.itemView.categoryIcon.setImageResource(R.drawable.ic_matkailu)
         }
 
         if (currentItem.category == "Muu")          {

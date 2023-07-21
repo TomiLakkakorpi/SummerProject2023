@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.databasetest.fragments.list.ListFragment"
-        android:label="Tehtävälista"
+        android:label="Tehtävät"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_addFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.databasetest.fragments.add.AddFragment"
-        android:label="Lisää Tehtävä"
+        android:label="Lisää Uusi Tehtävä"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_listFragment"

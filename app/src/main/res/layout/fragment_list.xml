@@ -84,7 +84,6 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <!-- Change layout height based on phone -->
-        <!-- 575 is good for my phone -->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -127,6 +126,7 @@
         android:src="@drawable/ic_add"
         android:focusable="true"
         app:backgroundTint="@color/green_add"
+        app:maxImageSize="35dp"
 
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewBottom"
@@ -142,6 +142,7 @@
         android:clickable="true"
         android:src="@drawable/ic_delete"
         app:backgroundTint="@color/red_delete"
+        app:maxImageSize="35dp"
 
         android:layout_marginStart="15dp"
         app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewBottom"

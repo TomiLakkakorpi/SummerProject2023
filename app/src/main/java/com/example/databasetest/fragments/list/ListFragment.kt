@@ -49,14 +49,20 @@ class ListFragment : Fragment() {
             deleteAllTasks()
         }
 
+        //Getting local date and seperating it into year, month and day values
         val today = LocalDate.now().toString().split("-")
         val currentYear = today[0]
         val currentMonth = today[1]
         val currentDay = today[2]
+
+        //Getting the dayOfWeek value with the year, month & day values from above
         val getDayName = LocalDate.of(currentYear.toInt(), currentMonth.toInt(), currentDay.toInt()).dayOfWeek.toString()
+
+        //Initializing some strings
         var dayName = ""
         var monthName = ""
 
+        //Setting the string values
         if (currentMonth == "01")     { monthName = "Tammikuuta" }
         if (currentMonth == "02")     { monthName = "Helmikuuta" }
         if (currentMonth == "03")     { monthName = "Maaliskuuta" }
@@ -78,6 +84,7 @@ class ListFragment : Fragment() {
         if (getDayName == "SATURDAY")   { dayName = "Lauantai" }
         if (getDayName == "SUNDAY")     { dayName = "Sunnuntai" }
 
+        //Combining all values into one string and displaying it in the list view
         val todaysDate = "$dayName $currentDay. $monthName"
         view.tvTodaysDate.setText(todaysDate)
 

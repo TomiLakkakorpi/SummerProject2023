@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">To Do App</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Muistilista</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="kategoriaString">Kategoria</string>
@@ -55,6 +54,7 @@
         <item>Jääkiekko</item>
         <item>Formula 1</item>
         <item>eSports</item>
+        <item>Matkailu</item>
         <item>Muu</item>
     </string-array>
 </resources>

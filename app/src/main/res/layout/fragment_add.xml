@@ -221,6 +221,7 @@
                 app:fabCustomSize="42dp"
                 android:clickable="true"
                 app:backgroundTint="@color/red_delete"
+                app:maxImageSize="30dp"
                 app:srcCompat="@drawable/ic_remove"
                 tools:layout_editor_absoluteX="146dp"
                 tools:layout_editor_absoluteY="240dp"
@@ -234,6 +235,7 @@
                 android:layout_marginEnd="10dp"
                 android:clickable="true"
                 app:backgroundTint="@color/green_add"
+                app:maxImageSize="30dp"
                 app:fabCustomSize="42dp"
                 app:layout_constraintEnd_toEndOf="parent"
 
@@ -263,6 +265,7 @@
                 android:focusable="true"
                 android:src="@drawable/ic_calendar"
                 app:backgroundTint="@color/blue_update"
+                app:maxImageSize="30dp"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -279,6 +282,7 @@
                 android:focusable="true"
                 android:src="@drawable/ic_time"
                 app:backgroundTint="@color/blue_update"
+                app:maxImageSize="30dp"
                 android:layout_marginTop="90dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -372,6 +376,7 @@
         android:focusable="true"
         android:src="@drawable/ic_cancel"
         app:backgroundTint="@color/red_delete"
+        app:maxImageSize="35dp"
         app:layout_constraintStart_toStartOf="@id/addScreenCardviewBottom"
         app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom"
         app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom" />
@@ -387,6 +392,7 @@
         android:focusable="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/green_add"
+        app:maxImageSize="35dp"
         app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
         app:layout_constraintEnd_toEndOf="@id/addScreenCardviewBottom"
         app:layout_constraintTop_toTopOf="@+id/addScreenCardviewBottom" />
