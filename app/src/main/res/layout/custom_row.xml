@@ -42,15 +42,12 @@
 
             <TextView
                 android:id="@+id/tvTaskHeader"
-
                 android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:textColor="@color/black"
-
                 app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,38 +68,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-
                 android:textSize="14sp"
                 android:textColor="@color/black"
-
                 app:layout_constraintStart_toEndOf="@+id/tvBulletPoint1"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
             <TextView
                 android:id="@+id/tvTaskDay"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-
                 android:textSize="14sp"
                 android:textColor="@color/black"
-
                 app:layout_constraintStart_toEndOf="@id/tvTaskTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
             <TextView
                 android:id="@+id/tvTaskDate"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-
                 android:textSize="14sp"
                 android:textColor="@color/black"
-
                 app:layout_constraintStart_toEndOf="@id/tvTaskDay"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
@@ -118,29 +106,25 @@
 
             <TextView
                 android:id="@+id/tvTaskDetails"
-
-                android:layout_width="325dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="5dp"
-
                 android:textSize="14sp"
                 android:textColor="@color/black"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvBulletPoint2"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskTime" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/categoryIcon"
-
                 android:layout_width="0.1dp"
                 android:layout_height="0.1dp"
                 app:fabCustomSize="1dp"
                 android:layout_marginTop="-8dp"
                 android:layout_marginEnd="15dp"
-                app:backgroundTint="@color/gray"
+                app:backgroundTint="@color/black"
                 android:clickable="false"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -148,16 +132,13 @@
 
             <TextView
                 android:id="@+id/tvCategory"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="-10dp"
-
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-
                 app:layout_constraintEnd_toStartOf="@id/categoryIcon"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -192,7 +173,6 @@
                     android:id="@+id/categoryBarConstraint"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 

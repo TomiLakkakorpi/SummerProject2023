@@ -25,6 +25,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -107,7 +108,7 @@ class AddFragment : Fragment() {
         //Changing from addFragment to ListFragment when "cancel" button is pressed
         view.addScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
-            Toast.makeText(requireContext(), "Tehtävää ei tallennettu", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "Tehtävää ei tallennettu", Toast.LENGTH_SHORT).show()
         }
 
         //Initializing categoryfilter dropdown menu
@@ -115,6 +116,45 @@ class AddFragment : Fragment() {
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         view.findViewById<AutoCompleteTextView>(R.id.addAutoCompleteTextView).setAdapter(arrayAdapter)
+
+        //Getting local date and seperating it into year, month and day values
+        val today = LocalDate.now().toString().split("-")
+        val currentYear = today[0]
+        val currentMonth = today[1]
+        val currentDay = today[2]
+
+        //Getting the dayOfWeek value with the year, month & day values from above
+        val getDayName = LocalDate.of(currentYear.toInt(), currentMonth.toInt(), currentDay.toInt()).dayOfWeek.toString()
+
+        //Initializing some strings
+        var dayName = ""
+        var monthName = ""
+
+        //Setting the string values
+        if (currentMonth == "01")     { monthName = "Tammikuuta" }
+        if (currentMonth == "02")     { monthName = "Helmikuuta" }
+        if (currentMonth == "03")     { monthName = "Maaliskuuta" }
+        if (currentMonth == "04")     { monthName = "Huhtikuuta" }
+        if (currentMonth == "05")     { monthName = "Toukokuuta" }
+        if (currentMonth == "06")     { monthName = "Kesäkuuta" }
+        if (currentMonth == "07")     { monthName = "Heinäkuuta" }
+        if (currentMonth == "08")     { monthName = "Elokuuta" }
+        if (currentMonth == "09")     { monthName = "Syyskuuta" }
+        if (currentMonth == "10")     { monthName = "Lokakuuta" }
+        if (currentMonth == "11")     { monthName = "Marraskuuta" }
+        if (currentMonth == "12")     { monthName = "Joulukuuta" }
+
+        if (getDayName == "MONDAY")     { dayName = "Maanantai" }
+        if (getDayName == "TUESDAY")    { dayName = "Tiistai" }
+        if (getDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
+        if (getDayName == "THURSDAY")   { dayName = "Torstai" }
+        if (getDayName == "FRIDAY")     { dayName = "Perjantai" }
+        if (getDayName == "SATURDAY")   { dayName = "Lauantai" }
+        if (getDayName == "SUNDAY")     { dayName = "Sunnuntai" }
+
+        //Combining all values into one string and displaying it in the list view
+        val todaysDate = "$dayName $currentDay. $monthName"
+        view.tvAddScreenTodaysDate.setText(todaysDate)
 
         return view
     }
@@ -229,6 +269,12 @@ class AddFragment : Fragment() {
             minute = valuesArrayList2[1]
         }
 
+        //Setting date values for the 4 scenarios
+        val regularDate = "$year/$month/$day"                       //normal date (example 10/10/23)
+        val dayMissingZeroDate = "$year/$month/0$day"               //day has only one digit (example 1/10/23) so we add 0 in front of it
+        val monthMissingZeroDate = "$year/0$month/$day"             //month has only one digit (example 10/1/23) so we add 0 in front of it
+        val dayAndMonthMissingZeroDate = "$year/0$month/0$day"
+
         //Setting time values for the 4 possible scenarios
         val regularTime = "$hour:$minute"                           //Normal time (example 10:00)
         val hourMissingZeroTime = "0$hour:$minute"                  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
@@ -236,7 +282,7 @@ class AddFragment : Fragment() {
         val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
 
         //Initializing variables
-        val date = "$day/$month/$year"
+        val date = "$year/$month/$day"
         var time = ""
         val status = false
 
@@ -244,7 +290,6 @@ class AddFragment : Fragment() {
         if (checkHeader(header) && checkTime(timeString) &&  checkDate(dateString) && checkCategory(category))
         {
             if (!isDateInThePast(dateString, timeString)) {
-
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
 
@@ -290,7 +335,7 @@ class AddFragment : Fragment() {
 
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
-        Toast.makeText(requireContext(), "$timeDifference", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), "$timeDifference", Toast.LENGTH_SHORT).show()
 
         return if (timeDifference < 0) {
             true
@@ -322,6 +367,30 @@ class AddFragment : Fragment() {
     //Checking that category field isn't empty
     private fun checkCategory(category: String): Boolean {
         return !(TextUtils.isEmpty(category))
+    }
+
+    //Checking input and matching for dates like 11/11/23
+    private fun dateCheck1(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/11/23
+    private fun dateCheck2(str: String): Boolean {
+        val regex = Regex("\\d/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/1/23
+    private fun dateCheck3(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/1/23
+    private fun dateCheck4(str: String): Boolean {
+        val regex = Regex("\\d/\\d/\\d{2}")
+        return str.matches(regex)
     }
 
     //Checking input and matching for times like 11:11

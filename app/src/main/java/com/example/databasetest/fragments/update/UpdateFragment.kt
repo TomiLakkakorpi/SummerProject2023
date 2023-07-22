@@ -1,6 +1,7 @@
 package com.example.databasetest.fragments.update
 
 import android.app.AlertDialog
+import android.app.Application
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,6 +24,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
 import java.text.SimpleDateFormat
@@ -49,9 +52,9 @@ class UpdateFragment : Fragment() {
         //Getting date values from the database, splitting them by delimiter / and putting the values in an array
         val dateValues = args.currentTask.date
         val valuesArrayListDate = dateValues.split("/")
-        val year = valuesArrayListDate[2]
+        val year = valuesArrayListDate[0]
         val month = valuesArrayListDate[1]
-        val day = valuesArrayListDate[0]
+        val day = valuesArrayListDate[2]
 
         //Getting time values from the database, splitting them by delimiter : and putting the values in an array
         val timeValues = args.currentTask.time
@@ -59,6 +62,7 @@ class UpdateFragment : Fragment() {
         val hour = valuesArrayListTime[0]
         val minute = valuesArrayListTime[1]
 
+        /*
         //Checking if day and month both start with 0 and dropping first index from the value before setting the value in the edittext field
         if (day.startsWith("0") && (month.startsWith("0"))) {
             val newDay = day.drop(1)
@@ -86,6 +90,7 @@ class UpdateFragment : Fragment() {
             val dateValue1 = "$day/$newMonth/$year"
             view.etEditScreenDate.setText(dateValue1)
         }
+        */
 
         //Checking if hour value starts with 0 and dropping the first index value if it does, else showing the time as it is in database
         if (hour.startsWith("0") && !minute.startsWith("0")) {
@@ -101,6 +106,9 @@ class UpdateFragment : Fragment() {
         view.etEditScreenHeader.setText(args.currentTask.header)
         view.etEditScreenDetails.setText(args.currentTask.details)
         view.updateAutoCompleteTextView.setText(args.currentTask.category)
+
+        val dateValue1 = "$day/$month/$year"
+        view.etEditScreenDate.setText(dateValue1)
 
         //Setting rating to update screen´s rating bar with the value from database
         view.updateScreenRatingBar.rating = args.currentTask.importance.toFloat()
@@ -187,6 +195,45 @@ class UpdateFragment : Fragment() {
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         view.findViewById<AutoCompleteTextView>(R.id.updateAutoCompleteTextView).setAdapter(arrayAdapter)
+
+        //Getting local date and seperating it into year, month and day values
+        val today = LocalDate.now().toString().split("-")
+        val currentYear = today[0]
+        val currentMonth = today[1]
+        val currentDay = today[2]
+
+        //Getting the dayOfWeek value with the year, month & day values from above
+        val getDayName = LocalDate.of(currentYear.toInt(), currentMonth.toInt(), currentDay.toInt()).dayOfWeek.toString()
+
+        //Initializing some strings
+        var dayName = ""
+        var monthName = ""
+
+        //Setting the string values
+        if (currentMonth == "01")     { monthName = "Tammikuuta" }
+        if (currentMonth == "02")     { monthName = "Helmikuuta" }
+        if (currentMonth == "03")     { monthName = "Maaliskuuta" }
+        if (currentMonth == "04")     { monthName = "Huhtikuuta" }
+        if (currentMonth == "05")     { monthName = "Toukokuuta" }
+        if (currentMonth == "06")     { monthName = "Kesäkuuta" }
+        if (currentMonth == "07")     { monthName = "Heinäkuuta" }
+        if (currentMonth == "08")     { monthName = "Elokuuta" }
+        if (currentMonth == "09")     { monthName = "Syyskuuta" }
+        if (currentMonth == "10")     { monthName = "Lokakuuta" }
+        if (currentMonth == "11")     { monthName = "Marraskuuta" }
+        if (currentMonth == "12")     { monthName = "Joulukuuta" }
+
+        if (getDayName == "MONDAY")     { dayName = "Maanantai" }
+        if (getDayName == "TUESDAY")    { dayName = "Tiistai" }
+        if (getDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
+        if (getDayName == "THURSDAY")   { dayName = "Torstai" }
+        if (getDayName == "FRIDAY")     { dayName = "Perjantai" }
+        if (getDayName == "SATURDAY")   { dayName = "Lauantai" }
+        if (getDayName == "SUNDAY")     { dayName = "Sunnuntai" }
+
+        //Combining all values into one string and displaying it in the list view
+        val todaysDate = "$dayName $currentDay. $monthName"
+        view.tvUpdateScreenTodaysDate.setText(todaysDate)
 
         return view
     }
@@ -298,6 +345,12 @@ class UpdateFragment : Fragment() {
         val hour = valuesArrayListTime2[0]
         val minute = valuesArrayListTime2[1]
 
+        //Setting date values for the 4 scenarios
+        val regularDate = "$year2/$month2/$day2"                    //normal date (example 10/10/23)
+        val dayMissingZeroDate = "$year2/$month2/0$day2"            //day has only one digit (example 1/10/23) so we add 0 in front of it
+        val monthMissingZeroDate = "$year2/0$month2/$day2"          //month has only one digit (example 10/1/23) so we add 0 in front of it
+        val dayAndMonthMissingZeroDate = "$year2/0$month2/0$day2"   //both day and month have only one digit (example 1/1/23) so we add 0 in front of both of them
+
         //Setting time values for the 2 possible scenarios
         val regularTime = "$hour:$minute"                           //Normal time (example 10:00)
         val hourMissingZeroTime = "0$hour:$minute"                  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
@@ -306,7 +359,7 @@ class UpdateFragment : Fragment() {
 
         //Initializing variables
         var dayName = ""
-        val date = "$day2/$month2/$year2"
+        var date = ""
         var time = ""
         val status: Boolean
 
@@ -326,6 +379,18 @@ class UpdateFragment : Fragment() {
         if (checkHeader(header) && checkTime(timeString) && checkDate(dateString) && checkCategory(category))
         {
             if (!isDateInThePast(dateString, timeString)) {
+                //Normal date 11/11/23
+                if (dateCheck1(dateString)) { date = regularDate }
+
+                //Date like 1/11/23
+                if (dateCheck2(dateString)) { date = dayMissingZeroDate }
+
+                //Date like 11/1/23
+                if (dateCheck3(dateString)) { date = monthMissingZeroDate }
+
+                //Date like 1/1/23
+                if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
+
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
 
@@ -345,6 +410,7 @@ class UpdateFragment : Fragment() {
                 val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay, importance)
                 mTaskViewModel.updateTask(updatedTask)
                 //Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), date, Toast.LENGTH_SHORT).show()
 
                 //Navigating back to list fragment
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
@@ -374,7 +440,6 @@ class UpdateFragment : Fragment() {
 
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
-        Toast.makeText(requireContext(), "$timeDifference", Toast.LENGTH_SHORT).show()
 
         return if (timeDifference < 0) {
             true
@@ -437,6 +502,30 @@ class UpdateFragment : Fragment() {
     //Checking that category field isn't empty
     private fun checkCategory(category: String): Boolean {
         return !(TextUtils.isEmpty(category))
+    }
+
+    //Checking input and matching for dates like 11/11/2023
+    private fun dateCheck1(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/11/2023
+    private fun dateCheck2(str: String): Boolean {
+        val regex = Regex("\\d/\\d{2}/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 11/1/2023
+    private fun dateCheck3(str: String): Boolean {
+        val regex = Regex("\\d{2}/\\d/\\d{2}")
+        return str.matches(regex)
+    }
+
+    //Checking input and matching for dates like 1/1/2023
+    private fun dateCheck4(str: String): Boolean {
+        val regex = Regex("\\d/\\d/\\d{2}")
+        return str.matches(regex)
     }
 
     //Checking input and matching for times like 11:11

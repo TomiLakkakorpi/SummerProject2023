@@ -8,7 +8,7 @@
     android:background="@color/teal_200">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/ListScreenCardviewTop"
+        android:id="@+id/UpdateScreenCardViewTop"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
@@ -25,7 +25,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tvTodaysDate"
+        android:id="@+id/tvListScreenTodaysDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
@@ -33,10 +33,10 @@
         android:textSize="18sp"
         android:textColor="@color/black"
         android:text=""
-        app:layout_constraintTop_toTopOf="@id/ListScreenCardviewTop"
-        app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewTop"
-        app:layout_constraintEnd_toEndOf="@id/ListScreenCardviewTop"
-        app:layout_constraintStart_toStartOf="@id/ListScreenCardviewTop"/>
+        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintEnd_toEndOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintStart_toStartOf="@id/UpdateScreenCardViewTop"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ListIconLeft"
@@ -44,13 +44,14 @@
         android:layout_width="0.1dp"
         android:layout_height="0.1dp"
         app:fabCustomSize="1dp"
+        android:layout_marginEnd="10dp"
         app:backgroundTint="@color/gray"
         android:src="@drawable/ic_calendar"
         android:clickable="false"
         android:focusable="true"
-        app:layout_constraintEnd_toEndOf="@id/ListScreenCardviewTop"
-        app:layout_constraintTop_toTopOf="@id/ListScreenCardviewTop"
-        app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewTop"/>
+        app:layout_constraintEnd_toEndOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ListIconRight"
@@ -58,13 +59,14 @@
         android:layout_width="0.1dp"
         android:layout_height="0.1dp"
         app:fabCustomSize="1dp"
+        android:layout_marginStart="10dp"
         app:backgroundTint="@color/gray"
         android:src="@drawable/ic_calendar"
         android:clickable="false"
         android:focusable="true"
-        app:layout_constraintStart_toStartOf="@id/ListScreenCardviewTop"
-        app:layout_constraintTop_toTopOf="@id/ListScreenCardviewTop"
-        app:layout_constraintBottom_toBottomOf="@id/ListScreenCardviewTop"/>
+        app:layout_constraintStart_toStartOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/ListScreenCardviewMiddle"
@@ -78,7 +80,7 @@
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintTop_toBottomOf="@id/ListScreenCardviewTop"
+        app:layout_constraintTop_toBottomOf="@id/UpdateScreenCardViewTop"
         app:layout_constraintBottom_toTopOf="@id/ListScreenCardviewBottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">

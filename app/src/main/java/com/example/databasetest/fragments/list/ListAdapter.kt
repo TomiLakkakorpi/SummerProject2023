@@ -7,19 +7,24 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.databasetest.R
 import com.example.databasetest.alarm.AlarmItem
 import com.example.databasetest.alarm.AndroidAlarmScheduler
+import com.example.databasetest.fragments.update.UpdateFragment
 import com.example.databasetest.model.Task
+import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.custom_row.view.*
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
-
     private var taskList = emptyList<Task>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -53,9 +58,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val timeValues = currentItem.time.split(":")
 
         //Getting values from date arraylist and time arraylist
-        val year = dateValues[2]
+        val year = dateValues[0]
         val month = dateValues[1]
-        val day = dateValues[0]
+        val day = dateValues[2]
 
         val hour = timeValues[0]
         val minute = timeValues[1]
@@ -67,40 +72,45 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         if (month.startsWith("0") && day.startsWith("0")) {
             val newMonth = month.drop(1)
             val newDay = day.drop(1)
-            val dateValue = "$newDay.$newMonth.$year"
+            val dateValue = "$newDay.$newMonth.20$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
         //If date is for example 11/11/23 show the date as it is and then show the date in the list
         if (!month.startsWith("0") && !day.startsWith("0")) {
-            val dateValue = "$day.$month.$year"
+            val dateValue = "$day.$month.20$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
         //If date is for example 01/11/23 drop the fist 0 from day and then show the date in the list
         if (day.startsWith("0") && !month.startsWith("0")) {
             val newDay = day.drop(1)
-            val dateValue = "$newDay.$month.$year"
+            val dateValue = "$newDay.$month.20$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
         //If date is for example 11/01/23 drop the first 0 from month and then show the date in the list
         if (month.startsWith("0") && !day.startsWith("0")) {
             val newMonth = month.drop(1)
-            val dateValue = "$day.$newMonth.$year"
+            val dateValue = "$day.$newMonth.20$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
-        //If time is for example 09:00 drop the first 0 from hour and then show the date in the list
-        if(hour.startsWith("0") && !minute.startsWith("0")) {
-            val newHour = hour.drop(1)
-            val timeValue = "$newHour:$minute"
-            holder.itemView.tvTaskTime.text = timeValue
+        if (currentItem.time == "00:00") {
+            holder.itemView.tvTaskTime.text = ""
             holder.itemView.tvBulletPoint1.text = "\u2022"
         } else {
-            val timeValue = "$hour:$minute"
-            holder.itemView.tvTaskTime.text = timeValue
-            holder.itemView.tvBulletPoint1.text = "\u2022"
+            //If time is for example 09:00 drop the first 0 from hour and then show the date in the list
+            if(hour.startsWith("0") && !minute.startsWith("0")) {
+                val newHour = hour.drop(1)
+                val timeValue = "$newHour:$minute "
+                holder.itemView.tvTaskTime.text = timeValue
+                holder.itemView.tvBulletPoint1.text = "\u2022"
+            } else {
+                val timeValue = "$hour:$minute "
+                holder.itemView.tvTaskTime.text = timeValue
+                holder.itemView.tvBulletPoint1.text = "\u2022"
+            }
         }
 
         //Setting header, dayName, details and category from db to the list
@@ -263,3 +273,5 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 }
+
+annotation class AndroidEntryPoint

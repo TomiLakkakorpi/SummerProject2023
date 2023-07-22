@@ -13,14 +13,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
+import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import java.time.LocalDate
+import java.util.*
 
 class ListFragment : Fragment() {
 
     //Initializing variables
     private var _binding: FragmentListBinding? = null
+    private var taskList = emptyList<Task>()
     private lateinit var mTaskViewModel: TaskViewModel
 
     override fun onCreateView(
@@ -86,7 +89,7 @@ class ListFragment : Fragment() {
 
         //Combining all values into one string and displaying it in the list view
         val todaysDate = "$dayName $currentDay. $monthName"
-        view.tvTodaysDate.setText(todaysDate)
+        view.tvListScreenTodaysDate.setText(todaysDate)
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
