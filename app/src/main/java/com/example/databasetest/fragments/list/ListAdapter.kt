@@ -53,9 +53,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val timeValues = currentItem.time.split(":")
 
         //Getting values from date arraylist and time arraylist
-        val year = dateValues[0]
+        val year = dateValues[2]
         val month = dateValues[1]
-        val day = dateValues[2]
+        val day = dateValues[0]
 
         val hour = timeValues[0]
         val minute = timeValues[1]
@@ -95,10 +95,12 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         if(hour.startsWith("0") && !minute.startsWith("0")) {
             val newHour = hour.drop(1)
             val timeValue = "$newHour:$minute"
-            holder.itemView.tvTaskTime.text = "\u2022 " + timeValue
+            holder.itemView.tvTaskTime.text = timeValue
+            holder.itemView.tvBulletPoint1.text = "\u2022"
         } else {
             val timeValue = "$hour:$minute"
-            holder.itemView.tvTaskTime.text = "\u2022 " + timeValue
+            holder.itemView.tvTaskTime.text = timeValue
+            holder.itemView.tvBulletPoint1.text = "\u2022"
         }
 
         //Setting header, dayName, details and category from db to the list
@@ -108,7 +110,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         //Showing a bullet point in front of details textview if it isn't empty
         if (!currentItem.details.isBlank()) {
-            holder.itemView.tvTaskDetails.text = "\u2022 " + currentItem.details
+            holder.itemView.tvTaskDetails.text = currentItem.details
+            holder.itemView.tvBulletPoint2.text = "\u2022"
         } else {
             holder.itemView.tvTaskDetails.text = currentItem.details
         }
@@ -157,85 +160,85 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         //Setting the tasks background color, icon background color and icon based on category
         if (currentItem.category == "Liikunta") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category1)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category1)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category1)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_liikunta)
         }
 
         if (currentItem.category == "Terveys") {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category2)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category2)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category2)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_terveys)
         }
 
         if (currentItem.category == "Koulu")        {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category3)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category3)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category3)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_koulu)
         }
 
         if (currentItem.category == "Työ")          {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category4)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category4)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category4)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_tyo)
         }
 
         if (currentItem.category == "Tärkeä")       {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category5)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category5)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category5)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_tarkea)
         }
 
         if (currentItem.category == "Talous")    {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category6)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category6)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category6)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_talous)
         }
 
         if (currentItem.category == "Askare")       {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category7)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category7)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category7)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_askare)
         }
 
         if (currentItem.category == "Tapaaminen")   {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category8)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category8)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category8)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_tapaaminen)
         }
 
         if (currentItem.category == "Pelit")        {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category9)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category9)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category9)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_pelit)
         }
 
         if (currentItem.category == "Jääkiekko")    {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category10)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category10)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category10)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_jaakiekko)
         }
 
         if (currentItem.category == "Formula 1")    {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category11)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category11)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category11)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_formula1)
         }
 
         if (currentItem.category == "eSports")      {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category12)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category12)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category12)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_pelit)
         }
 
         if (currentItem.category == "Matkailu")      {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.category13)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category13)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category13)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_matkailu)
         }
 
         if (currentItem.category == "Muu")          {
-            holder.itemView.taskMainConstraint.setBackgroundResource(R.color.categoryRest)
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.categoryRest)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.categoryRest)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_muu)
         }

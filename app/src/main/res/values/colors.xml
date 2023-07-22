@@ -14,6 +14,7 @@
     <color name="yellow_star">#dadd1e</color>
     <color name="backgroundMain">#6712EF</color>
     <color name="backgroundSecondary">#D17936</color>
+    <color name="customRowBackground">#20D1AC</color>
 
     <color name="lightGrey"></color>
     <color name="yellow">#FFC300</color>
@@ -23,7 +24,7 @@
 
     <color name="category1">#37e1e1</color>
     <color name="category2">#f54fa6</color>
-    <color name="category3">#20D1AC</color>
+    <color name="category3">#BADA55</color>
     <color name="category4">#0B5E55</color>
     <color name="category5">#3A4C97</color>
     <color name="category6">#82d782</color>

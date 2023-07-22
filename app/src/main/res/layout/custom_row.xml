@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/diet_window_background"
+    android:id="@+id/customRowMainConstraint"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:cardBackgroundColor="@color/gray"
+        app:cardBackgroundColor="@color/customRowBackground"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
@@ -26,8 +26,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/taskMainConstraint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+            android:layout_height="match_parent">
 
             <CheckBox
                 android:id="@+id/taskCheckbox"
@@ -44,27 +43,39 @@
             <TextView
                 android:id="@+id/tvTaskHeader"
 
-                android:layout_width="200dp"
+                android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
 
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/black"
 
                 app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tvBulletPoint1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/taskCheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader"/>
+
+            <TextView
                 android:id="@+id/tvTaskTime"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
 
+                android:textSize="14sp"
                 android:textColor="@color/black"
 
-                app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
+                app:layout_constraintStart_toEndOf="@+id/tvBulletPoint1"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
             <TextView
@@ -75,6 +86,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
 
+                android:textSize="14sp"
                 android:textColor="@color/black"
 
                 app:layout_constraintStart_toEndOf="@id/tvTaskTime"
@@ -88,24 +100,36 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
 
+                android:textSize="14sp"
                 android:textColor="@color/black"
 
                 app:layout_constraintStart_toEndOf="@id/tvTaskDay"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskHeader" />
 
             <TextView
-                android:id="@+id/tvTaskDetails"
-
+                android:id="@+id/tvBulletPoint2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:paddingRight="90dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/tvTaskTime"/>
 
+            <TextView
+                android:id="@+id/tvTaskDetails"
+
+                android:layout_width="325dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+
+                android:textSize="14sp"
                 android:textColor="@color/black"
 
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/taskCheckbox"
+                app:layout_constraintStart_toEndOf="@+id/tvBulletPoint2"
                 app:layout_constraintTop_toBottomOf="@+id/tvTaskTime" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -115,6 +139,7 @@
                 android:layout_height="0.1dp"
                 app:fabCustomSize="1dp"
                 android:layout_marginTop="-8dp"
+                android:layout_marginEnd="15dp"
                 app:backgroundTint="@color/gray"
                 android:clickable="false"
                 android:focusable="true"
@@ -130,7 +155,7 @@
                 android:layout_marginEnd="-10dp"
 
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
 
                 app:layout_constraintEnd_toStartOf="@id/categoryIcon"
@@ -141,13 +166,35 @@
                 android:layout_width="46dp"
                 android:layout_height="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="30dp"
                 android:stepSize="0.5"
                 android:numStars="3"
                 android:theme="@style/customRatingBar"
                 style="?android:attr/ratingBarStyleSmall"
                 app:layout_constraintTop_toBottomOf="@id/tvCategory"
                 app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/categoryBar"
+                android:layout_width="10dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                app:cardBackgroundColor="@color/gray"
+                app:cardElevation="1dp"
+                app:cardMaxElevation="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/categoryBarConstraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

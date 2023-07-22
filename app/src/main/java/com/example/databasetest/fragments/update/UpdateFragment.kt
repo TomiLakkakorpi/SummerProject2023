@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_update.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class UpdateFragment : Fragment() {
@@ -48,9 +49,9 @@ class UpdateFragment : Fragment() {
         //Getting date values from the database, splitting them by delimiter / and putting the values in an array
         val dateValues = args.currentTask.date
         val valuesArrayListDate = dateValues.split("/")
-        val year = valuesArrayListDate[0]
+        val year = valuesArrayListDate[2]
         val month = valuesArrayListDate[1]
-        val day = valuesArrayListDate[2]
+        val day = valuesArrayListDate[0]
 
         //Getting time values from the database, splitting them by delimiter : and putting the values in an array
         val timeValues = args.currentTask.time
@@ -178,7 +179,7 @@ class UpdateFragment : Fragment() {
         //Changing from updateFragment to listFragment when "cancel" button is pressed
         view.updateScreenCancel.setOnClickListener {
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-            Toast.makeText(requireContext(), "Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "Tehtävää ei päivitetty", Toast.LENGTH_SHORT).show()
         }
 
         //Initializing categoryfilter dropdown menu
@@ -297,12 +298,6 @@ class UpdateFragment : Fragment() {
         val hour = valuesArrayListTime2[0]
         val minute = valuesArrayListTime2[1]
 
-        //Setting date values for the 4 scenarios
-        val regularDate = "$year2/$month2/$day2"                    //normal date (example 10/10/23)
-        val dayMissingZeroDate = "$year2/$month2/0$day2"            //day has only one digit (example 1/10/23) so we add 0 in front of it
-        val monthMissingZeroDate = "$year2/0$month2/$day2"          //month has only one digit (example 10/1/23) so we add 0 in front of it
-        val dayAndMonthMissingZeroDate = "$year2/0$month2/0$day2"   //both day and month have only one digit (example 1/1/23) so we add 0 in front of both of them
-
         //Setting time values for the 2 possible scenarios
         val regularTime = "$hour:$minute"                           //Normal time (example 10:00)
         val hourMissingZeroTime = "0$hour:$minute"                  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
@@ -311,7 +306,7 @@ class UpdateFragment : Fragment() {
 
         //Initializing variables
         var dayName = ""
-        var date = ""
+        val date = "$day2/$month2/$year2"
         var time = ""
         val status: Boolean
 
@@ -330,44 +325,61 @@ class UpdateFragment : Fragment() {
         //Checking if header field is empty
         if (checkHeader(header) && checkTime(timeString) && checkDate(dateString) && checkCategory(category))
         {
-            //Normal date 11/11/23
-            if (dateCheck1(dateString)) { date = regularDate }
+            if (!isDateInThePast(dateString, timeString)) {
+                //Normal time 10:00
+                if (timeCheck1(timeString)) { time = regularTime }
 
-            //Date like 1/11/23
-            if (dateCheck2(dateString)) { date = dayMissingZeroDate }
+                //Time with only 1 digit in hour field (1:00)
+                if (timeCheck2(timeString)) { time = hourMissingZeroTime }
 
-            //Date like 11/1/23
-            if (dateCheck3(dateString)) { date = monthMissingZeroDate }
+                //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
+                if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
 
-            //Date like 1/1/23
-            if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
+                //Time with 1 digit in both hour and minute field
+                if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime }
 
-            //Normal time 10:00
-            if (timeCheck1(timeString)) { time = regularTime }
+                //Setting the status variable based on the checkbox state
+                status = checkBox.isChecked
 
-            //Time with only 1 digit in hour field (1:00)
-            if (timeCheck2(timeString)) { time = hourMissingZeroTime }
+                //updating the task with the given values and changing back to listfragment
+                val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay, importance)
+                mTaskViewModel.updateTask(updatedTask)
+                //Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
 
-            //Time with only 1 digit in minute field (1:0) (Timepicker assigns only one digit to minute value if the value is for example 12:00)
-            if (timeCheck3(timeString)) { time = minuteMissingZeroTime }
+                //Navigating back to list fragment
+                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
 
-            //Time with 1 digit in both hour and minute field
-            if (timeCheck4(timeString)) { time = bothHourAndMinuteMissingZeroTime }
-
-            //Setting the status variable based on the checkbox state
-            status = checkBox.isChecked
-
-            //updating the task with the given values and changing back to listfragment
-            val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay, importance)
-            mTaskViewModel.updateTask(updatedTask)
-            Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-
-            //Navigating back to list fragment
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-
+            } else {
+                //Displaying a toast if the selected date is in the past
+                Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
+            }
         } else {
             //Displaying toast if any of the 4 required values are empty
             Toast.makeText(requireContext(), "Syötä vähintään otsikko, kellonaika, päivämäärä ja kategoria", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    //Function to check whether the given date & time is in the past
+    private fun isDateInThePast(dateString: String, timeString: String): Boolean {
+        val now = LocalDateTime.now()
+
+        val dateValues = dateString.split("/")
+        val day = dateValues[0]
+        val month = dateValues[1]
+        val year = "20" + dateValues[2]
+
+        val timeValues = timeString.split(":")
+        val hour = timeValues[0]
+        val minute = timeValues[1]
+
+        val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+        val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
+        Toast.makeText(requireContext(), "$timeDifference", Toast.LENGTH_SHORT).show()
+
+        return if (timeDifference < 0) {
+            true
+        } else {
+            false
         }
     }
 
@@ -378,7 +390,7 @@ class UpdateFragment : Fragment() {
         {_, _ ->
             mTaskViewModel.deleteTask(args.currentTask)
             cancelAlarm(args.currentTask.id)
-            Toast.makeText(requireContext(), "Tehtävä poistettu", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "Tehtävä poistettu", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
         builder.setNegativeButton("Ei")
@@ -446,30 +458,6 @@ class UpdateFragment : Fragment() {
 
     private fun timeCheck4(str: String): Boolean {
         val regex = Regex("\\d:\\d")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 11/11/2023
-    private fun dateCheck1(str: String): Boolean {
-        val regex = Regex("\\d{2}/\\d{2}/\\d{2}")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 1/11/2023
-    private fun dateCheck2(str: String): Boolean {
-        val regex = Regex("\\d/\\d{2}/\\d{2}")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 11/1/2023
-    private fun dateCheck3(str: String): Boolean {
-        val regex = Regex("\\d{2}/\\d/\\d{2}")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 1/1/2023
-    private fun dateCheck4(str: String): Boolean {
-        val regex = Regex("\\d/\\d/\\d{2}")
         return str.matches(regex)
     }
 }
