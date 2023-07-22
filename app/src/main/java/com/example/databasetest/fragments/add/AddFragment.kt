@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -42,6 +43,7 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
@@ -268,12 +270,6 @@ class AddFragment : Fragment() {
             hour = valuesArrayList2[0]
             minute = valuesArrayList2[1]
         }
-
-        //Setting date values for the 4 scenarios
-        val regularDate = "$year/$month/$day"                       //normal date (example 10/10/23)
-        val dayMissingZeroDate = "$year/$month/0$day"               //day has only one digit (example 1/10/23) so we add 0 in front of it
-        val monthMissingZeroDate = "$year/0$month/$day"             //month has only one digit (example 10/1/23) so we add 0 in front of it
-        val dayAndMonthMissingZeroDate = "$year/0$month/0$day"
 
         //Setting time values for the 4 possible scenarios
         val regularTime = "$hour:$minute"                           //Normal time (example 10:00)

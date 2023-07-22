@@ -49,6 +49,34 @@ class UpdateFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_update, container, false)
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
+        //Calling update function when "update" button is pressed
+        view.updateScreenUpdate.setOnClickListener {
+            updateItem()
+        }
+
+        //Calling deletion function when "delete" button is pressed
+        view.updateScreenDelete.setOnClickListener {
+            deleteTask()
+        }
+
+        //Opening time picker menu when button is pressed
+        view.updateScreenTimePicker.setOnClickListener {
+            openTimePicker()
+        }
+
+        //Opening date picker menu when button is pressed
+        view.updateScreenDatePicker.setOnClickListener {
+            openDatePicker()
+        }
+
+        //Setting the values from database to the edittext fields
+        view.etEditScreenHeader.setText(args.currentTask.header)
+        view.etEditScreenDetails.setText(args.currentTask.details)
+        view.updateAutoCompleteTextView.setText(args.currentTask.category)
+
+        //Setting rating to update screen´s rating bar with the value from database
+        view.updateScreenRatingBar.rating = args.currentTask.importance.toFloat()
+
         //Getting date values from the database, splitting them by delimiter / and putting the values in an array
         val dateValues = args.currentTask.date
         val valuesArrayListDate = dateValues.split("/")
@@ -62,36 +90,6 @@ class UpdateFragment : Fragment() {
         val hour = valuesArrayListTime[0]
         val minute = valuesArrayListTime[1]
 
-        /*
-        //Checking if day and month both start with 0 and dropping first index from the value before setting the value in the edittext field
-        if (day.startsWith("0") && (month.startsWith("0"))) {
-            val newDay = day.drop(1)
-            val newMonth = month.drop(1)
-            val dateValue1 = "$newDay/$newMonth/$year"
-            view.etEditScreenDate.setText(dateValue1)
-        }
-
-        //Checking if neither of day or month start with 0 before setting the value in the edittext field
-        if (!day.startsWith("0") && (!month.startsWith("0"))) {
-            val dateValue1 = "$day/$month/$year"
-            view.etEditScreenDate.setText(dateValue1)
-        }
-
-        //Checking if only day starts with 0 and dropping first index from the value before setting the value in the edittext field
-        if (day.startsWith("0") && (!month.startsWith("0"))) {
-            val newDay = day.drop(1)
-            val dateValue1 = "$newDay/$month/$year"
-            view.etEditScreenDate.setText(dateValue1)
-        }
-
-        //Checking if only month starts with 0 and dropping first index from the value before setting the value in the edittext field
-        if (!day.startsWith("0") && (month.startsWith("0"))) {
-            val newMonth = month.drop(1)
-            val dateValue1 = "$day/$newMonth/$year"
-            view.etEditScreenDate.setText(dateValue1)
-        }
-        */
-
         //Checking if hour value starts with 0 and dropping the first index value if it does, else showing the time as it is in database
         if (hour.startsWith("0") && !minute.startsWith("0")) {
             val newHour = hour.drop(1)
@@ -102,16 +100,9 @@ class UpdateFragment : Fragment() {
             view.etEditScreenTime.setText(timeValue)
         }
 
-        //Setting the values from database to the edittext fields
-        view.etEditScreenHeader.setText(args.currentTask.header)
-        view.etEditScreenDetails.setText(args.currentTask.details)
-        view.updateAutoCompleteTextView.setText(args.currentTask.category)
-
-        val dateValue1 = "$day/$month/$year"
-        view.etEditScreenDate.setText(dateValue1)
-
-        //Setting rating to update screen´s rating bar with the value from database
-        view.updateScreenRatingBar.rating = args.currentTask.importance.toFloat()
+        //Setting date to the edittext in update fragment
+        val dateValue = "$day/$month/$year"
+        view.etEditScreenDate.setText(dateValue)
 
         //Setting the task status checkbox based on its value in database
         if (args.currentTask.status) {
@@ -139,26 +130,6 @@ class UpdateFragment : Fragment() {
             view.updateCheckBoxDayBefore.setChecked(true)
         } else {
             view.updateCheckBoxDayBefore.setChecked(false)
-        }
-
-        //Calling update function when "update" button is pressed
-        view.updateScreenUpdate.setOnClickListener {
-            updateItem()
-        }
-
-        //Calling deletion function when "delete" button is pressed
-        view.updateScreenDelete.setOnClickListener {
-            deleteTask()
-        }
-
-        //Opening time picker menu when button is pressed
-        view.updateScreenTimePicker.setOnClickListener {
-            openTimePicker()
-        }
-
-        //Opening date picker menu when button is pressed
-        view.updateScreenDatePicker.setOnClickListener {
-            openDatePicker()
         }
 
         //Getting importance value from database with args

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200">
+    android:background="@color/teal_200"
+    android:isScrollContainer = "false"
+    android:windowSoftInputMode="adjustPan">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/AddScreenCardViewTop"
@@ -140,6 +142,33 @@
                     android:inputType="textMultiLine" />
 
                 <TextView
+                    android:id="@+id/tvAddScreenDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10dp"
+
+                    android:text="@string/lisatiedotString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/etAddScreenDetails"
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+
+                    android:backgroundTint="#000000"
+                    android:ems="10"
+
+                    android:inputType="textMultiLine" />
+
+                <TextView
                     android:id="@+id/tvAddScreenDate"
 
                     android:layout_width="wrap_content"
@@ -197,33 +226,6 @@
                     android:ems="10"
                     android:inputType="none"
                     android:editable="false"/>
-
-                <TextView
-                    android:id="@+id/tvAddScreenDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-                    android:layout_margin="10dp"
-
-                    android:text="@string/lisatiedotString"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="italic" />
-
-                <EditText
-                    android:id="@+id/etAddScreenDetails"
-
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-
-                    android:backgroundTint="#000000"
-                    android:ems="10"
-
-                    android:inputType="textMultiLine" />
 
                 <TextView
                     android:id="@+id/tvAddScreenCategory"
@@ -322,6 +324,7 @@
                 android:layout_height="42dp"
                 app:fabCustomSize="42dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="62dp"
 
                 android:clickable="true"
                 android:focusable="true"
@@ -330,7 +333,7 @@
                 app:maxImageSize="30dp"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toTopOf="@id/addScreenIncreaseImportance" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/addScreenTimePicker"
@@ -339,6 +342,7 @@
                 android:layout_height="42dp"
                 app:fabCustomSize="42dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="110dp"
 
                 android:clickable="true"
                 android:focusable="true"
@@ -347,7 +351,7 @@
                 app:maxImageSize="30dp"
                 android:layout_marginTop="90dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toTopOf="@id/addScreenIncreaseImportance" />
 
             <TextView
                 android:id="@+id/tvAddScreenRemember"
