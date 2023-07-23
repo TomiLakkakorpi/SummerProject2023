@@ -115,6 +115,10 @@ class ListFragment : Fragment() {
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        val categories = resources.getStringArray(R.array.categories2)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
+        view?.findViewById<AutoCompleteTextView>(R.id.CategoryFilter)?.setAdapter(arrayAdapter)
+
         super.onViewStateRestored(savedInstanceState)
 
         val filter = view?.CategoryFilter?.text.toString()
