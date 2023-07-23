@@ -6,7 +6,7 @@ import com.example.databasetest.model.Task
 
 class TaskRepository(private val taskDao: TaskDao) {
 
-    val readAllData: LiveData<List<Task>> = taskDao.readAllData()
+    //val readAllData: LiveData<List<Task>> = taskDao.readAllData()
 
     fun addTask(task: Task){
         taskDao.addTask(task)
@@ -22,5 +22,9 @@ class TaskRepository(private val taskDao: TaskDao) {
 
     fun deleteAllTasks() {
         taskDao.deleteAllTasks()
+    }
+
+    fun getTasksFiltered(filter: String): LiveData<List<Task>> {
+        return taskDao.readAllData(filter)
     }
 }

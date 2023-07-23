@@ -2,10 +2,13 @@ package com.example.databasetest.fragments.list
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +18,10 @@ import com.example.databasetest.R
 import com.example.databasetest.databinding.FragmentListBinding
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
+import kotlinx.android.synthetic.main.custom_row.*
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import kotlinx.android.synthetic.main.fragment_update.*
 import java.time.LocalDate
 import java.util.*
 
@@ -39,7 +45,7 @@ class ListFragment : Fragment() {
 
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         mTaskViewModel.readAllData.observe(viewLifecycleOwner, Observer { task ->
-            adapter.setData(task)
+            task.let {adapter.setData(it) }
         })
 
         //Navigating to add fragment when add button is pressed
@@ -92,11 +98,31 @@ class ListFragment : Fragment() {
         view.tvListScreenTodaysDate.setText(todaysDate)
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
-        val categories = resources.getStringArray(R.array.categories)
+        val categories = resources.getStringArray(R.array.categories2)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         view.findViewById<AutoCompleteTextView>(R.id.CategoryFilter).setAdapter(arrayAdapter)
 
+        view.CategoryFilter.addTextChangedListener {
+            val temp = CategoryFilter.text.toString()
+            view.etCategoryFilter.setText(temp)
+        }
+
+        view.etCategoryFilter.addTextChangedListener {text: Editable? ->
+            if (text != null) mTaskViewModel.setFilter(text.toString())
+        }
+
         return view
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        val categories = resources.getStringArray(R.array.categories2)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
+        view?.findViewById<AutoCompleteTextView>(R.id.CategoryFilter)?.setAdapter(arrayAdapter)
+
+        super.onViewStateRestored(savedInstanceState)
+
+        val filter = view?.CategoryFilter?.text.toString()
+        mTaskViewModel.setFilter(filter)
     }
 
     //Function to delete all tasks that are marked as complete (SQL query has a check where it only deletes tasks that are marked as complete)

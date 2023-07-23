@@ -24,6 +24,6 @@ interface TaskDao {
     fun deleteAllTasks(): Void
 
     //Function to order all tasks based on date and time
-    @Query("SELECT * FROM task_table ORDER BY date, time ASC")
-    fun readAllData(): LiveData<List<Task>>
+    @Query("SELECT * FROM task_table WHERE category LIKE :filter ORDER BY date, time ASC")
+    fun readAllData(filter: String): LiveData<List<Task>>
 }

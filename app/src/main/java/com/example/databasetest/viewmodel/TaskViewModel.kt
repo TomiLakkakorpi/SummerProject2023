@@ -1,9 +1,7 @@
 package com.example.databasetest.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.databasetest.data.TaskDatabase
 import com.example.databasetest.repository.TaskRepository
 import com.example.databasetest.model.Task
@@ -13,12 +11,25 @@ import kotlinx.coroutines.launch
 class TaskViewModel(application: Application): AndroidViewModel(application) {
 
     val readAllData: LiveData<List<Task>>
+    private val filter = MutableLiveData<String>("%")
     private val repository: TaskRepository
 
     init {
         val taskDao = TaskDatabase.getDatabase(application).taskDao()
         repository = TaskRepository(taskDao)
-        readAllData = repository.readAllData
+
+        readAllData = Transformations.switchMap(filter) { filter ->
+            repository.getTasksFiltered(filter)
+        }
+        //readAllData = repository.readAllData
+    }
+
+    fun setFilter(newFilter: String) {
+        val f = when {
+            newFilter == "Näytä kaikki" -> "%"
+            else -> newFilter
+        }
+        filter.postValue(f)
     }
 
     fun addTask(task: Task){
