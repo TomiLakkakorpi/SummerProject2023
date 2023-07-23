@@ -57,4 +57,23 @@
         <item>Matkailu</item>
         <item>Muu</item>
     </string-array>
+
+    <string-array name="categories2">
+        <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
+        <item>Näytä kaikki</item>
+        <item>Liikunta</item>
+        <item>Terveys</item>
+        <item>Koulu</item>
+        <item>Työ</item>
+        <item>Tärkeä</item>
+        <item>Talous</item>
+        <item>Askare</item>
+        <item>Tapaaminen</item>
+        <item>Pelit</item>
+        <item>Jääkiekko</item>
+        <item>Formula 1</item>
+        <item>eSports</item>
+        <item>Matkailu</item>
+        <item>Muu</item>
+    </string-array>
 </resources>
