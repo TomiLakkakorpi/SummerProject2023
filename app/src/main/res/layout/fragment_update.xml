@@ -5,24 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_200"
-    android:isScrollContainer = "false"
+    android:isScrollContainer="false"
     android:windowSoftInputMode="adjustPan">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/UpdateScreenCardViewTop"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_margin="10dp"
         app:cardBackgroundColor="@color/teal_700"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -30,53 +31,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@color/black"
         android:text=""
-        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"
         app:layout_constraintEnd_toEndOf="@id/UpdateScreenCardViewTop"
-        app:layout_constraintStart_toStartOf="@id/UpdateScreenCardViewTop"/>
+        app:layout_constraintStart_toStartOf="@id/UpdateScreenCardViewTop"
+        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ListIconLeft"
-
         android:layout_width="0.1dp"
         android:layout_height="0.1dp"
-        app:fabCustomSize="1dp"
         android:layout_marginEnd="10dp"
-        app:backgroundTint="@color/gray"
-        android:src="@drawable/ic_calendar"
         android:clickable="false"
         android:focusable="true"
+        android:src="@drawable/ic_calendar"
+        app:backgroundTint="@color/gray"
+        app:fabCustomSize="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"
         app:layout_constraintEnd_toEndOf="@id/UpdateScreenCardViewTop"
-        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop"
-        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"/>
+        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ListIconRight"
-
         android:layout_width="0.1dp"
         android:layout_height="0.1dp"
-        app:fabCustomSize="1dp"
         android:layout_marginStart="10dp"
-        app:backgroundTint="@color/gray"
-        android:src="@drawable/ic_calendar"
         android:clickable="false"
         android:focusable="true"
+        android:src="@drawable/ic_calendar"
+        app:backgroundTint="@color/gray"
+        app:fabCustomSize="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"
         app:layout_constraintStart_toStartOf="@id/UpdateScreenCardViewTop"
-        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop"
-        app:layout_constraintBottom_toBottomOf="@id/UpdateScreenCardViewTop"/>
+        app:layout_constraintTop_toTopOf="@id/UpdateScreenCardViewTop" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/editScreenCardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="520dp"
-        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:maxHeight="520dp"
         app:cardBackgroundColor="@color/teal_700"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
@@ -96,15 +95,13 @@
 
             <TextView
                 android:id="@+id/tvEditScreenStatus"
-
                 android:layout_width="175dp"
                 android:layout_height="wrap_content"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
-
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
                 android:text="Merkitse Tehdyksi"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -116,59 +113,52 @@
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <GridLayout
                 android:id="@+id/updateScreenGridLayout"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-
                 android:columnCount="2"
                 android:rowCount="6"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvEditScreenStatus">
 
-        <TextView
-            android:id="@+id/tvEditScreenHeader"
-
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10sp"
-
-            android:text="@string/otsikkoString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
-
-        <EditText
-            android:id="@+id/etEditScreenHeader"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" />
-
                 <TextView
-                    android:id="@+id/tvEditScreenDetails"
-
+                    android:id="@+id/tvEditScreenHeader"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
                     android:layout_margin="10sp"
+                    android:text="@string/otsikkoString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
 
+                    tools:layout_editor_absoluteY="19dp" />
+
+                <EditText
+                    android:id="@+id/etEditScreenHeader"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textMultiLine" />
+
+                <TextView
+                    android:id="@+id/tvEditScreenDetails"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10sp"
                     android:text="@string/lisatiedotString"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -181,32 +171,30 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textMultiLine"/>
+                    android:inputType="textMultiLine" />
 
-        <TextView
-            android:id="@+id/tvEditScreenDate"
+                <TextView
+                    android:id="@+id/tvEditScreenDate"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10sp"
+                    android:text="@string/paivamaaraString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
 
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10sp"
+                    tools:layout_editor_absoluteY="19dp" />
 
-            android:text="@string/paivamaaraString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic"
-
-            tools:layout_editor_absoluteY="19dp" />
-
-        <EditText
-            android:id="@+id/etEditScreenDate"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="none"
-            android:editable="false"/>
+                <EditText
+                    android:id="@+id/etEditScreenDate"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:ems="10"
+                    android:inputType="none" />
 
                 <TextView
                     android:id="@+id/tvEditScreenTime"
@@ -217,7 +205,6 @@
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
                     android:layout_margin="10sp"
-
                     android:text="@string/kellonaikaString"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -229,71 +216,69 @@
                     android:id="@+id/etEditScreenTime"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:ems="10"
-                    android:inputType="none"
-                    android:editable="false"/>
+                    android:inputType="none" />
 
-        <TextView
-            android:id="@+id/tvEditScreenCategory"
+                <TextView
+                    android:id="@+id/tvEditScreenCategory"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_margin="10sp"
+                    android:text="@string/kategoriaString"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
 
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="10sp"
+                    tools:layout_editor_absoluteY="19dp" />
 
-            android:text="@string/kategoriaString"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
 
-            tools:layout_editor_absoluteY="19dp" />
+                    <AutoCompleteTextView
+                        android:id="@+id/updateAutoCompleteTextView"
+                        android:layout_width="190dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5sp"
+                        android:layout_weight="1"
+                        android:inputType="none" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <AutoCompleteTextView
-                android:id="@+id/updateAutoCompleteTextView"
-                android:layout_width="190dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:inputType="none" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </GridLayout>
+            </GridLayout>
 
             <TextView
                 android:id="@+id/tvUpdateScreenImportance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/tärkeysString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenDecreaseImportance"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:layout_marginStart="20dp"
-                app:fabCustomSize="42dp"
                 android:clickable="true"
                 app:backgroundTint="@color/red_delete"
-                app:srcCompat="@drawable/ic_remove"
-                app:maxImageSize="30dp"
-                tools:layout_editor_absoluteX="146dp"
-                tools:layout_editor_absoluteY="240dp"
+                app:fabCustomSize="42dp"
+                app:layout_constraintStart_toEndOf="@id/tvUpdateScreenImportance"
                 app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
-                app:layout_constraintStart_toEndOf="@id/tvUpdateScreenImportance"/>
+                app:maxImageSize="30dp"
+                app:srcCompat="@drawable/ic_remove"
+                tools:layout_editor_absoluteX="146dp"
+                tools:layout_editor_absoluteY="240dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenIncreaseImportance"
@@ -303,29 +288,28 @@
                 android:clickable="true"
                 app:backgroundTint="@color/green_add"
                 app:fabCustomSize="42dp"
-                app:maxImageSize="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
+                app:maxImageSize="30dp"
                 app:srcCompat="@drawable/ic_add" />
 
             <RatingBar
                 android:id="@+id/updateScreenRatingBar"
+                style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="3"
                 android:theme="@style/RatingBar"
-                style="?android:attr/ratingBarStyle"
-                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout"
+                app:layout_constraintEnd_toStartOf="@id/updateScreenIncreaseImportance"
                 app:layout_constraintStart_toEndOf="@id/updateScreenDecreaseImportance"
-                app:layout_constraintEnd_toStartOf="@id/updateScreenIncreaseImportance"/>
+                app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout" />
 
             <TextView
                 android:id="@+id/tvUpdateScreenRemember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/muistutaString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -354,137 +338,127 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                app:layout_constraintTop_toBottomOf="@id/updateCheckBoxHourBefore"
-                app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember" />
+                app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
+                app:layout_constraintTop_toBottomOf="@id/updateCheckBoxHourBefore" />
 
             <TextView
                 android:id="@+id/tvUpdateScreenMinutesBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:text="@string/minutesbeforeString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:text="@string/minutesbeforeString"
                 app:layout_constraintStart_toEndOf="@id/updateCheckboxMinutesBefore"
-                app:layout_constraintTop_toBottomOf="@id/updateScreenRatingBar"/>
+                app:layout_constraintTop_toBottomOf="@id/updateScreenRatingBar" />
 
             <TextView
                 android:id="@+id/tvUpdateScreenHourBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:text="@string/hourbeforeString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:text="@string/hourbeforeString"
                 app:layout_constraintStart_toEndOf="@id/updateCheckBoxHourBefore"
-                app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenMinutesBefore"/>
+                app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenMinutesBefore" />
 
             <TextView
                 android:id="@+id/tvUpdateScreenDayBefore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:text="@string/daybeforeString"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:text="@string/daybeforeString"
                 app:layout_constraintStart_toEndOf="@id/updateCheckBoxHourBefore"
-                app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenHourBefore"/>
+                app:layout_constraintTop_toBottomOf="@id/tvUpdateScreenHourBefore" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenDatePicker"
-
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                app:fabCustomSize="42dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginBottom="62dp"
-
+                android:layout_marginBottom="110dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_calendar"
                 app:backgroundTint="@color/blue_update"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="42dp"
+                app:layout_constraintBottom_toTopOf="@id/updateScreenIncreaseImportance"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/updateScreenIncreaseImportance" />
+                app:maxImageSize="30dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/updateScreenTimePicker"
-
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                app:fabCustomSize="42dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginBottom="110dp"
-
+                android:layout_marginBottom="62dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:src="@drawable/ic_time"
                 app:backgroundTint="@color/blue_update"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="42dp"
+                app:layout_constraintBottom_toTopOf="@id/updateScreenIncreaseImportance"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/updateScreenIncreaseImportance" />
+                app:maxImageSize="30dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/updateScreenCancel"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_cancel"
         app:backgroundTint="@color/green_add"
-        app:maxImageSize="35dp"
         app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
         app:layout_constraintStart_toStartOf="@id/addScreenCardviewBottom"
-        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom" />
+        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom"
+        app:maxImageSize="35dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/updateScreenDelete"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_delete"
         app:backgroundTint="@color/red_delete"
-        app:maxImageSize="35dp"
         app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
         app:layout_constraintEnd_toEndOf="@id/addScreenCardviewBottom"
         app:layout_constraintStart_toStartOf="@id/addScreenCardviewBottom"
-        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom" />
+        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom"
+        app:maxImageSize="35dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/updateScreenUpdate"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_update"
         app:backgroundTint="@color/blue_update"
-        app:maxImageSize="35dp"
         app:layout_constraintBottom_toBottomOf="@id/addScreenCardviewBottom"
         app:layout_constraintEnd_toEndOf="@id/addScreenCardviewBottom"
-        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom" />
+        app:layout_constraintTop_toTopOf="@id/addScreenCardviewBottom"
+        app:maxImageSize="35dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/addScreenCardviewBottom"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_margin="10dp"
         app:cardBackgroundColor="@color/teal_700"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
@@ -493,5 +467,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
+
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -236,13 +236,13 @@ class AddFragment : Fragment() {
         val notifyHour: Boolean = addCheckBoxHourBefore.isChecked
         val notifyDay: Boolean = addCheckBoxDayBefore.isChecked
 
+        //Initializing date & time values
         var day = "0"
         var month = "0"
         var year = "00"
         var hour = "0"
         var minute = "0"
         var dayName = ""
-
         val getTaskDayName: String
 
         if (checkDate(dateString)) {
@@ -255,6 +255,7 @@ class AddFragment : Fragment() {
             //Getting the day value based on the given due date
             getTaskDayName = LocalDate.of(year.toInt(), month.toInt(), day.toInt()).dayOfWeek.toString()
 
+            //Setting the day name according to the result from getTaskDayName above
             if (getTaskDayName == "MONDAY")     { dayName = "Maanantai" }
             if (getTaskDayName == "TUESDAY")    { dayName = "Tiistai" }
             if (getTaskDayName == "WEDNESDAY")  { dayName = "Keskiviikko" }
@@ -264,6 +265,7 @@ class AddFragment : Fragment() {
             if (getTaskDayName == "SUNDAY")     { dayName = "Sunnuntai" }
         }
 
+        //First checking if time field is empty, if it isnt then continuing
         if (checkTime(timeString)) {
             //Splitting time value into an array & getting values for hour & minute from the array
             val valuesArrayList2 = timeString.split(":")
@@ -271,21 +273,22 @@ class AddFragment : Fragment() {
             minute = valuesArrayList2[1]
         }
 
-        //Setting time values for the 4 possible scenarios
-        val regularTime = "$hour:$minute"                           //Normal time (example 10:00)
-        val hourMissingZeroTime = "0$hour:$minute"                  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
-        val minuteMissingZeroTime = "$hour:0$minute"
-        val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
-
         //Initializing variables
         val date = "$year/$month/$day"
         var time = ""
         val status = false
 
+        //Setting time values for the 4 possible scenarios
+        val regularTime = "$hour:$minute"
+        val hourMissingZeroTime = "0$hour:$minute"
+        val minuteMissingZeroTime = "$hour:0$minute"
+        val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
+
         //Checking if header field is empty
         if (checkHeader(header) && checkTime(timeString) &&  checkDate(dateString) && checkCategory(category))
         {
-            if (!isDateInThePast(dateString, timeString)) {
+            if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
+
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
 
@@ -331,7 +334,6 @@ class AddFragment : Fragment() {
 
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
-        //Toast.makeText(requireContext(), "$timeDifference", Toast.LENGTH_SHORT).show()
 
         return if (timeDifference < 0) {
             true

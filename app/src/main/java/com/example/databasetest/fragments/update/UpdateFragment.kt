@@ -316,21 +316,15 @@ class UpdateFragment : Fragment() {
         val hour = valuesArrayListTime2[0]
         val minute = valuesArrayListTime2[1]
 
-        //Setting date values for the 4 scenarios
-        val regularDate = "$year2/$month2/$day2"                    //normal date (example 10/10/23)
-        val dayMissingZeroDate = "$year2/$month2/0$day2"            //day has only one digit (example 1/10/23) so we add 0 in front of it
-        val monthMissingZeroDate = "$year2/0$month2/$day2"          //month has only one digit (example 10/1/23) so we add 0 in front of it
-        val dayAndMonthMissingZeroDate = "$year2/0$month2/0$day2"   //both day and month have only one digit (example 1/1/23) so we add 0 in front of both of them
-
         //Setting time values for the 2 possible scenarios
         val regularTime = "$hour:$minute"                           //Normal time (example 10:00)
         val hourMissingZeroTime = "0$hour:$minute"                  //Hour value is only one digit (example 9:00) so we add a 0 in front of it
         val minuteMissingZeroTime = "$hour:0$minute"
         val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
 
-        //Initializing variables
+        //Initializing variables'
+        var date = "$year2/$month2/$day2"
         var dayName = ""
-        var date = ""
         var time = ""
         val status: Boolean
 
@@ -349,18 +343,7 @@ class UpdateFragment : Fragment() {
         //Checking if header field is empty
         if (checkHeader(header) && checkTime(timeString) && checkDate(dateString) && checkCategory(category))
         {
-            if (!isDateInThePast(dateString, timeString)) {
-                //Normal date 11/11/23
-                if (dateCheck1(dateString)) { date = regularDate }
-
-                //Date like 1/11/23
-                if (dateCheck2(dateString)) { date = dayMissingZeroDate }
-
-                //Date like 11/1/23
-                if (dateCheck3(dateString)) { date = monthMissingZeroDate }
-
-                //Date like 1/1/23
-                if (dateCheck4(dateString)) { date = dayAndMonthMissingZeroDate }
+            if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
 
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
@@ -380,8 +363,6 @@ class UpdateFragment : Fragment() {
                 //updating the task with the given values and changing back to listfragment
                 val updatedTask = Task(args.currentTask.id, header, time, date, dayName, details, category, status, notifyMinutes, notifyHour, notifyDay, importance)
                 mTaskViewModel.updateTask(updatedTask)
-                //Toast.makeText(requireContext(), "Tehtävä päivitetty", Toast.LENGTH_SHORT).show()
-                Toast.makeText(requireContext(), date, Toast.LENGTH_SHORT).show()
 
                 //Navigating back to list fragment
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
@@ -412,7 +393,7 @@ class UpdateFragment : Fragment() {
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
 
-        return if (timeDifference < 0) {
+        return if (timeDifference < -300) {
             true
         } else {
             false

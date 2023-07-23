@@ -7,6 +7,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -101,7 +102,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             holder.itemView.tvBulletPoint1.text = "\u2022"
         } else {
             //If time is for example 09:00 drop the first 0 from hour and then show the date in the list
-            if(hour.startsWith("0") && !minute.startsWith("0")) {
+            if(hour.startsWith("0")) {
                 val newHour = hour.drop(1)
                 val timeValue = "$newHour:$minute "
                 holder.itemView.tvTaskTime.text = timeValue
