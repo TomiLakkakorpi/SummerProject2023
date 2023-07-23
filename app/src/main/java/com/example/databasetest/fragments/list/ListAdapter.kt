@@ -4,10 +4,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -169,6 +171,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
            scheduleAlarm(resultSeconds-86400, "3:${currentItem.header}:${currentItem.id}", thisContext)
        }
 
+        //Displaying a late icon over the task checkbox if the task due time & date is in the past, & if the task hasnt been marked as completed
+        if (isDateInThePast(currentItem.date, currentItem.time) && !currentItem.status) {
+            holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_late)
+        }
+
         //Setting the tasks background color, icon background color and icon based on category
         if (currentItem.category == "Liikunta") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category1)
@@ -255,6 +262,29 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         }
     }
 
+    //Function to check whether the given date & time is in the past
+    private fun isDateInThePast(date: String, time: String): Boolean {
+        val now = LocalDateTime.now()
+
+        val dateValues = date.split("/")
+        val day = dateValues[2]
+        val month = dateValues[1]
+        val year = "20" + dateValues[0]
+
+        val timeValues = time.split(":")
+        val hour = timeValues[0]
+        val minute = timeValues[1]
+
+        val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+        val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
+
+        return if (timeDifference < 0) {
+            true
+        } else {
+            false
+        }
+    }
+
     //Function to schedule alarm
     private fun scheduleAlarm(seconds: Long, message: String, context: Context) {
         val alarmItem: AlarmItem?
@@ -274,5 +304,3 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 }
-
-annotation class AndroidEntryPoint
