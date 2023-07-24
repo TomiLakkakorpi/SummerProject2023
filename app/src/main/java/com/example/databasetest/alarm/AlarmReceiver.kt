@@ -1,10 +1,13 @@
 package com.example.databasetest.alarm
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.TaskStackBuilder
+import com.example.databasetest.MainActivity
 import com.example.databasetest.R
 
 class AlarmReceiver: BroadcastReceiver() {
@@ -22,6 +25,13 @@ class AlarmReceiver: BroadcastReceiver() {
         val notificationMessage = splitMessage[1]
         val taskID = splitMessage[2]
 
+        val resultIntent = Intent(context, MainActivity::class.java)
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
+            addNextIntentWithParentStack(resultIntent)
+            getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        }
+
         //This notification will be shown at the due time
         if (notificationType.toInt() == 1) {
             val notification = NotificationCompat.Builder(context, "ToDoChannel")
@@ -29,6 +39,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 .setContentText("Tehtävälle merkitty aika on 15 minuutin päästä")
                 .setSmallIcon(R.drawable.appicon)
                 .setAutoCancel(true)
+                .setContentIntent(resultPendingIntent)
                 .build()
             notificationManager.notify(taskID.toInt(), notification)
         }

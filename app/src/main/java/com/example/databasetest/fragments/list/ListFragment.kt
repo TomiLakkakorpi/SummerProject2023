@@ -8,10 +8,12 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.databasetest.R
@@ -22,6 +24,7 @@ import kotlinx.android.synthetic.main.custom_row.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.fragment_update.*
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
@@ -29,7 +32,6 @@ class ListFragment : Fragment() {
 
     //Initializing variables
     private var _binding: FragmentListBinding? = null
-    private var taskList = emptyList<Task>()
     private lateinit var mTaskViewModel: TaskViewModel
 
     override fun onCreateView(
@@ -97,15 +99,20 @@ class ListFragment : Fragment() {
         val todaysDate = "$dayName $currentDay. $monthName"
         view.tvListScreenTodaysDate.setText(todaysDate)
 
-        _binding = FragmentListBinding.inflate(inflater, container, false)
-        val categories = resources.getStringArray(R.array.categories2)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
-        view.findViewById<AutoCompleteTextView>(R.id.CategoryFilter).setAdapter(arrayAdapter)
+        val presetCategoryText = "Näytä kaikki"
+        view.etCategoryFilter.setText(presetCategoryText)
 
-        view.CategoryFilter.addTextChangedListener {
-            val temp = CategoryFilter.text.toString()
-            view.etCategoryFilter.setText(temp)
+        view.floatingActionButtonNavigateRight.setOnClickListener {
+            val string = view.etCategoryFilter.text.toString()
+            moveCategoryRight(string)
         }
+
+        view.floatingActionButtonNavigateLeft.setOnClickListener {
+            val string = view.etCategoryFilter.text.toString()
+            moveCategoryLeft(string)
+        }
+
+        _binding = FragmentListBinding.inflate(inflater, container, false)
 
         view.etCategoryFilter.addTextChangedListener {text: Editable? ->
             if (text != null) mTaskViewModel.setFilter(text.toString())
@@ -114,15 +121,40 @@ class ListFragment : Fragment() {
         return view
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        val categories = resources.getStringArray(R.array.categories2)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item2, categories)
-        view?.findViewById<AutoCompleteTextView>(R.id.CategoryFilter)?.setAdapter(arrayAdapter)
+    private fun moveCategoryRight(string: String) {
+        if (string == "Näytä kaikki") { view?.etCategoryFilter?.setText(R.string.category1) }
+        if (string == "Liikunta") { view?.etCategoryFilter?.setText(R.string.category2) }
+        if (string == "Terveys") { view?.etCategoryFilter?.setText(R.string.category3) }
+        if (string == "Koulu") { view?.etCategoryFilter?.setText(R.string.category4) }
+        if (string == "Työ") { view?.etCategoryFilter?.setText(R.string.category5) }
+        if (string == "Tärkeä") { view?.etCategoryFilter?.setText(R.string.category6) }
+        if (string == "Talous") { view?.etCategoryFilter?.setText(R.string.category7) }
+        if (string == "Askare") { view?.etCategoryFilter?.setText(R.string.category8) }
+        if (string == "Tapaaminen") { view?.etCategoryFilter?.setText(R.string.category9) }
+        if (string == "Pelit") { view?.etCategoryFilter?.setText(R.string.category10) }
+        if (string == "Jääkiekko") { view?.etCategoryFilter?.setText(R.string.category11) }
+        if (string == "Formula 1") { view?.etCategoryFilter?.setText(R.string.category12) }
+        if (string == "eSports") { view?.etCategoryFilter?.setText(R.string.category13) }
+        if (string == "Matkailu") { view?.etCategoryFilter?.setText(R.string.category14) }
+        if (string == "Muu") { view?.etCategoryFilter?.setText(R.string.allCategories) }
+    }
 
-        super.onViewStateRestored(savedInstanceState)
-
-        val filter = view?.CategoryFilter?.text.toString()
-        mTaskViewModel.setFilter(filter)
+    private fun moveCategoryLeft(string: String) {
+        if (string == "Näytä kaikki") { view?.etCategoryFilter?.setText(R.string.category14) }
+        if (string == "Muu") { view?.etCategoryFilter?.setText(R.string.category13) }
+        if (string == "Matkailu") { view?.etCategoryFilter?.setText(R.string.category12) }
+        if (string == "eSports") { view?.etCategoryFilter?.setText(R.string.category11) }
+        if (string == "Formula 1") { view?.etCategoryFilter?.setText(R.string.category10) }
+        if (string == "Jääkiekko") { view?.etCategoryFilter?.setText(R.string.category9) }
+        if (string == "Pelit") { view?.etCategoryFilter?.setText(R.string.category8) }
+        if (string == "Tapaaminen") { view?.etCategoryFilter?.setText(R.string.category7) }
+        if (string == "Askare") { view?.etCategoryFilter?.setText(R.string.category6) }
+        if (string == "Talous") { view?.etCategoryFilter?.setText(R.string.category5) }
+        if (string == "Tärkeä") { view?.etCategoryFilter?.setText(R.string.category4) }
+        if (string == "Työ") { view?.etCategoryFilter?.setText(R.string.category3) }
+        if (string == "Koulu") { view?.etCategoryFilter?.setText(R.string.category2) }
+        if (string == "Terveys") { view?.etCategoryFilter?.setText(R.string.category1) }
+        if (string == "Liikunta") { view?.etCategoryFilter?.setText(R.string.allCategories) }
     }
 
     //Function to delete all tasks that are marked as complete (SQL query has a check where it only deletes tasks that are marked as complete)
@@ -140,5 +172,16 @@ class ListFragment : Fragment() {
         builder.setTitle("Poista kaikki tehtävät?")
         builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät?")
         builder.create().show()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        //val categories = resources.getStringArray(R.array.categories2)
+        //val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item2, categories)
+        //view?.findViewById<AutoCompleteTextView>(R.id.CategoryFilter)?.setAdapter(arrayAdapter)
+
+        super.onViewStateRestored(savedInstanceState)
+
+        val filter = view?.etCategoryFilter?.text.toString()
+        mTaskViewModel.setFilter(filter)
     }
 }

@@ -21,15 +21,14 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         readAllData = Transformations.switchMap(filter) { filter ->
             repository.getTasksFiltered(filter)
         }
-        //readAllData = repository.readAllData
     }
 
     fun setFilter(newFilter: String) {
-        val f = when {
+        val filter2 = when {
             newFilter == "Näytä kaikki" -> "%"
             else -> newFilter
         }
-        filter.postValue(f)
+        filter.postValue(filter2)
     }
 
     fun addTask(task: Task){

@@ -206,6 +206,12 @@ class UpdateFragment : Fragment() {
         val todaysDate = "$dayName $currentDay. $monthName"
         view.tvUpdateScreenTodaysDate.setText(todaysDate)
 
+        if (isDateInThePast(args.currentTask.date, args.currentTask.time)) {
+            view.updateScreenUpdate.setImageResource(R.drawable.ic_update_disabled)
+        } else {
+            view.updateScreenUpdate.setImageResource(R.drawable.ic_update)
+        }
+
         return view
     }
 

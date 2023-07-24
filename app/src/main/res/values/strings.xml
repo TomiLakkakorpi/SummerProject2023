@@ -28,39 +28,24 @@
     <string name="poista_valmiit_tehtavatString">Poista Valmiit Tehtävät</string>
 
     <!-- Jos vaihdat kategorioiden nimiä, vaihda myös tähän -->
-    <string name="category1">1</string>
-    <string name="category2">2</string>
-    <string name="category3">3</string>
-    <string name="category4">4</string>
-    <string name="category5">5</string>
-    <string name="category6">6</string>
-    <string name="category7">7</string>
-    <string name="category8">8</string>
-    <string name="category9">9</string>
-    <string name="category10">10</string>
-    <string name="allCategories">Show All Categories</string>
+    <string name="allCategories">Näytä kaikki</string>
+    <string name="category1">Liikunta</string>
+    <string name="category2">Terveys</string>
+    <string name="category3">Koulu</string>
+    <string name="category4">Työ</string>
+    <string name="category5">Tärkeä</string>
+    <string name="category6">Talous</string>
+    <string name="category7">Askare</string>
+    <string name="category8">Tapaaminen</string>
+    <string name="category9">Pelit</string>
+    <string name="category10">Jääkiekko</string>
+    <string name="category11">Formula 1</string>
+    <string name="category12">eSports</string>
+    <string name="category13">Matkailu</string>
+    <string name="category14">Muu</string>
 
     <string-array name="categories">
         <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
-        <item>Liikunta</item>
-        <item>Terveys</item>
-        <item>Koulu</item>
-        <item>Työ</item>
-        <item>Tärkeä</item>
-        <item>Talous</item>
-        <item>Askare</item>
-        <item>Tapaaminen</item>
-        <item>Pelit</item>
-        <item>Jääkiekko</item>
-        <item>Formula 1</item>
-        <item>eSports</item>
-        <item>Matkailu</item>
-        <item>Muu</item>
-    </string-array>
-
-    <string-array name="categories2">
-        <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
-        <item>Näytä kaikki</item>
         <item>Liikunta</item>
         <item>Terveys</item>
         <item>Koulu</item>
