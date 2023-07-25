@@ -39,6 +39,7 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        //Initializing views, adapters etc.
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         val adapter = ListAdapter()
         val recyclerView = view.recyclerView
@@ -73,7 +74,7 @@ class ListFragment : Fragment() {
         var dayName = ""
         var monthName = ""
 
-        //Setting the string values
+        //Setting the string values for current date
         if (currentMonth == "01")     { monthName = "Tammikuuta" }
         if (currentMonth == "02")     { monthName = "Helmikuuta" }
         if (currentMonth == "03")     { monthName = "Maaliskuuta" }
@@ -99,14 +100,17 @@ class ListFragment : Fragment() {
         val todaysDate = "$dayName $currentDay. $monthName"
         view.tvListScreenTodaysDate.setText(todaysDate)
 
+        //default setting for filter is show all tasks
         val presetCategoryText = "Näytä kaikki"
         view.etCategoryFilter.setText(presetCategoryText)
 
+        //Changing to the next filter when right button is pressed
         view.floatingActionButtonNavigateRight.setOnClickListener {
             val string = view.etCategoryFilter.text.toString()
             moveCategoryRight(string)
         }
 
+        //Changing to the next filter when left button is pressed
         view.floatingActionButtonNavigateLeft.setOnClickListener {
             val string = view.etCategoryFilter.text.toString()
             moveCategoryLeft(string)
@@ -114,6 +118,7 @@ class ListFragment : Fragment() {
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
+        //Setting the category filter when categoryfilter edittext is changed
         view.etCategoryFilter.addTextChangedListener {text: Editable? ->
             if (text != null) mTaskViewModel.setFilter(text.toString())
         }
@@ -121,6 +126,7 @@ class ListFragment : Fragment() {
         return view
     }
 
+    //Going through the categories from top down
     private fun moveCategoryRight(string: String) {
         if (string == "Näytä kaikki") { view?.etCategoryFilter?.setText(R.string.category1) }
         if (string == "Liikunta") { view?.etCategoryFilter?.setText(R.string.category2) }
@@ -139,6 +145,7 @@ class ListFragment : Fragment() {
         if (string == "Muu") { view?.etCategoryFilter?.setText(R.string.allCategories) }
     }
 
+    //Going through the categories from bottom up
     private fun moveCategoryLeft(string: String) {
         if (string == "Näytä kaikki") { view?.etCategoryFilter?.setText(R.string.category14) }
         if (string == "Muu") { view?.etCategoryFilter?.setText(R.string.category13) }
@@ -175,12 +182,9 @@ class ListFragment : Fragment() {
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        //val categories = resources.getStringArray(R.array.categories2)
-        //val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item2, categories)
-        //view?.findViewById<AutoCompleteTextView>(R.id.CategoryFilter)?.setAdapter(arrayAdapter)
-
         super.onViewStateRestored(savedInstanceState)
 
+        //Setting the filter again. Some issues came when changing to a different fragment and then coming back to list fragment
         val filter = view?.etCategoryFilter?.text.toString()
         mTaskViewModel.setFilter(filter)
     }

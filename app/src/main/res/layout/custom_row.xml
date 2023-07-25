@@ -47,12 +47,26 @@
                 app:fabCustomSize="1dp"
                 android:layout_marginStart="-4dp"
                 app:backgroundTint="@color/teal_200"
-                app:maxImageSize="30dp"
+                app:maxImageSize="25dp"
                 android:clickable="false"
                 android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/NotificationsStatusIcon"
+                android:layout_width="0.1dp"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="22dp"
+                app:fabCustomSize="10dp"
+                app:backgroundTint="@color/teal_200"
+                app:maxImageSize="18dp"
+                android:clickable="false"
+                android:focusable="true"
+                app:layout_constraintTop_toTopOf="@id/taskRating"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/tvTaskHeader"
@@ -120,7 +134,7 @@
 
             <TextView
                 android:id="@+id/tvTaskDetails"
-                android:layout_width="240dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -136,7 +150,7 @@
                 android:layout_width="0.1dp"
                 android:layout_height="0.1dp"
                 app:fabCustomSize="1dp"
-                android:layout_marginTop="-8dp"
+                android:layout_marginTop="-9dp"
                 android:layout_marginEnd="15dp"
                 app:backgroundTint="@color/teal_200"
                 android:clickable="false"

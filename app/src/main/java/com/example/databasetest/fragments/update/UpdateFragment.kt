@@ -206,9 +206,14 @@ class UpdateFragment : Fragment() {
         val todaysDate = "$dayName $currentDay. $monthName"
         view.tvUpdateScreenTodaysDate.setText(todaysDate)
 
-        if (isDateInThePast(args.currentTask.date, args.currentTask.time)) {
+        //Checking if the due date & time are over 5 hours in the past, or if time is set as 00:00 and due time is in less than 24h (1440 mins)
+        if (isDateInThePast(args.currentTask.date, args.currentTask.time) && !isTime00AndLessThan24H(args.currentTask.time, args.currentTask.date)) {
+
+            //Displaying a crossed out update icon if the tasks date&time is over 5 hours in the past
             view.updateScreenUpdate.setImageResource(R.drawable.ic_update_disabled)
         } else {
+
+            //Displaying the regular update icon
             view.updateScreenUpdate.setImageResource(R.drawable.ic_update)
         }
 
@@ -221,7 +226,7 @@ class UpdateFragment : Fragment() {
     //Function for date picker
     private fun openDatePicker() {
 
-        //Initializing our calendar
+        //Initializing calendar
         val myCalendar = Calendar.getInstance()
         val datePicker = DatePickerDialog.OnDateSetListener{ view, year, month, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
@@ -271,22 +276,25 @@ class UpdateFragment : Fragment() {
             pickerMinute = picker.minute.toString()
             timeString2 = "$pickerHour:$pickerMinute"
 
-            //Adding a "0" to minutes if minutes has only one digit, then setting the time value to the edittext for the user to see
+            //Displaying time as it is, if both fields have 2 digits
             if (timeCheck1(timeString2)) {
                 val showTime = "$pickerHour:$pickerMinute"
                 etEditScreenTime.setText(showTime)
             }
 
+            //Adding a 0 to hour field if hour has only 1 digit
             if (timeCheck2(timeString2)) {
                 val showTime2 = "0$pickerHour:$pickerMinute"
                 etEditScreenTime.setText(showTime2)
             }
 
+            //Adding a 0 to minutes if minutes field has only one field
             if (timeCheck3(timeString2)) {
                 val showTime3 = "$pickerHour:0$pickerMinute"
                 etEditScreenTime.setText(showTime3)
             }
 
+            //Adding a 0 to both fields if they both have only 1 digit
             if (timeCheck4(timeString2)) {
                 val showTime4 = "0$pickerHour:0$pickerMinute"
                 etEditScreenTime.setText(showTime4)
@@ -329,7 +337,7 @@ class UpdateFragment : Fragment() {
         val bothHourAndMinuteMissingZeroTime = "0$hour:0$minute"
 
         //Initializing variables'
-        var date = "$year2/$month2/$day2"
+        val date = "$year2/$month2/$day2"
         var dayName = ""
         var time = ""
         val status: Boolean
@@ -349,6 +357,7 @@ class UpdateFragment : Fragment() {
         //Checking if header field is empty
         if (checkHeader(header) && checkTime(timeString) && checkDate(dateString) && checkCategory(category))
         {
+            //Checking if date is over 5 hours in the past, or selected time is 00:00
             if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
 
                 //Normal time 10:00
@@ -399,11 +408,26 @@ class UpdateFragment : Fragment() {
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
 
-        return if (timeDifference < -300) {
-            true
-        } else {
-            false
-        }
+        return timeDifference < -300
+    }
+
+    //Checking if time is 00:00 and due time is in less than 24h
+    private fun isTime00AndLessThan24H(time: String, date: String): Boolean {
+        val now = LocalDateTime.now()
+
+        val dateValues = date.split("/")
+        val day = dateValues[0]
+        val month = dateValues[1]
+        val year = "20" + dateValues[2]
+
+        val timeValues = time.split(":")
+        val hour = timeValues[0]
+        val minute = timeValues[1]
+
+        val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+        val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
+
+        return time == "00:00" && timeDifference < -1440
     }
 
     //Function for deleting a single task

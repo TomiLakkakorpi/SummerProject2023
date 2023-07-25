@@ -47,6 +47,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         return MyViewHolder(LayoutInflater.from(parent.context).inflate((R.layout.custom_row), parent, false))
     }
 
+    //Function to get task list size
     override fun getItemCount(): Int {
         return taskList.size
     }
@@ -68,37 +69,35 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val hour = timeValues[0]
         val minute = timeValues[1]
 
-        //This is how stars are shown
-        // holder.itemView.taskRating.numStars = 3
-
         //If date is for example 01/01/23 drop first 0 from both day and month and then show the date in the list
         if (month.startsWith("0") && day.startsWith("0")) {
             val newMonth = month.drop(1)
             val newDay = day.drop(1)
-            val dateValue = "$newDay.$newMonth.20$year"
+            val dateValue = "$newDay.$newMonth.$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
         //If date is for example 11/11/23 show the date as it is and then show the date in the list
         if (!month.startsWith("0") && !day.startsWith("0")) {
-            val dateValue = "$day.$month.20$year"
+            val dateValue = "$day.$month.$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
         //If date is for example 01/11/23 drop the fist 0 from day and then show the date in the list
         if (day.startsWith("0") && !month.startsWith("0")) {
             val newDay = day.drop(1)
-            val dateValue = "$newDay.$month.20$year"
+            val dateValue = "$newDay.$month.$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
         //If date is for example 11/01/23 drop the first 0 from month and then show the date in the list
         if (month.startsWith("0") && !day.startsWith("0")) {
             val newMonth = month.drop(1)
-            val dateValue = "$day.$newMonth.20$year"
+            val dateValue = "$day.$newMonth.$year"
             holder.itemView.tvTaskDate.text = dateValue
         }
 
+        //If selected time is 00:00 the time is not shown on the list view
         if (currentItem.time == "00:00") {
             holder.itemView.tvTaskTime.text = ""
             holder.itemView.tvBulletPoint1.text = "\u2022"
@@ -137,7 +136,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
         //Setting the task´s checkbox based on its status in the database (status true = checkbox checked)
         if (currentItem.status) {
-            holder.itemView.taskCheckbox.setChecked(true)
+            //holder.itemView.taskCheckbox.setChecked(true)
+            holder.itemView.taskCheckbox.alpha = 0f
+            holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_checkmark)
         } else {
             holder.itemView.taskCheckbox.setChecked(false)
         }
@@ -172,8 +173,17 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
        }
 
         //Displaying a late icon over the task checkbox if the task due time & date is in the past, & if the task hasnt been marked as completed
-        if (isDateInThePast(currentItem.date, currentItem.time) && !currentItem.status) {
-            holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_late)
+        if (isDateInThePast(currentItem.date, currentItem.time) && !currentItem.status && !isTime00(currentItem.time)) {
+            holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_warning)
+            holder.itemView.taskCheckbox.alpha = 0f
+        }
+
+        //Displaying a "notifications active" icon if any of the 3 notifications have been turned on
+        //Displaying a "notifications off" icon if none of the notifications have been turned on
+        if (currentItem.notifyMinutes || currentItem.notifyHour || currentItem.notifyDay) {
+            holder.itemView.NotificationsStatusIcon.setImageResource(R.drawable.ic_notifications_active)
+        } else {
+            holder.itemView.NotificationsStatusIcon.setImageResource(R.drawable.ic_notifications_off)
         }
 
         //Setting the tasks background color, icon background color and icon based on category
@@ -262,14 +272,19 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         }
     }
 
+    //Checking if the time is 00:00
+    private fun isTime00(time: String): Boolean {
+        return time == "00:00"
+    }
+
     //Function to check whether the given date & time is in the past
     private fun isDateInThePast(date: String, time: String): Boolean {
         val now = LocalDateTime.now()
 
         val dateValues = date.split("/")
-        val day = dateValues[2]
-        val month = dateValues[1]
         val year = "20" + dateValues[0]
+        val month = dateValues[1]
+        val day = dateValues[2]
 
         val timeValues = time.split(":")
         val hour = timeValues[0]
@@ -278,11 +293,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
 
-        return if (timeDifference < 0) {
-            true
-        } else {
-            false
-        }
+        return timeDifference < 0
     }
 
     //Function to schedule alarm
