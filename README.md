@@ -2,20 +2,24 @@
 
 Summer project 2023 - Tomi Lakkakorpi
 
-    • Project name:       To Do App
+    • Project name:       Muistilista (To Do App)
     • Project idea:       Unique to-do app to fit personal needs
     • Project goal:       To design and build a working to-do app
 
     Tools used in the project:
-    • Word - Weekly reports
-    • Excel - Working hours monitoring
-    • OneDrive - Project files storage
     • Github - Storing source code, version control & kanban board
+    • Android Studio - Project´s IDE
     • Figma - Designing app UI
+    • Word - Weekly reports, closing report
+    • Excel - Working hours monitoring
+    • Android.com - Researching about android development
+    • Youtube - Tutorials and guides
 
     Techniques used in the project:
+    • 
     • SQLite ROOM Persistance Library for database functionality
     • Alarm Manager for notification scheduling
+    • DatePicker and TimePicker for date & time selection UI
 
     App architecture, UI/UX plans etc:
     • UI Plan V1 https://www.figma.com/file/5oU7sVzF0S8wphPnUa3cp6/Summer-Project-2023---UI-Designs?type=design&node-id=0-1&mode=design
@@ -38,9 +42,17 @@ Summer project 2023 - Tomi Lakkakorpi
     • Disconnect your phone from your pc
     • (Optional) Go turn off USB-debugging and developer options in the settings
 
-    Other related documents:
-    •
+    Other related documents (All found in the OneDrive folder):
+    • Working hour monitoring Excel document - "Ajankäyttö - Kesäprojekti 2023.xlsx"
+    • Closing report Word document - "Kesäprojekti 2023 - Loppuraportti.docx"
+    • Project poster - "To Do Posteri.pptx"
+    • Weekly reports - "Viikkoraportit - Kesäprojekti 2023.docx"
+    • UI design pictures
+    • Poster pictures
 
+    Documents listed above can be found here
+    • https://oamk-my.sharepoint.com/personal/t9lato03_students_oamk_fi/_layouts/15/onedrive.aspx?login_hint=t9lato03%40students%2Eoamk%2Efi&id=%2Fpersonal%2Ft9lato03%5Fstudents%5Foamk%5Ffi%2FDocuments%2FKes%C3%A4projekti%202023%20%2D%20Tomi%20Lakkakorpi&view=0
+    
 
 
 

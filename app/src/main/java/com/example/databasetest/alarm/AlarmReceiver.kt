@@ -23,7 +23,9 @@ class AlarmReceiver: BroadcastReceiver() {
         val splitMessage = message.split(":")
         val notificationType = splitMessage[0]
         val notificationMessage = splitMessage[1]
-        val taskID = splitMessage[2]
+        val taskIDminutes = splitMessage[2].toInt() + 100000
+        val taskIDhour = splitMessage[2].toInt() + 200000
+        val taskIDday = splitMessage[2].toInt() + 300000
 
         val resultIntent = Intent(context, MainActivity::class.java)
         val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
@@ -32,7 +34,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         }
 
-        //This notification will be shown at the due time
+        //This notification will be 15mins before due time
         if (notificationType.toInt() == 1) {
             val notification = NotificationCompat.Builder(context, "ToDoChannel")
                 .setContentTitle("Muistutus tehtävästä $notificationMessage")
@@ -41,7 +43,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setContentIntent(resultPendingIntent)
                 .build()
-            notificationManager.notify(taskID.toInt(), notification)
+            notificationManager.notify(taskIDminutes, notification)
         }
 
         //This notification will be shown one hour before the due time
@@ -52,7 +54,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 .setSmallIcon(R.drawable.appicon)
                 .setAutoCancel(true)
                 .build()
-            notificationManager.notify(taskID.toInt(), notification)
+            notificationManager.notify(taskIDhour, notification)
         }
 
         //This notification will be shown one day before the due time
@@ -63,7 +65,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 .setSmallIcon(R.drawable.appicon)
                 .setAutoCancel(true)
                 .build()
-            notificationManager.notify(taskID.toInt(), notification)
+            notificationManager.notify(taskIDday, notification)
         }
     }
 }

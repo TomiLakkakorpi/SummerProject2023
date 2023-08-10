@@ -155,8 +155,14 @@ class AddFragment : Fragment() {
         if (getDayName == "SUNDAY")     { dayName = "Sunnuntai" }
 
         //Combining all values into one string and displaying it in the list view
-        val todaysDate = "$dayName $currentDay. $monthName"
-        view.tvAddScreenTodaysDate.setText(todaysDate)
+        if (currentDay.startsWith("0")) {
+            val newCurrentDay = currentDay.drop(1)
+            val todaysDate = "$dayName $newCurrentDay. $monthName"
+            view.tvAddScreenTodaysDate.setText(todaysDate)
+        } else {
+            val todaysDate = "$dayName $currentDay. $monthName"
+            view.tvAddScreenTodaysDate.setText(todaysDate)
+        }
 
         return view
     }
@@ -287,7 +293,7 @@ class AddFragment : Fragment() {
         //Checking if header field is empty
         if (checkHeader(header) && checkTime(timeString) &&  checkDate(dateString) && checkCategory(category))
         {
-            if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
+            //if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
 
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
@@ -308,10 +314,10 @@ class AddFragment : Fragment() {
                 //Navigating back to list fragment
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
-            } else {
-                //Displaying a toast if the selected date is in the past
-                Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
-            }
+            //} else {
+            //    //Displaying a toast if the selected date is in the past
+            //    Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
+            //}
 
         } else {
             //Displaying toast if any of the 4 required values are empty

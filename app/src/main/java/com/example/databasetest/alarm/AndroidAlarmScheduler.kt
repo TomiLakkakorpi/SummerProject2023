@@ -17,7 +17,9 @@ class AndroidAlarmScheduler(
 
         //Getting task ID from the message string and putting that as the alarm´s ID
         val message = item.message.split(":")
-        val taskID = message[2]
+        val taskIDminutes = message[2].toInt() + 100000
+        val taskIDhour = message[2].toInt() + 200000
+        val taskIDday = message[2].toInt() + 300000
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("EXTRA_MESSAGE", item.message)
         }
@@ -28,7 +30,31 @@ class AndroidAlarmScheduler(
             item.time.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000,
             PendingIntent.getBroadcast(
                 context,
-                taskID.toInt(),
+                taskIDminutes,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        )
+
+        //Scheduling the alarm
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            item.time.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000,
+            PendingIntent.getBroadcast(
+                context,
+                taskIDhour,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        )
+
+        //Scheduling the alarm
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            item.time.atZone(ZoneId.systemDefault()).toEpochSecond() * 1000,
+            PendingIntent.getBroadcast(
+                context,
+                taskIDday,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )

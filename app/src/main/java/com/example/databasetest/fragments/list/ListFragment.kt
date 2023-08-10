@@ -97,8 +97,14 @@ class ListFragment : Fragment() {
         if (getDayName == "SUNDAY")     { dayName = "Sunnuntai" }
 
         //Combining all values into one string and displaying it in the list view
-        val todaysDate = "$dayName $currentDay. $monthName"
-        view.tvListScreenTodaysDate.setText(todaysDate)
+        if (currentDay.startsWith("0")) {
+            val newCurrentDay = currentDay.drop(1)
+            val todaysDate = "$dayName $newCurrentDay. $monthName"
+            view.tvListScreenTodaysDate.setText(todaysDate)
+        } else {
+            val todaysDate = "$dayName $currentDay. $monthName"
+            view.tvListScreenTodaysDate.setText(todaysDate)
+        }
 
         //default setting for filter is show all tasks
         val presetCategoryText = "Näytä kaikki"
@@ -177,7 +183,7 @@ class ListFragment : Fragment() {
             Toast.makeText(requireContext(),"Tehtäviä ei poistettu", Toast.LENGTH_SHORT).show()
         }
         builder.setTitle("Poista kaikki tehtävät?")
-        builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät?")
+        builder.setMessage("Haluatko varmasti poistaa kaikki tehdyt tehtävät? ")
         builder.create().show()
     }
 

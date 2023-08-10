@@ -112,12 +112,12 @@
 
                     <TextView
                         android:id="@+id/tvEditScreenStatus"
-                        android:layout_width="180dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
                         android:layout_gravity="fill"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="22dp"
                         android:layout_marginTop="8dp"
                         android:text="Merkitse Tehdyksi"
                         android:textColor="@color/black"
@@ -125,6 +125,7 @@
                         android:textStyle="italic"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+                        <!-- width emulator 22dp -->
 
                     <CheckBox
                         android:id="@+id/checkBox"
@@ -163,10 +164,11 @@
 
                         <EditText
                             android:id="@+id/etEditScreenHeader"
-                            android:layout_width="200dp"
+                            android:layout_width="230dp"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:inputType="textMultiLine" />
+                            <!-- width emulator 230dp -->
 
                         <TextView
                             android:id="@+id/tvEditScreenDetails"
@@ -185,10 +187,11 @@
 
                         <EditText
                             android:id="@+id/etEditScreenDetails"
-                            android:layout_width="200dp"
+                            android:layout_width="230dp"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:inputType="textMultiLine" />
+                            <!-- width emulator 230dp -->
 
                         <TextView
                             android:id="@+id/tvEditScreenDate"
@@ -207,11 +210,12 @@
 
                         <EditText
                             android:id="@+id/etEditScreenDate"
-                            android:layout_width="150dp"
+                            android:layout_width="180dp"
                             android:layout_height="wrap_content"
                             android:editable="false"
                             android:ems="10"
                             android:inputType="none" />
+                            <!-- width emulator 180dp -->
 
                         <TextView
                             android:id="@+id/tvEditScreenTime"
@@ -231,11 +235,12 @@
 
                         <EditText
                             android:id="@+id/etEditScreenTime"
-                            android:layout_width="150dp"
+                            android:layout_width="180dp"
                             android:layout_height="wrap_content"
                             android:editable="false"
                             android:ems="10"
                             android:inputType="none" />
+                            <!-- width emulator 180dp -->
 
                         <TextView
                             android:id="@+id/tvEditScreenCategory"
@@ -254,16 +259,18 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                            android:layout_width="200dp"
+                            android:layout_width="230dp"
                             android:layout_height="wrap_content">
+                            <!-- width emulator 230dp -->
 
                             <AutoCompleteTextView
                                 android:id="@+id/updateAutoCompleteTextView"
-                                android:layout_width="190dp"
+                                android:layout_width="220dp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="5sp"
                                 android:layout_weight="1"
                                 android:inputType="none" />
+                                <!-- width emulator 220dp -->
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -273,7 +280,7 @@
                         android:id="@+id/tvUpdateScreenImportance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="22dp"
                         android:layout_marginTop="8dp"
                         android:text="@string/tärkeysString"
                         android:textColor="@color/black"
@@ -281,12 +288,13 @@
                         android:textStyle="italic"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/updateScreenGridLayout" />
+                        <!-- margin start emulator 22dp -->
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/updateScreenDecreaseImportance"
                         android:layout_width="42dp"
                         android:layout_height="42dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="60dp"
                         android:clickable="true"
                         app:backgroundTint="@color/red_delete"
                         app:fabCustomSize="42dp"
@@ -296,6 +304,7 @@
                         app:srcCompat="@drawable/ic_remove"
                         tools:layout_editor_absoluteX="146dp"
                         tools:layout_editor_absoluteY="240dp" />
+                        <!-- margin start emulator 60dp -->
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/updateScreenIncreaseImportance"
@@ -325,7 +334,7 @@
                         android:id="@+id/tvUpdateScreenRemember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="22dp"
                         android:layout_marginTop="30dp"
                         android:text="@string/muistutaString"
                         android:textColor="@color/black"
@@ -333,30 +342,34 @@
                         android:textStyle="italic"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvUpdateScreenImportance" />
+                        <!-- margin start emulator 22dp -->
 
                     <CheckBox
                         android:id="@+id/updateCheckboxMinutesBefore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="45dp"
                         app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
                         app:layout_constraintTop_toBottomOf="@+id/updateScreenRatingBar" />
+                        <!-- margin start emulator 45dp -->
 
                     <CheckBox
                         android:id="@+id/updateCheckBoxHourBefore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="45dp"
                         app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
                         app:layout_constraintTop_toBottomOf="@+id/updateCheckboxMinutesBefore" />
+                        <!-- margin start emulator 45dp -->
 
                     <CheckBox
                         android:id="@+id/updateCheckBoxDayBefore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="45dp"
                         app:layout_constraintStart_toEndOf="@+id/tvUpdateScreenRemember"
                         app:layout_constraintTop_toBottomOf="@id/updateCheckBoxHourBefore" />
+                        <!-- margin start emulator 45dp -->
 
                     <TextView
                         android:id="@+id/tvUpdateScreenMinutesBefore"
@@ -408,6 +421,7 @@
                         app:layout_constraintBottom_toTopOf="@id/updateScreenIncreaseImportance"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:maxImageSize="30dp" />
+                        <!-- margin end emulator 15dp -->
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/updateScreenTimePicker"
@@ -423,6 +437,7 @@
                         app:layout_constraintBottom_toTopOf="@id/updateScreenIncreaseImportance"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:maxImageSize="30dp" />
+                        <!-- margin end emulator 15dp -->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>

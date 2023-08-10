@@ -23,6 +23,7 @@ import com.example.databasetest.fragments.update.UpdateFragment
 import com.example.databasetest.model.Task
 import com.example.databasetest.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.custom_row.view.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Collections.emptyList
@@ -156,26 +157,37 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         //Getting the time difference between local time and due time
         val resultSeconds = currentTime.until(dueTime, ChronoUnit.SECONDS)
         val thisContext = holder.itemView.getContext()
+        val idMinutes = currentItem.id + 100000
+        val idHour = currentItem.id + 200000
+        val idDay = currentItem.id + 300000
 
         //Notification 15 minutes before due time
         if (currentItem.notifyMinutes && resultSeconds > 900) {
-            scheduleAlarm(resultSeconds-900, "1:${currentItem.header}:${currentItem.id}", thisContext)
+            scheduleAlarm(resultSeconds-900, "1:${currentItem.header}:$idMinutes", thisContext)
         }
 
         //Notification one hour before due time
         if (currentItem.notifyHour && resultSeconds > 3600) {
-            scheduleAlarm(resultSeconds-3600, "2:${currentItem.header}:${currentItem.id}", thisContext)
+            scheduleAlarm(resultSeconds-3600, "2:${currentItem.header}:$idHour", thisContext)
         }
 
        //Notification one day before due time
        if (currentItem.notifyDay && resultSeconds > 86400) {
-           scheduleAlarm(resultSeconds-86400, "3:${currentItem.header}:${currentItem.id}", thisContext)
+           scheduleAlarm(resultSeconds-86400, "3:${currentItem.header}:$idDay", thisContext)
        }
 
         //Displaying a late icon over the task checkbox if the task due time & date is in the past, & if the task hasnt been marked as completed
-        if (isDateInThePast(currentItem.date, currentItem.time) && !currentItem.status && !isTime00(currentItem.time)) {
-            holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_warning)
-            holder.itemView.taskCheckbox.alpha = 0f
+        if (isDateAndTimeInThePast(currentItem.date, currentItem.time) && !currentItem.status) {
+
+            //If task´s selected time is 00:00 and the date is not in the past
+            if(isTime00(currentItem.time) && !isTaskDateInThePast(currentItem.date)){
+                //Showing regular checkbox
+                holder.itemView.taskCheckbox.alpha = 1f
+            } else {
+                //Else showing late icon and setting checkbox alpha to 0
+                holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_warning)
+                holder.itemView.taskCheckbox.alpha = 0f
+            }
         }
 
         //Displaying a "notifications active" icon if any of the 3 notifications have been turned on
@@ -183,7 +195,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         if (currentItem.notifyMinutes || currentItem.notifyHour || currentItem.notifyDay) {
             holder.itemView.NotificationsStatusIcon.setImageResource(R.drawable.ic_notifications_active)
         } else {
-            holder.itemView.NotificationsStatusIcon.setImageResource(R.drawable.ic_notifications_off)
+            //holder.itemView.NotificationsStatusIcon.setImageResource(R.drawable.ic_notifications_off)
+            holder.itemView.NotificationsStatusIcon.alpha = 0f
         }
 
         //Setting the tasks background color, icon background color and icon based on category
@@ -278,7 +291,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     }
 
     //Function to check whether the given date & time is in the past
-    private fun isDateInThePast(date: String, time: String): Boolean {
+    private fun isDateAndTimeInThePast(date: String, time: String): Boolean {
         val now = LocalDateTime.now()
 
         val dateValues = date.split("/")
@@ -294,6 +307,20 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
 
         return timeDifference < 0
+    }
+
+    private fun isTaskDateInThePast(date: String): Boolean {
+        val now = LocalDate.now()
+        val dateValues = date.split("/")
+        val year = "20" + dateValues[0]
+        val month = dateValues[1]
+        val day = dateValues[2]
+
+        val taskDate = LocalDate.of(year.toInt(), month.toInt(), day.toInt())
+        val difference = now.until(taskDate, ChronoUnit.DAYS)
+
+        return difference < 0
+        //return taskDate != currentDate
     }
 
     //Function to schedule alarm
