@@ -20,7 +20,7 @@ interface TaskDao {
     fun deleteTask(task: Task): Int
 
     //Function to delete all tasks marked as completed
-    @Query("DELETE FROM task_table WHERE status=1") //AND notifyMinutes=0 AND notifyHour=0 AND notifyDay=0
+    @Query("DELETE FROM task_table WHERE status=1")
     fun deleteAllTasks(): Void
 
     //Function to order all tasks based on date and time

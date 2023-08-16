@@ -306,6 +306,7 @@
                         style="?android:attr/ratingBarStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:isIndicator="true"
                         android:numStars="3"
                         android:theme="@style/RatingBar"
                         app:layout_constraintEnd_toStartOf="@id/addScreenIncreaseImportance"

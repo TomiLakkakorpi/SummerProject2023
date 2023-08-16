@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -26,7 +25,6 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -113,7 +111,7 @@ class AddFragment : Fragment() {
             //Toast.makeText(requireContext(), "Tehtävää ei tallennettu", Toast.LENGTH_SHORT).show()
         }
 
-        //Initializing categoryfilter dropdown menu
+        //Initializing category dropdown menu
         _binding = FragmentListBinding.inflate(inflater, container, false)
         val categories = resources.getStringArray(R.array.categories)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
@@ -293,7 +291,7 @@ class AddFragment : Fragment() {
         //Checking if header field is empty
         if (checkHeader(header) && checkTime(timeString) &&  checkDate(dateString) && checkCategory(category))
         {
-            //if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
+            if (timeString == "00:00" || !isDateInThePast(dateString, timeString)) {
 
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
@@ -314,10 +312,10 @@ class AddFragment : Fragment() {
                 //Navigating back to list fragment
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
 
-            //} else {
-            //    //Displaying a toast if the selected date is in the past
-            //    Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
-            //}
+            } else {
+                //Displaying a toast if the selected date is in the past
+                Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
+            }
 
         } else {
             //Displaying toast if any of the 4 required values are empty
@@ -341,11 +339,7 @@ class AddFragment : Fragment() {
         val taskTime = LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         val timeDifference = now.until(taskTime, ChronoUnit.MINUTES)
 
-        return if (timeDifference < 0) {
-            true
-        } else {
-            false
-        }
+        return timeDifference < 0
     }
 
     override fun onDestroyView() {
@@ -371,30 +365,6 @@ class AddFragment : Fragment() {
     //Checking that category field isn't empty
     private fun checkCategory(category: String): Boolean {
         return !(TextUtils.isEmpty(category))
-    }
-
-    //Checking input and matching for dates like 11/11/23
-    private fun dateCheck1(str: String): Boolean {
-        val regex = Regex("\\d{2}/\\d{2}/\\d{2}")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 1/11/23
-    private fun dateCheck2(str: String): Boolean {
-        val regex = Regex("\\d/\\d{2}/\\d{2}")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 11/1/23
-    private fun dateCheck3(str: String): Boolean {
-        val regex = Regex("\\d{2}/\\d/\\d{2}")
-        return str.matches(regex)
-    }
-
-    //Checking input and matching for dates like 1/1/23
-    private fun dateCheck4(str: String): Boolean {
-        val regex = Regex("\\d/\\d/\\d{2}")
-        return str.matches(regex)
     }
 
     //Checking input and matching for times like 11:11

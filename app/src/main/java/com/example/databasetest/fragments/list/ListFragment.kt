@@ -124,7 +124,7 @@ class ListFragment : Fragment() {
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
-        //Setting the category filter when categoryfilter edittext is changed
+        //Setting the category filter when category filter edittext is changed
         view.etCategoryFilter.addTextChangedListener {text: Editable? ->
             if (text != null) mTaskViewModel.setFilter(text.toString())
         }

@@ -325,6 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="3"
+                        android:isIndicator="true"
                         android:theme="@style/RatingBar"
                         app:layout_constraintEnd_toStartOf="@id/updateScreenIncreaseImportance"
                         app:layout_constraintStart_toEndOf="@id/updateScreenDecreaseImportance"
