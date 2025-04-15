@@ -364,7 +364,7 @@ class UpdateFragment : Fragment() {
         if (checkHeader(header) && checkTime(timeString) && checkDate(dateString) && checkCategory(category))
         {
             //Checking if date is over 5 hours in the past, or selected time is 00:00
-            if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
+            //if (!isDateInThePast(dateString, timeString) || timeString == "00:00") {
 
                 //Normal time 10:00
                 if (timeCheck1(timeString)) { time = regularTime }
@@ -388,10 +388,10 @@ class UpdateFragment : Fragment() {
                 //Navigating back to list fragment
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
 
-            } else {
-                //Displaying a toast if the selected date is in the past
-                 Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
-            }
+            //} else {
+            //    //Displaying a toast if the selected date is in the past
+            //     Toast.makeText(requireContext(), "Valittu aika on jo mennyt, valitse uusi aika", Toast.LENGTH_SHORT).show()
+            //}
         } else {
             //Displaying toast if any of the 4 required values are empty
             Toast.makeText(requireContext(), "Syötä vähintään otsikko, kellonaika, päivämäärä ja kategoria", Toast.LENGTH_SHORT).show()

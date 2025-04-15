@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.databasetest.fragments.list.ListFragment"
-        android:label="Tehtävät"
-        tools:layout="@layout/fragment_list" >
+        android:label="Muistilista"
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment"

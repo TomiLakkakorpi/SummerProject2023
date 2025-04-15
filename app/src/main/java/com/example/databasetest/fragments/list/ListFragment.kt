@@ -148,13 +148,15 @@ class ListFragment : Fragment() {
         if (string == "Formula 1") { view?.etCategoryFilter?.setText(R.string.category12) }
         if (string == "eSports") { view?.etCategoryFilter?.setText(R.string.category13) }
         if (string == "Matkailu") { view?.etCategoryFilter?.setText(R.string.category14) }
+        if (string == "Päiväys") {view?.etCategoryFilter?.setText(R.string.categoryRest)}
         if (string == "Muu") { view?.etCategoryFilter?.setText(R.string.allCategories) }
     }
 
     //Going through the categories from bottom up
     private fun moveCategoryLeft(string: String) {
-        if (string == "Näytä kaikki") { view?.etCategoryFilter?.setText(R.string.category14) }
-        if (string == "Muu") { view?.etCategoryFilter?.setText(R.string.category13) }
+        if (string == "Näytä kaikki") { view?.etCategoryFilter?.setText(R.string.categoryRest) }
+        if (string == "Muu") {view?.etCategoryFilter?.setText(R.string.category14)}
+        if (string == "Päiväys") { view?.etCategoryFilter?.setText(R.string.category13) }
         if (string == "Matkailu") { view?.etCategoryFilter?.setText(R.string.category12) }
         if (string == "eSports") { view?.etCategoryFilter?.setText(R.string.category11) }
         if (string == "Formula 1") { view?.etCategoryFilter?.setText(R.string.category10) }

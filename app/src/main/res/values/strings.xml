@@ -42,7 +42,8 @@
     <string name="category11">Formula 1</string>
     <string name="category12">eSports</string>
     <string name="category13">Matkailu</string>
-    <string name="category14">Muu</string>
+    <string name="category14">Päiväys</string>
+    <string name="categoryRest">Muu</string>"
 
     <string-array name="categories">
         <!-- Muista myös vaihtaa ListAdapter koodiin kategorioiden nimet jos muutat niitä! -->
@@ -59,6 +60,7 @@
         <item>Formula 1</item>
         <item>eSports</item>
         <item>Matkailu</item>
+        <item>Päiväys</item>
         <item>Muu</item>
     </string-array>
 </resources>

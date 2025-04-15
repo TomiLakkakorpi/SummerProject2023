@@ -135,13 +135,16 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             holder.itemView.findNavController().navigate(action)
         }
 
+        //holder.itemView.taskCheckbox.alpha = 0f
+
         //Setting the task´s checkbox based on its status in the database (status true = checkbox checked)
         if (currentItem.status) {
             //holder.itemView.taskCheckbox.setChecked(true)
-            holder.itemView.taskCheckbox.alpha = 0f
+            //holder.itemView.taskCheckbox.alpha = 0f
             holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_checkmark)
         } else {
-            holder.itemView.taskCheckbox.setChecked(false)
+            //holder.itemView.taskCheckbox.setChecked(false)
+            holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_square)
         }
 
         //Setting task´s ratingbar according to its value in database
@@ -182,11 +185,12 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             //If task´s selected time is 00:00 and the date is not in the past
             if(isTime00(currentItem.time) && !isTaskDateInThePast(currentItem.date)){
                 //Showing regular checkbox
-                holder.itemView.taskCheckbox.alpha = 1f
+                holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_square)
+                //holder.itemView.taskCheckbox.alpha = 1f ---
             } else {
                 //Else showing late icon and setting checkbox alpha to 0
                 holder.itemView.TaskLateIcon.setImageResource(R.drawable.ic_warning)
-                holder.itemView.taskCheckbox.alpha = 0f
+                //holder.itemView.taskCheckbox.alpha = 0f
             }
         }
 
@@ -212,73 +216,79 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_terveys)
         }
 
-        if (currentItem.category == "Koulu")        {
+        if (currentItem.category == "Koulu") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category3)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category3)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_koulu)
         }
 
-        if (currentItem.category == "Työ")          {
+        if (currentItem.category == "Työ") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category4)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category4)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_tyo)
         }
 
-        if (currentItem.category == "Tärkeä")       {
+        if (currentItem.category == "Tärkeä") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category5)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category5)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_tarkea)
         }
 
-        if (currentItem.category == "Talous")    {
+        if (currentItem.category == "Talous") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category6)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category6)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_talous)
         }
 
-        if (currentItem.category == "Askare")       {
+        if (currentItem.category == "Askare") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category7)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category7)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_askare)
         }
 
-        if (currentItem.category == "Tapaaminen")   {
+        if (currentItem.category == "Tapaaminen") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category8)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category8)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_tapaaminen)
         }
 
-        if (currentItem.category == "Pelit")        {
+        if (currentItem.category == "Pelit") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category9)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category9)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_pelit)
         }
 
-        if (currentItem.category == "Jääkiekko")    {
+        if (currentItem.category == "Jääkiekko") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category10)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category10)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_jaakiekko)
         }
 
-        if (currentItem.category == "Formula 1")    {
+        if (currentItem.category == "Formula 1") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category11)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category11)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_formula1)
         }
 
-        if (currentItem.category == "eSports")      {
+        if (currentItem.category == "eSports") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category12)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category12)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_pelit)
         }
 
-        if (currentItem.category == "Matkailu")      {
+        if (currentItem.category == "Matkailu") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category13)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.category13)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_matkailu)
         }
 
-        if (currentItem.category == "Muu")          {
+        if (currentItem.category == "Päiväys") {
+            holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.category14)
+            holder.itemView.categoryIcon.setBackgroundResource(R.color.category14)
+            holder.itemView.categoryIcon.setImageResource(R.drawable.ic_paivays)
+        }
+
+        if (currentItem.category == "Muu") {
             holder.itemView.categoryBarConstraint.setBackgroundResource(R.color.categoryRest)
             holder.itemView.categoryIcon.setBackgroundResource(R.color.categoryRest)
             holder.itemView.categoryIcon.setImageResource(R.drawable.ic_muu)

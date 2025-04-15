@@ -16,7 +16,7 @@ data class Task(
     val dayName: String,
     val details: String,
     val category: String,
-    val status: Boolean,
+    var status: Boolean,
     val notifyMinutes: Boolean,
     val notifyHour: Boolean,
     val notifyDay: Boolean,
